@@ -1,0 +1,116 @@
+/* Jenis Pupuk Styles */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+    text-align: center;
+}
+
+.page-subtitle {
+    color: var(--text-light);
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.fertilizer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin: 3rem 0;
+}
+
+.fertilizer-card {
+    background-color: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.fertilizer-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-color);
+}
+
+.fertilizer-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.fertilizer-header h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    margin-top: 1rem;
+}
+
+.fertilizer-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    background-color: rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.fertilizer-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.fertilizer-card:hover .fertilizer-image img {
+    transform: scale(1.1);
+}
+
+.fertilizer-body {
+    padding: 1.75rem;
+    flex: 1;
+}
+
+.fertilizer-section {
+    margin-bottom: 1.5rem;
+}
+
+.fertilizer-section:last-child {
+    margin-bottom: 0;
+}
+
+.fertilizer-section h4 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fertilizer-section h4::before {
+    content: '▸';
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.fertilizer-section p {
+    color: var(--text-color);
+    line-height: 1.8;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
