@@ -38,21 +38,25 @@ body {
 
 /* Navbar */
 .navbar {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #0D4A12 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, #0D4A12 100%);
     color: var(--white);
     padding: 1rem 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.25);
     position: sticky;
     top: 0;
     z-index: 1000;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+    overflow: visible;
+    border-radius: 0 0 20px 20px;
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    overflow: visible;
 }
 
 .logo-link {
@@ -67,33 +71,45 @@ body {
     width: auto;
     object-fit: contain;
     transition: var(--transition);
+    filter: brightness(1.3) contrast(1.2) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.3));
 }
 
 .logo-link:hover .logo-image {
     transform: scale(1.1);
+    filter: brightness(1.5) contrast(1.3) drop-shadow(0 4px 8px rgba(255, 255, 255, 0.4));
 }
 
 .navbar-brand .logo-text {
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--white);
+    color: #ffffff;
     text-decoration: none;
     letter-spacing: -0.5px;
     transition: var(--transition);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand .logo-text:hover {
     transform: scale(1.05);
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
 }
 
 .user-profile-link {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.5rem 0;
+    padding: 0.625rem 1.25rem !important;
+    color: var(--text-color) !important;
+}
+
+.user-profile-link:hover {
+    background: linear-gradient(90deg, var(--accent-color), var(--secondary-color)) !important;
+    color: var(--white) !important;
+    padding-left: 1.5rem !important;
 }
 
 .user-avatar {
@@ -117,7 +133,16 @@ body {
 .navbar-menu {
     display: flex;
     list-style: none;
-    gap: 2.5rem;
+    gap: 2rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu > li {
+    margin: 0;
+    padding: 0;
+    display: flex;
     align-items: center;
 }
 
@@ -125,9 +150,29 @@ body {
     color: var(--white);
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0.5rem;
     position: relative;
     transition: var(--transition);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Pastikan link navbar biasa (bukan dropdown) tidak terpengaruh oleh dropdown */
+.navbar-menu > li:not(.dropdown) > a {
+    position: relative;
+    z-index: 2;
+}
+
+/* Pastikan link dropdown toggle tidak mengikuti link biasa */
+.dropdown-toggle {
+    pointer-events: auto;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
 
 .navbar-menu a::after {
@@ -151,26 +196,46 @@ body {
 
 .dropdown {
     position: relative;
-    /* Tambahkan padding bottom untuk area hover yang lebih besar */
-    padding-bottom: 0.5rem;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.5rem);
     left: 0;
-    margin-top: 0.5rem;
     background-color: var(--white);
-    min-width: 220px;
-    box-shadow: var(--shadow-hover);
-    border-radius: 12px;
-    padding: 0.75rem 0;
+    min-width: 200px;
+    max-width: 280px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 0.5rem 0;
     display: none;
     list-style: none;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     animation: fadeInDown 0.2s ease-out;
     z-index: 1000;
     pointer-events: auto;
+    margin: 0;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+/* Dropdown menu untuk item di kanan navbar (seperti Profil) */
+.navbar-menu > li:last-child .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+/* Pastikan semua dropdown menu tidak terpotong dan memiliki ukuran yang konsisten */
+.navbar-menu .dropdown-menu {
+    min-width: 200px;
+    max-width: 280px;
+    width: auto;
+}
+
+/* Dropdown menu untuk item di tengah (seperti Fitur) - pastikan tidak terpotong */
+.navbar-menu > li:not(:last-child) .dropdown-menu {
+    left: 0;
+    right: auto;
 }
 
 @keyframes fadeInDown {
@@ -186,19 +251,25 @@ body {
 }
 
 /* Dropdown tetap terbuka saat hover pada parent atau menu */
-.dropdown:hover .dropdown-menu,
+.dropdown:hover > .dropdown-menu,
 .dropdown-menu:hover {
     display: block;
+}
+
+/* Pastikan link biasa (bukan dropdown) tidak terpengaruh */
+.navbar-menu > li:not(.dropdown) > a {
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 /* Area invisible untuk menghilangkan gap antara trigger dan menu */
 .dropdown-menu::before {
     content: '';
     position: absolute;
-    top: -0.5rem;
-    left: -200px;
-    right: -200px;
-    height: 0.5rem;
+    top: -0.25rem;
+    left: -100px;
+    right: -100px;
+    height: 0.25rem;
     background: transparent;
     pointer-events: auto;
 }
@@ -208,31 +279,56 @@ body {
     content: '';
     position: absolute;
     top: 100%;
-    left: -200px;
-    right: -200px;
-    height: 0.5rem;
+    left: -100px;
+    right: -100px;
+    height: 0.25rem;
     background: transparent;
     pointer-events: auto;
     z-index: 999;
 }
 
+.dropdown-menu li {
+    margin: 0;
+    padding: 0;
+}
+
 .dropdown-menu a {
     color: var(--text-color);
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
     display: block;
     transition: var(--transition);
     font-weight: 500;
+    text-decoration: none;
+    border-radius: 0;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .dropdown-menu a:hover {
     background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
     color: var(--white);
-    padding-left: 2rem;
+    padding-left: 1.5rem;
+}
+
+.dropdown-divider {
+    height: 1px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: none;
 }
 
 .arrow {
-    font-size: 0.7rem;
-    margin-left: 0.3rem;
+    font-size: 0.65rem;
+    margin-left: 0.4rem;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+}
+
+.dropdown:hover .arrow {
+    transform: rotate(180deg);
 }
 
 /* Hero Banner */
@@ -249,7 +345,12 @@ body {
     min-height: 500px;
     display: flex;
     align-items: center;
-    contain: layout style paint;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.hero-banner * {
+    pointer-events: auto;
 }
 
 .hero-overlay {
@@ -261,6 +362,7 @@ body {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.75) 0%, rgba(46, 125, 50, 0.65) 50%, rgba(56, 142, 60, 0.6) 100%);
     z-index: 1;
     will-change: opacity;
+    pointer-events: none !important;
 }
 
 /* Pattern overlay dihapus untuk performa lebih baik */
@@ -268,6 +370,19 @@ body {
 .hero-banner .container {
     position: relative;
     z-index: 3;
+}
+
+.hero-banner .btn {
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.hero-banner .btn:hover {
+    text-decoration: none;
 }
 
 .hero-title {
@@ -302,6 +417,30 @@ body {
     }
 }
 
+/* Page Header Styles */
+.page-header {
+    text-align: center;
+    margin: 3rem 0 2.5rem;
+    padding: 2rem 0;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
 /* Search Section */
 .search-section {
     background-color: var(--white);
@@ -310,7 +449,7 @@ body {
     margin-top: -2rem;
     position: relative;
     z-index: 10;
-    border-radius: 16px 16px 0 0;
+    border-radius: 16px;
     margin-left: 24px;
     margin-right: 24px;
 }

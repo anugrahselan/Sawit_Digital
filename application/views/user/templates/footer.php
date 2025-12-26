@@ -124,10 +124,35 @@
 <script>
     // Set base URL untuk JavaScript
     var baseUrl = '<?= base_url() ?>';
+    
+    // Pastikan tombol Daftar Gratis di hero banner bisa diklik
+    document.addEventListener('DOMContentLoaded', function() {
+        var heroBtn = document.querySelector('.hero-register-btn');
+        if (heroBtn) {
+            // Hapus semua event listener yang mungkin menghalangi
+            heroBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                var href = this.getAttribute('href');
+                if (href) {
+                    // Pastikan navigasi berjalan
+                    window.location.href = href;
+                    return false;
+                }
+            }, true); // Use capture phase
+            
+            // Juga pastikan mousedown dan mouseup tidak dihalangi
+            heroBtn.addEventListener('mousedown', function(e) {
+                e.stopPropagation();
+            }, true);
+            
+            heroBtn.addEventListener('mouseup', function(e) {
+                e.stopPropagation();
+            }, true);
+        }
+    });
 </script>
 <?php if (isset($page_js)): ?>
     <script src="<?= base_url('assets/js/' . $page_js); ?>" defer></script>
 <?php endif; ?>
 </body>
-
 </html>

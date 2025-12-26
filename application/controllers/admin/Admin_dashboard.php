@@ -16,8 +16,6 @@ class Admin_dashboard extends MY_Controller {
     
     public function index() {
         $data['page_title'] = 'Dashboard Admin';
-        $data['page_css'] = 'admin/dashboard.css';
-        $data['page_js'] = 'admin/dashboard.js';
         
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')]
@@ -104,5 +102,3 @@ class Admin_dashboard extends MY_Controller {
         return $this->db->get()->result();
     }
 }
-
-

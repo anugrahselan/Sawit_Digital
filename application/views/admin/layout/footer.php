@@ -14,5 +14,3 @@
     <?php endif; ?>
 </body>
 </html>
-
-

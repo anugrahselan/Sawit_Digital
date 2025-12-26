@@ -14,7 +14,7 @@
                     <?php $this->load->view('user/partials/kartu_artikel', ['article' => $article]); ?>
                 </div>
             <?php else: ?>
-                <?php $this->load->view('partials/kartu_artikel', ['article' => $article]); ?>
+                <?php $this->load->view('user/partials/kartu_artikel', ['article' => $article]); ?>
             <?php 
                 endif;
             endforeach; 

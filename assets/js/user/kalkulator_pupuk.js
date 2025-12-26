@@ -55,34 +55,70 @@ function displayResult(dosis, jumlahPohon) {
     var dosisPerPohon = parseFloat(dosis.dosis_per_pohon) || 2.5;
     var totalDosis = dosisPerPohon * jumlahPohon;
     
-    var html = '<div class="result-item">';
-    html += '<div class="result-label">Dosis per Pohon</div>';
-    html += '<div class="result-value">' + dosisPerPohon.toFixed(2) + ' kg</div>';
+    // Format number with thousand separator
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    
+    var html = '<div class="result-summary-card">';
+    html += '<div class="result-summary-icon">⚖️</div>';
+    html += '<div class="result-summary-content">';
+    html += '<div class="result-summary-label">Total Dosis Dibutuhkan</div>';
+    html += '<div class="result-summary-value">' + formatNumber(totalDosis.toFixed(2)) + ' <span class="unit">kg</span></div>';
+    html += '</div>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Jumlah Pohon</div>';
-    html += '<div class="result-value">' + jumlahPohon + ' pohon</div>';
+    html += '<div class="result-details">';
+    
+    html += '<div class="result-card">';
+    html += '<div class="result-card-icon">🌱</div>';
+    html += '<div class="result-card-content">';
+    html += '<div class="result-card-label">Dosis per Pohon</div>';
+    html += '<div class="result-card-value">' + formatNumber(dosisPerPohon.toFixed(2)) + ' <span class="unit">kg</span></div>';
+    html += '</div>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Total Dosis Dibutuhkan</div>';
-    html += '<div class="result-value" style="font-size: 1.5rem; color: var(--primary-color); font-weight: bold;">' + totalDosis.toFixed(2) + ' kg</div>';
+    html += '<div class="result-card">';
+    html += '<div class="result-card-icon">🌳</div>';
+    html += '<div class="result-card-content">';
+    html += '<div class="result-card-label">Jumlah Pohon</div>';
+    html += '<div class="result-card-value">' + formatNumber(jumlahPohon) + ' <span class="unit">pohon</span></div>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="result-card">';
+    html += '<div class="result-card-icon">📐</div>';
+    html += '<div class="result-card-content">';
+    html += '<div class="result-card-label">Perhitungan</div>';
+    html += '<div class="result-card-value-small">' + formatNumber(dosisPerPohon.toFixed(2)) + ' kg × ' + formatNumber(jumlahPohon) + ' pohon</div>';
+    html += '</div>';
+    html += '</div>';
+    
     html += '</div>';
     
     if (dosis.keterangan_aplikasi) {
-        html += '<div class="result-item">';
-        html += '<div class="result-label">Cara Aplikasi</div>';
-        html += '<div class="result-value">' + dosis.keterangan_aplikasi + '</div>';
+        html += '<div class="result-info-box">';
+        html += '<div class="result-info-header">';
+        html += '<span class="result-info-icon">💡</span>';
+        html += '<span class="result-info-title">Cara Aplikasi</span>';
+        html += '</div>';
+        html += '<div class="result-info-content">' + dosis.keterangan_aplikasi + '</div>';
         html += '</div>';
     }
     
-    html += '<div class="mt-3">';
-    html += '<button type="button" class="btn btn-success btn-block" id="btnSaveDosis">Simpan Data Dosis</button>';
+    html += '<div class="result-actions">';
+    html += '<button type="button" class="btn btn-success btn-block" id="btnSaveDosis">';
+    html += '<span class="btn-icon-left">💾</span>';
+    html += '<span class="btn-text">Simpan Data Dosis</span>';
+    html += '</button>';
     html += '</div>';
     
     $('#resultContent').html(html);
-    $('#resultContainer').show();
+    
+    // Scroll to result
+    $('html, body').animate({
+        scrollTop: $('#resultContainer').offset().top - 100
+    }, 500);
     
     // Save button handler
     $('#btnSaveDosis').on('click', function() {

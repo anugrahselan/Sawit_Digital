@@ -9,20 +9,20 @@ class Api extends CI_Controller
         $this->load->model('Harga_tbs_model');
         $this->load->model('Informasi_tambahan_model');
         $this->load->model('Jenis_pupuk_model');
-        $this->load->database();
+        $this->load->model('Penyakit_model');
     }
 
     public function tbs_prices()
     {
         $id_kabupaten = $this->input->get('id_kabupaten');
-        
+
         if ($id_kabupaten) {
             // Jika filter kabupaten, ambil harga terbaru per perusahaan di kabupaten tersebut
             $tbs_prices = $this->Harga_tbs_model->get_by_kabupaten($id_kabupaten);
         } else {
             // Ambil harga hari ini untuk semua perusahaan dan kabupaten
             $tbs_prices = $this->Harga_tbs_model->get_today_prices();
-            
+
             // Jika tidak ada harga hari ini, ambil harga terbaru per perusahaan
             if (empty($tbs_prices)) {
                 $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
@@ -32,11 +32,11 @@ class Api extends CI_Controller
         // Bandingkan dengan harga kemarin untuk setiap harga
         foreach ($tbs_prices as $price) {
             $previous = $this->Harga_tbs_model->get_previous_price(
-                $price->id_kabupaten, 
-                $price->id_perusahaan, 
+                $price->id_kabupaten,
+                $price->id_perusahaan,
                 $price->tanggal
             );
-            
+
             if ($previous) {
                 // Hitung perubahan dari kemarin ke hari ini
                 $change = $price->harga_per_kg - $previous->harga_per_kg;
@@ -64,10 +64,11 @@ class Api extends CI_Controller
         }
 
         header('Content-Type: application/json');
+
         echo json_encode([
             'articles' => $this->Informasi_tambahan_model->search($keyword),
             'fertilizers' => $this->Jenis_pupuk_model->search($keyword),
-            'penyakit' => $this->db->like('nama_penyakit', $keyword)->or_like('gejala', $keyword)->get('jenis_penyakit')->result()
+            'penyakit' => $this->Penyakit_model->search($keyword)
         ]);
     }
 

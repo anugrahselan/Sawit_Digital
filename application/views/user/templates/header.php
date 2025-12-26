@@ -81,6 +81,23 @@
         </div>
     </nav>
 
+    <?php 
+    // Tampilkan hero banner dan search bar hanya di halaman beranda
+    $current_uri = uri_string();
+    $is_beranda = false;
+    
+    // Cek apakah ini halaman beranda
+    if ($current_uri == 'beranda' || $current_uri == '' || $current_uri == 'index.php' || $current_uri == 'Home' || strpos($current_uri, 'beranda') === 0) {
+        $is_beranda = true;
+    }
+    
+    // Override dengan variabel $show_hero jika ada
+    if (isset($show_hero)) {
+        $is_beranda = (bool)$show_hero;
+    }
+    
+    if ($is_beranda): 
+    ?>
     <section class="hero-banner"<?php
     $hero = '';
     $exts = ['webp', 'jpg', 'png'];
@@ -97,7 +114,7 @@
             <h1 class="hero-title">Sistem Penyuluhan Sawit Digital</h1>
             <p class="hero-subtitle">Platform lengkap untuk petani sawit mendapatkan informasi, kalkulator, dan edukasi
                 terbaik</p>
-            <a href="<?= site_url('daftar') ?>" class="btn btn-primary">Daftar Gratis</a>
+            <a href="<?= site_url('daftar') ?>" class="btn btn-primary hero-register-btn" style="position: relative; z-index: 10; pointer-events: auto; cursor: pointer; text-decoration: none; display: inline-block;">Daftar Gratis</a>
         </div>
     </section>
 
@@ -111,3 +128,4 @@
             </form>
         </div>
     </section>
+    <?php endif; ?>

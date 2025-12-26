@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const toggle = dropdown.querySelector('.dropdown-toggle');
         const menu = dropdown.querySelector('.dropdown-menu');
         
+        // Pastikan hanya dropdown yang memiliki toggle dan menu
         if (!toggle || !menu) return;
+        
+        // Pastikan dropdown ini benar-benar memiliki class dropdown
+        if (!dropdown.classList.contains('dropdown')) return;
         
         let timeout;
         let isHovering = false;
@@ -37,9 +41,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 800); // Delay lebih lama (800ms) untuk memberikan waktu kursor berpindah
         }
         
-        // Show dropdown saat hover pada dropdown container
-        dropdown.addEventListener('mouseenter', function() {
+        // Show dropdown saat hover pada dropdown toggle
+        toggle.addEventListener('mouseenter', function(e) {
+            e.stopPropagation();
             showDropdown();
+        });
+        
+        // Juga trigger saat hover pada container dropdown (tapi pastikan bukan dari item navbar lain)
+        dropdown.addEventListener('mouseenter', function(e) {
+            // Hanya trigger jika hover langsung pada dropdown container atau toggle, bukan dari item navbar lain
+            if (e.target === dropdown || e.target === toggle || toggle.contains(e.target)) {
+                showDropdown();
+            }
         });
         
         // Hide dropdown saat mouse meninggalkan dropdown container
@@ -72,17 +85,30 @@ document.addEventListener('DOMContentLoaded', function() {
             hideDropdown();
         });
         
-        // Tambahkan event listener untuk menangkap semua mouse movement di area dropdown
-        // Ini membantu menangkap area gap
-        dropdown.addEventListener('mousemove', function() {
-            if (!isHovering) {
+        // Pastikan hanya dropdown yang memiliki toggle yang bisa di-trigger
+        // Jangan trigger dropdown dari item navbar lain
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (menu.style.display === 'none' || menu.style.display === '') {
                 showDropdown();
+            } else {
+                hideDropdown();
             }
         });
         
-        menu.addEventListener('mousemove', function() {
-            showDropdown();
+        // Tutup dropdown saat klik di luar atau pada link navbar biasa (bukan dropdown)
+        document.addEventListener('click', function(e) {
+            const clickedElement = e.target;
+            // Jika klik di luar dropdown, tutup
+            if (!dropdown.contains(clickedElement)) {
+                hideDropdown();
+            }
+            // Jika klik pada link navbar biasa (bukan dropdown toggle), tutup dropdown
+            const navbarItem = clickedElement.closest('.navbar-menu > li');
+            if (navbarItem && !navbarItem.classList.contains('dropdown')) {
+                hideDropdown();
+            }
         });
     });
 });
-

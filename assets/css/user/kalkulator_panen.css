@@ -1,4 +1,27 @@
 /* Kalkulator Panen Styles */
+.page-header {
+    text-align: center;
+    margin: 3rem 0 2.5rem;
+    padding: 2rem 0;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
 .calculator-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -28,7 +51,27 @@
     background: linear-gradient(90deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
 }
 
-.calculator-form h2,
+.form-header {
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.form-description {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
 .calculator-result h2 {
     color: var(--primary-color);
     margin-bottom: 2rem;
@@ -39,7 +82,7 @@
     gap: 0.75rem;
 }
 
-.calculator-form h2::before,
+.form-header h2::before,
 .calculator-result h2::before {
     content: '';
     width: 4px;
@@ -52,13 +95,40 @@
     margin-bottom: 1.75rem;
 }
 
+.form-group {
+    margin-bottom: 1.75rem;
+}
+
+.form-group:last-of-type {
+    margin-bottom: 2rem;
+}
+
 .form-group label {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     margin-bottom: 0.75rem;
     color: var(--text-color);
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.3px;
+    flex-wrap: wrap;
+}
+
+.label-text {
+    flex: 1;
+}
+
+.label-required {
+    color: #e53935;
+    font-weight: 700;
+}
+
+.label-hint {
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 0.85rem;
+    font-style: italic;
 }
 
 .form-control {
@@ -93,7 +163,7 @@
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     border: none;
     color: var(--white);
-    padding: 1rem 2rem;
+    padding: 1.125rem 2rem;
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 600;
@@ -102,12 +172,30 @@
     width: 100%;
     box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-text {
+    flex: 1;
+    text-align: center;
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
 }
 
 .btn-primary:hover {
     background: linear-gradient(135deg, #0D4A12 0%, #1B5E20 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4);
+}
+
+.btn-primary:hover .btn-icon {
+    transform: translateX(4px);
 }
 
 .btn-primary:active {

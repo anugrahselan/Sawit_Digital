@@ -20,4 +20,3 @@ class Admin_settings extends MY_Controller {
         $this->load->view('admin/layout/footer');
     }
 }
-

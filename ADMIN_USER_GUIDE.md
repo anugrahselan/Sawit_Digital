@@ -26,7 +26,7 @@ Sistem lengkap untuk mengelola data sawit dengan dua panel: **Admin Panel** untu
 ### 4. Login Admin
 - **Email**: `admin@gmail.com`
 - **Password**: `admin123`
-- Jika password belum di-hash, jalankan: `http://localhost/Sawit_Digital/fix_admin_password.php`
+- Password akan otomatis di-hash saat login pertama kali jika belum di-hash
 
 ## 📋 Fitur Admin Panel
 

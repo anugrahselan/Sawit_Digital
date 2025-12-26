@@ -26,4 +26,3 @@ class Admin_tanah extends MY_Controller {
         $this->load->view('admin/layout/footer');
     }
 }
-

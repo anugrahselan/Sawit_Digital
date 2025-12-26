@@ -1,59 +1,97 @@
 <div class="container">
-    <h1 class="page-title">Kalkulator Panen</h1>
-    <p class="page-subtitle">Hitung estimasi hasil panen dan keuntungan sawit Anda</p>
+    <div class="page-header">
+        <h1 class="page-title">Kalkulator Panen</h1>
+        <p class="page-subtitle">Hitung estimasi hasil panen dan keuntungan sawit Anda</p>
+    </div>
 
     <div class="calculator-container">
         <div class="calculator-form">
-            <h2>Input Data</h2>
+            <div class="form-header">
+                <h2>Input Data</h2>
+                <p class="form-description">Isi form di bawah ini untuk menghitung hasil panen dan keuntungan</p>
+            </div>
             <form id="harvestForm">
                 <div class="form-group">
-                    <label for="id_kabupaten">Kabupaten</label>
+                    <label for="id_kabupaten">
+                        <span class="label-text">Kabupaten</span>
+                        <span class="label-required">*</span>
+                    </label>
                     <select name="id_kabupaten" id="id_kabupaten" class="form-control" required>
-                        <option value="">Pilih Kabupaten</option>
+                        <option value="">-- Pilih Kabupaten --</option>
                         <?php foreach ($kabupaten as $kab): ?>
-                            <option value="<?= $kab->id_kabupaten ?>"><?= $kab->nama_kabupaten ?></option>
+                            <option value="<?= $kab->id_kabupaten ?>"><?= htmlspecialchars($kab->nama_kabupaten) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="id_perusahaan">Perusahaan (Opsional)</label>
+                    <label for="id_perusahaan">
+                        <span class="label-text">Perusahaan</span>
+                        <span class="label-hint">(Opsional)</span>
+                    </label>
                     <select name="id_perusahaan" id="id_perusahaan" class="form-control">
-                        <option value="">Pilih Perusahaan</option>
+                        <option value="">-- Pilih Perusahaan --</option>
                         <?php foreach ($perusahaan as $pt): ?>
-                            <option value="<?= $pt->id_perusahaan ?>"><?= $pt->nama_perusahaan ?></option>
+                            <option value="<?= $pt->id_perusahaan ?>"><?= htmlspecialchars($pt->nama_perusahaan) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="harga_per_kg">Harga per KG (Rp)</label>
+                    <label for="harga_per_kg">
+                        <span class="label-text">Harga per KG</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(Rp)</span>
+                    </label>
                     <input type="number" name="harga_per_kg" id="harga_per_kg" class="form-control" required min="0"
-                        step="0.01" placeholder="Masukkan harga per kilogram">
+                        step="0.01" placeholder="Contoh: 3400">
                 </div>
                 <div class="form-group">
-                    <label for="berat_kotor">Berat Kotor (KG)</label>
-                    <input type="number" name="berat_kotor" id="berat_kotor" class="form-control" required min="0" placeholder="Masukkan berat kotor">
+                    <label for="berat_kotor">
+                        <span class="label-text">Berat Kotor</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(KG)</span>
+                    </label>
+                    <input type="number" name="berat_kotor" id="berat_kotor" class="form-control" required min="0" step="0.01" placeholder="Contoh: 1000">
                 </div>
                 <div class="form-group">
-                    <label for="potongan">Potongan (%)</label>
+                    <label for="potongan">
+                        <span class="label-text">Potongan</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(%)</span>
+                    </label>
                     <input type="number" name="potongan" id="potongan" class="form-control" required min="0" max="100"
-                        value="0" placeholder="Masukkan persentase potongan">
+                        value="0" step="0.01" placeholder="Contoh: 5">
                 </div>
                 <div class="form-group">
-                    <label for="upah_panen">Upah Panen (Rp)</label>
+                    <label for="upah_panen">
+                        <span class="label-text">Upah Panen</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(Rp)</span>
+                    </label>
                     <input type="number" name="upah_panen" id="upah_panen" class="form-control" required min="0"
-                        value="0" placeholder="Masukkan upah panen">
+                        value="0" step="0.01" placeholder="Contoh: 50000">
                 </div>
                 <div class="form-group">
-                    <label for="biaya_transportasi">Biaya Transportasi (Rp)</label>
+                    <label for="biaya_transportasi">
+                        <span class="label-text">Biaya Transportasi</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(Rp)</span>
+                    </label>
                     <input type="number" name="biaya_transportasi" id="biaya_transportasi" class="form-control" required
-                        min="0" value="0" placeholder="Masukkan biaya transportasi">
+                        min="0" value="0" step="0.01" placeholder="Contoh: 20000">
                 </div>
                 <div class="form-group">
-                    <label for="potong_hutang">Potong Hutang (Rp)</label>
+                    <label for="potong_hutang">
+                        <span class="label-text">Potong Hutang</span>
+                        <span class="label-required">*</span>
+                        <span class="label-hint">(Rp)</span>
+                    </label>
                     <input type="number" name="potong_hutang" id="potong_hutang" class="form-control" required min="0"
-                        value="0" placeholder="Masukkan potong hutang">
+                        value="0" step="0.01" placeholder="Contoh: 0">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Hitung Hasil</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span class="btn-text">Hitung Hasil</span>
+                    <span class="btn-icon">→</span>
+                </button>
             </form>
         </div>
 

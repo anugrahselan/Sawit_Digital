@@ -19,8 +19,6 @@ class Admin_harga_tbs extends MY_Controller {
      */
     public function index() {
         $data['page_title'] = 'Harga TBS';
-        $data['page_css'] = 'harga_tbs.css';
-        $data['page_js'] = 'harga_tbs.js';
         
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
