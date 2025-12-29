@@ -32,75 +32,56 @@ body.auth-page {
     min-height: 100vh;
     overflow-x: hidden;
     overflow-y: auto;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    position: relative;
+    background: var(--white);
 }
 
 /* ============================================
-   CONTAINER - FULL SCREEN
+   CONTAINER - SPLIT SCREEN
    ============================================ */
 .auth-container {
+    display: flex;
     min-height: 100vh;
     width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-/* Background Overlay */
-.auth-overlay {
+/* ============================================
+   LEFT SIDE - ILLUSTRATION (45%)
+   ============================================ */
+.auth-illustration {
+    width: 45%;
+    background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+/* Overlay untuk memastikan konten tetap readable */
+.auth-illustration::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(180deg, rgba(232, 245, 233, 0.7) 0%, rgba(200, 230, 201, 0.8) 100%);
+    background: linear-gradient(180deg, rgba(232, 245, 233, 0.85) 0%, rgba(200, 230, 201, 0.9) 100%);
     z-index: 0;
 }
 
-/* ============================================
-   HEADER - LOGO (Top Left)
-   ============================================ */
-.auth-header {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    z-index: 10;
+.auth-illustration > * {
+    position: relative;
+    z-index: 1;
 }
 
-.auth-header .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* ============================================
-   CENTER CONTENT
-   ============================================ */
-.auth-center-content {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-    text-align: center;
-    max-width: 500px;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.auth-center-right {
-    right: 60px;
-}
-
-.auth-center-left {
-    left: 60px;
+/* Header - Logo */
+.illustration-header {
+    position: relative;
+    z-index: 2;
 }
 
 .logo-container {
@@ -135,7 +116,6 @@ body.auth-page {
     display: block;
 }
 
-/* Jika logo-icon berisi img, sesuaikan styling */
 .logo-icon img {
     width: 100%;
     height: 100%;
@@ -162,7 +142,17 @@ body.auth-page {
     line-height: 1.2;
 }
 
-/* Center - Main Illustration (moved to auth-center-content) */
+/* Center - Main Illustration */
+.illustration-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 40px 0;
+}
 
 .illustration-icon-wrapper {
     position: relative;
@@ -216,27 +206,9 @@ body.auth-page {
     }
 }
 
-/* Footer */
-.auth-footer {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    text-align: center;
-}
-
-.auth-footer p {
-    font-size: 12px;
-    color: #689F38;
-    margin: 0;
-    font-weight: 500;
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
-}
-
-/* Illustration Text Styling */
 .illustration-text {
-    margin-top: 30px;
+    text-align: center;
+    max-width: 500px;
 }
 
 .illustration-heading {
@@ -255,36 +227,84 @@ body.auth-page {
     text-shadow: 0 1px 5px rgba(255, 255, 255, 0.8);
 }
 
-/* ============================================
-   FORM WRAPPER - LEFT & RIGHT
-   ============================================ */
-.auth-form-wrapper {
+/* Footer */
+.illustration-footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.illustration-footer p {
+    font-size: 12px;
+    color: #689F38;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+/* Background Blur Circles */
+.blur-circles {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.blur-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(40px);
+    opacity: 0.6;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    top: -100px;
+    left: -100px;
+}
+
+.circle-2 {
+    width: 200px;
+    height: 200px;
     top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
+    right: -50px;
+}
+
+.circle-3 {
+    width: 250px;
+    height: 250px;
+    bottom: -50px;
+    left: 20%;
+}
+
+.circle-4 {
+    width: 180px;
+    height: 180px;
+    top: 30%;
+    left: 60%;
+}
+
+/* ============================================
+   RIGHT SIDE - FORM SECTION (55%)
+   ============================================ */
+.auth-form-section {
+    width: 55%;
+    background: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px;
-}
-
-.auth-form-left {
-    left: 60px;
-}
-
-.auth-form-right {
-    right: 60px;
+    padding: 60px;
+    overflow-y: auto;
 }
 
 .form-wrapper {
     width: 100%;
-    max-width: 420px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
 }
 
 /* ============================================
@@ -513,37 +533,15 @@ body.auth-page {
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-@media (max-width: 1200px) {
-    .auth-form-left {
-        left: 30px;
-    }
-
-    .auth-form-right {
-        right: 30px;
-    }
-
-    .form-wrapper {
-        max-width: 380px;
-        padding: 35px;
-    }
-}
-
 @media (max-width: 968px) {
-    .auth-header {
-        top: 20px;
-        left: 20px;
+    .auth-container {
+        flex-direction: column;
     }
 
-    .auth-center-content {
-        max-width: 400px;
-    }
-
-    .auth-center-right {
-        right: 30px;
-    }
-
-    .auth-center-left {
-        left: 30px;
+    .auth-illustration {
+        width: 100%;
+        min-height: 40vh;
+        padding: 30px 40px;
     }
 
     .illustration-icon {
@@ -564,46 +562,9 @@ body.auth-page {
         font-size: 14px;
     }
 
-    .auth-form-wrapper {
-        position: static;
-        transform: none;
+    .auth-form-section {
         width: 100%;
-        padding: 20px;
-        margin-top: 20px;
-    }
-
-    .auth-form-left,
-    .auth-form-right {
-        left: auto;
-        right: auto;
-        position: static;
-    }
-
-    .auth-center-content {
-        position: static;
-        transform: none;
-        width: 100%;
-        margin-top: 20px;
-        padding: 20px;
-    }
-
-    .auth-center-right,
-    .auth-center-left {
-        left: auto;
-        right: auto;
-        position: static;
-    }
-
-    .form-wrapper {
-        max-width: 100%;
-        padding: 30px;
-    }
-
-    .auth-footer {
-        position: static;
-        transform: none;
-        margin-top: 30px;
-        padding: 20px;
+        padding: 40px 30px;
     }
 
     .form-title {
@@ -612,22 +573,9 @@ body.auth-page {
 }
 
 @media (max-width: 640px) {
-    .auth-header {
-        top: 15px;
-        left: 15px;
-    }
-
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .logo-main {
-        font-size: 16px;
-    }
-
-    .logo-subtitle {
-        font-size: 12px;
+    .auth-illustration {
+        padding: 30px 20px;
+        min-height: 35vh;
     }
 
     .illustration-icon {
@@ -649,12 +597,8 @@ body.auth-page {
         font-size: 13px;
     }
 
-    .auth-form-wrapper {
-        padding: 15px;
-    }
-
-    .form-wrapper {
-        padding: 25px 20px;
+    .auth-form-section {
+        padding: 30px 20px;
     }
 
     .form-title {
@@ -673,11 +617,6 @@ body.auth-page {
     .submit-btn {
         padding: 14px;
         font-size: 15px;
-    }
-
-    .auth-footer {
-        font-size: 11px;
-        padding: 15px;
     }
 }
 

@@ -15,67 +15,61 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/auth/login.css') . $cache; ?>">
 </head>
 
-<body class="auth-page" style="background-image: url('<?= base_url('assets/img/hero/hero-banner.jpg') ?>');">
+<body class="auth-page">
     <div class="auth-container">
-        <!-- Background Overlay -->
-        <div class="auth-overlay"></div>
+        <!-- LEFT SIDE - ILLUSTRATION SECTION (45%) -->
+        <div class="auth-illustration"
+            style="background-image: url('<?= base_url('assets/img/hero/hero-banner.jpg') ?>');">
+            <!-- Header -->
+            <div class="illustration-header">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <img src="<?= base_url('assets/img/logo/logo.png') ?>" alt="Sawit Digital Logo"
+                            class="logo-image">
+                    </div>
+                    <div class="logo-text">
+                        <div class="logo-main">SAWIT DIGITAL</div>
+                        <div class="logo-subtitle">Sistem Penyuluhan</div>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Header Logo (Top Left) -->
-        <div class="auth-header">
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <img src="<?= base_url('assets/img/logo/logo.png') ?>" alt="Sawit Digital Logo" class="logo-image">
+            <!-- Center - Main Illustration -->
+            <div class="illustration-center">
+                <div class="illustration-icon-wrapper">
+                    <div class="illustration-icon">
+                        <img src="<?= base_url('assets/img/logo/logo.png') ?>" alt="Sawit Digital"
+                            class="illustration-logo">
+                    </div>
+                    <div class="illustration-circle"></div>
                 </div>
-                <div class="logo-text">
-                    <div class="logo-main">SAWIT DIGITAL</div>
-                    <div class="logo-subtitle">Sistem Penyuluhan</div>
+                <div class="illustration-text">
+                    <h2 class="illustration-heading">Selamat Datang</h2>
+                    <p class="illustration-description">Sistem Informasi Penyuluhan Sawit Digital untuk kemajuan
+                        perkebunan kelapa sawit Indonesia</p>
                 </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="illustration-footer">
+                <p>© 2025 Sawit Digital | Powered by UKM</p>
+            </div>
+
+            <!-- Background Blur Circles -->
+            <div class="blur-circles">
+                <div class="blur-circle circle-1"></div>
+                <div class="blur-circle circle-2"></div>
+                <div class="blur-circle circle-3"></div>
+                <div class="blur-circle circle-4"></div>
             </div>
         </div>
 
-        <!-- Center Content - Login (Right Side) -->
-        <div class="auth-center-content auth-center-right"
-            style="display: <?= isset($register_error) && !empty($register_error) ? 'none' : 'flex' ?>;">
-            <div class="illustration-icon-wrapper">
-                <div class="illustration-icon">
-                    <img src="<?= base_url('assets/img/logo/logo.png') ?>" alt="Sawit Digital" class="illustration-logo">
-                </div>
-                <div class="illustration-circle"></div>
-            </div>
-            <div class="illustration-text">
-                <h2 class="illustration-heading">Selamat Datang</h2>
-                <p class="illustration-description">Sistem Informasi Penyuluhan Sawit Digital untuk kemajuan
-                    perkebunan kelapa sawit Indonesia</p>
-            </div>
-        </div>
-
-        <!-- Center Content - Register (Left Side) -->
-        <div class="auth-center-content auth-center-left"
-            style="display: <?= isset($register_error) && !empty($register_error) ? 'flex' : 'none' ?>;">
-            <div class="illustration-icon-wrapper">
-                <div class="illustration-icon">
-                    <img src="<?= base_url('assets/img/logo/logo.png') ?>" alt="Sawit Digital" class="illustration-logo">
-                </div>
-                <div class="illustration-circle"></div>
-            </div>
-            <div class="illustration-text">
-                <h2 class="illustration-heading">Selamat Datang</h2>
-                <p class="illustration-description">Sistem Informasi Penyuluhan Sawit Digital untuk kemajuan
-                    perkebunan kelapa sawit Indonesia</p>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="auth-footer">
-            <p>© 2025 Sawit Digital | Powered by UKM</p>
-        </div>
-
-        <!-- LEFT SIDE - LOGIN FORM -->
-        <div class="auth-form-wrapper auth-form-left"
-            style="display: <?= isset($register_error) && !empty($register_error) ? 'none' : 'flex' ?>;">
+        <!-- RIGHT SIDE - FORM SECTION (55%) -->
+        <div class="auth-form-section">
             <div class="form-wrapper">
                 <!-- LOGIN FORM -->
-                <div class="auth-form" id="loginForm">
+                <div class="auth-form" id="loginForm"
+                    style="display: <?= isset($register_error) && !empty($register_error) ? 'none' : 'block' ?>;">
                     <div class="form-header">
                         <h1 class="form-title">Login</h1>
                         <p class="form-subtitle">Silakan masuk ke akun Anda</p>
@@ -122,15 +116,10 @@
                         <a href="#" class="footer-link">Terms and Services</a>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- RIGHT SIDE - REGISTER FORM -->
-        <div class="auth-form-wrapper auth-form-right"
-            style="display: <?= isset($register_error) && !empty($register_error) ? 'flex' : 'none' ?>;">
-            <div class="form-wrapper">
                 <!-- REGISTER FORM -->
-                <div class="auth-form" id="registerForm">
+                <div class="auth-form" id="registerForm"
+                    style="display: <?= isset($register_error) && !empty($register_error) ? 'block' : 'none' ?>;">
                     <div class="form-header">
                         <h1 class="form-title">Daftar</h1>
                         <p class="form-subtitle">Buat akun baru Anda</p>
@@ -212,33 +201,21 @@
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
 
-        // Toggle between Login and Register forms
-        const loginWrapper = document.querySelector('.auth-form-left');
-        const registerWrapper = document.querySelector('.auth-form-right');
-        const centerRight = document.querySelector('.auth-center-right');
-        const centerLeft = document.querySelector('.auth-center-left');
-
         if (showRegisterBtn) {
             showRegisterBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Sembunyikan form login (kiri) dan center content (kanan)
-                if (loginWrapper) loginWrapper.style.display = 'none';
-                if (centerRight) centerRight.style.display = 'none';
-                // Tampilkan form register (kanan) dan center content (kiri)
-                if (registerWrapper) registerWrapper.style.display = 'flex';
-                if (centerLeft) centerLeft.style.display = 'flex';
+                if (loginForm) loginForm.style.display = 'none';
+                if (registerForm) registerForm.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
         if (showLoginBtn) {
             showLoginBtn.addEventListener('click', function (e) {
                 e.preventDefault();
-                // Sembunyikan form register (kanan) dan center content (kiri)
-                if (registerWrapper) registerWrapper.style.display = 'none';
-                if (centerLeft) centerLeft.style.display = 'none';
-                // Tampilkan form login (kiri) dan center content (kanan)
-                if (loginWrapper) loginWrapper.style.display = 'flex';
-                if (centerRight) centerRight.style.display = 'flex';
+                if (registerForm) registerForm.style.display = 'none';
+                if (loginForm) loginForm.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
