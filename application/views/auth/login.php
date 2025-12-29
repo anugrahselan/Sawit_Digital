@@ -18,8 +18,7 @@
 <body class="auth-page">
     <div class="auth-container">
         <!-- LEFT SIDE - ILLUSTRATION SECTION (45%) -->
-        <div class="auth-illustration"
-            style="background-image: url('<?= base_url('assets/img/hero/hero-banner.jpg') ?>');">
+        <div class="auth-illustration" style="background-image: url('<?= base_url('assets/img/hero/login.jpg') ?>');">
             <!-- Header -->
             <div class="illustration-header">
                 <div class="logo-container">
@@ -52,7 +51,7 @@
 
             <!-- Footer -->
             <div class="illustration-footer">
-                <p>© 2025 Sawit Digital | Powered by UKM</p>
+                <p>© 2025 Sawit Digital | Powered by Sawit Digital</p>
             </div>
 
             <!-- Background Blur Circles -->
