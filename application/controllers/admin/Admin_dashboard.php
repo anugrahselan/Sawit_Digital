@@ -1,20 +1,18 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_dashboard extends MY_Controller {
-    
     public function __construct() {
         parent::__construct();
-        $this->require_admin_or_penyuluh();
+        $this->require_admin();
         
         $this->load->model('Harga_tbs_model');
         $this->load->model('Kabupaten_model');
         $this->load->model('Pengguna_model');
-        
         $this->load->model('Perusahaan_model');
     }
     
-    public function index() {
+    public function index(): void {
         $data['page_title'] = 'Dashboard Admin';
         
         $data['breadcrumbs'] = [
@@ -28,31 +26,31 @@ class Admin_dashboard extends MY_Controller {
         $data['tbs_prices'] = $this->get_tbs_prices_with_changes();
         $data['weekly_trends'] = $this->get_weekly_trends();
         
-        $this->load->view('admin/layout/header', $data);
+        $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/dashboard/index', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/footer');
     }
     
-    private function get_total_perusahaan() {
+    private function get_total_perusahaan(): int {
         if ($this->db->table_exists('perusahaan')) {
             return $this->db->count_all('perusahaan');
         }
         return 0;
     }
     
-    private function get_total_kabupaten() {
+    private function get_total_kabupaten(): int {
         return $this->db->count_all('kabupaten');
     }
     
-    private function get_total_harga_tbs() {
+    private function get_total_harga_tbs(): int {
         return $this->db->count_all('harga_tbs');
     }
     
-    private function get_total_users() {
+    private function get_total_users(): int {
         return $this->db->count_all('users');
     }
     
-    private function get_tbs_prices_with_changes() {
+    private function get_tbs_prices_with_changes(): array {
         $this->db->select('harga_tbs.*, perusahaan.nama_perusahaan, kabupaten.nama_kabupaten');
         $this->db->from('harga_tbs');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
@@ -88,7 +86,7 @@ class Admin_dashboard extends MY_Controller {
         return $prices;
     }
     
-    private function get_weekly_trends() {
+    private function get_weekly_trends(): array {
         $end_date = date('Y-m-d');
         $start_date = date('Y-m-d', strtotime('-7 days'));
         

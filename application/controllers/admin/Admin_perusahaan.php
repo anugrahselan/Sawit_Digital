@@ -1,65 +1,69 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin_perusahaan extends MY_Controller {
-    
-    public function __construct() {
+class Admin_perusahaan extends MY_Controller
+{
+
+    public function __construct()
+    {
         parent::__construct();
-        $this->require_admin_or_penyuluh();
-        
+        $this->require_admin();
+
         $this->load->model('Perusahaan_model');
         $this->load->model('Kabupaten_model');
         $this->load->library('form_validation');
         $this->load->library('pagination');
     }
-    
-    public function index() {
+
+    public function index(): void
+    {
         $data['page_title'] = 'Perusahaan';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Perusahaan', 'url' => site_url('admin/perusahaan')]
         ];
-        
+
         // Pagination
         $config['base_url'] = site_url('admin/perusahaan');
         $config['total_rows'] = $this->Perusahaan_model->count_all();
         $config['per_page'] = 20;
         $config['uri_segment'] = 3;
-        
+
         $this->pagination->initialize($config);
-        
+
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data['perusahaan'] = $this->Perusahaan_model->get_all($config['per_page'], $page);
         $data['pagination_links'] = $this->pagination->create_links();
         $data['can_edit'] = $this->can_edit();
         $data['can_delete'] = $this->can_delete();
-        
-        $this->load->view('admin/layout/header', $data);
+
+        $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/perusahaan/index', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function create() {
+
+    public function tambah_perusahaan(): void
+    {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/perusahaan');
         }
-        
+
         $data['page_title'] = 'Tambah Perusahaan';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Perusahaan', 'url' => site_url('admin/perusahaan')],
-            ['label' => 'Tambah', 'url' => site_url('admin/perusahaan/create')]
+            ['label' => 'Tambah', 'url' => site_url('admin/perusahaan/tambah_perusahaan')]
         ];
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->form_validation->set_rules('nama_perusahaan', 'Nama Perusahaan', 'required');
             $this->form_validation->set_rules('id_kabupaten', 'Kabupaten', 'required');
-            
+
             if ($this->form_validation->run() == TRUE) {
                 $nama_perusahaan = $this->input->post('nama_perusahaan');
                 $id_kabupaten = $this->input->post('id_kabupaten');
-                
+
                 // Check unique nama_perusahaan per kabupaten
                 if ($this->Perusahaan_model->nama_exists_in_kabupaten($nama_perusahaan, $id_kabupaten)) {
                     $data['error'] = 'Nama perusahaan sudah ada di kabupaten ini';
@@ -70,7 +74,7 @@ class Admin_perusahaan extends MY_Controller {
                         'alamat' => $this->input->post('alamat'),
                         'kontak' => $this->input->post('kontak')
                     ];
-                    
+
                     if ($this->Perusahaan_model->create($data_insert)) {
                         $this->session->set_flashdata('success', 'Perusahaan berhasil ditambahkan');
                         redirect('admin/perusahaan');
@@ -80,42 +84,43 @@ class Admin_perusahaan extends MY_Controller {
                 }
             }
         }
-        
+
         $data['kabupaten_list'] = $this->Kabupaten_model->get_all();
-        
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/perusahaan/form', $data);
-        $this->load->view('admin/layout/footer');
+
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/perusahaan/Tambah_perusahaan', $data);
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function update($id) {
+
+    public function ubah_perusahaan($id): void
+    {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/perusahaan');
         }
-        
+
         $perusahaan = $this->Perusahaan_model->get_by_id($id);
         if (!$perusahaan) {
             $this->session->set_flashdata('error', 'Data tidak ditemukan');
             redirect('admin/perusahaan');
         }
-        
+
         $data['page_title'] = 'Edit Perusahaan';
         $data['perusahaan'] = $perusahaan;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Perusahaan', 'url' => site_url('admin/perusahaan')],
-            ['label' => 'Edit', 'url' => site_url('admin/perusahaan/update/' . $id)]
+            ['label' => 'Edit', 'url' => site_url('admin/perusahaan/ubah_perusahaan/' . $id)]
         ];
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->form_validation->set_rules('nama_perusahaan', 'Nama Perusahaan', 'required');
             $this->form_validation->set_rules('id_kabupaten', 'Kabupaten', 'required');
-            
+
             if ($this->form_validation->run() == TRUE) {
                 $nama_perusahaan = $this->input->post('nama_perusahaan');
                 $id_kabupaten = $this->input->post('id_kabupaten');
-                
+
                 // Check unique nama_perusahaan per kabupaten
                 if ($this->Perusahaan_model->nama_exists_in_kabupaten($nama_perusahaan, $id_kabupaten, $id)) {
                     $data['error'] = 'Nama perusahaan sudah ada di kabupaten ini';
@@ -126,7 +131,7 @@ class Admin_perusahaan extends MY_Controller {
                         'alamat' => $this->input->post('alamat'),
                         'kontak' => $this->input->post('kontak')
                     ];
-                    
+
                     if ($this->Perusahaan_model->update($id, $data_update)) {
                         $this->session->set_flashdata('success', 'Perusahaan berhasil diupdate');
                         redirect('admin/perusahaan');
@@ -136,28 +141,31 @@ class Admin_perusahaan extends MY_Controller {
                 }
             }
         }
-        
+
         $data['kabupaten_list'] = $this->Kabupaten_model->get_all();
-        
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/perusahaan/form', $data);
-        $this->load->view('admin/layout/footer');
+
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/perusahaan/ubah_perusahaan', $data);
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function delete($id) {
+
+    public function hapus_perusahaan($id): void
+    {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/perusahaan');
         }
-        
+
         if ($this->Perusahaan_model->delete($id)) {
             $this->session->set_flashdata('success', 'Perusahaan berhasil dihapus');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus perusahaan');
         }
-        
+
         redirect('admin/perusahaan');
     }
 }
+
+
 
 

@@ -4,6 +4,62 @@ $(document).ready(function() {
         e.preventDefault();
         calculateDosis();
     });
+    
+    // Tampilkan info tanah saat dipilih
+    $('#id_tanah').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var phMin = selectedOption.data('ph-min');
+        var phMax = selectedOption.data('ph-max');
+        var kandunganN = selectedOption.data('kandungan-n');
+        var kandunganP = selectedOption.data('kandungan-p');
+        var kandunganK = selectedOption.data('kandungan-k');
+        var rekomendasi = selectedOption.data('rekomendasi');
+        
+        var infoHtml = '';
+        if (phMin || phMax) {
+            infoHtml += '<div><strong>pH:</strong> ' + (phMin ? phMin : '?') + ' - ' + (phMax ? phMax : '?') + '</div>';
+        }
+        if (kandunganN || kandunganP || kandunganK) {
+            infoHtml += '<div><strong>Kandungan:</strong> ';
+            var kandungan = [];
+            if (kandunganN) kandungan.push('N: ' + kandunganN + '%');
+            if (kandunganP) kandungan.push('P: ' + kandunganP + '%');
+            if (kandunganK) kandungan.push('K: ' + kandunganK + '%');
+            infoHtml += kandungan.join(', ') + '</div>';
+        }
+        if (rekomendasi) {
+            infoHtml += '<div><strong>Rekomendasi:</strong> ' + rekomendasi + '</div>';
+        }
+        
+        if (infoHtml) {
+            $('#tanah-details').html(infoHtml);
+            $('#tanah-info').show();
+        } else {
+            $('#tanah-info').hide();
+        }
+    });
+    
+    // Tampilkan info pupuk saat dipilih
+    $('#id_pupuk').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var kandungan = selectedOption.data('kandungan');
+        var fungsi = selectedOption.data('fungsi');
+        
+        var infoHtml = '';
+        if (kandungan) {
+            infoHtml += '<div><strong>Kandungan:</strong> ' + kandungan + '</div>';
+        }
+        if (fungsi) {
+            infoHtml += '<div><strong>Fungsi:</strong> ' + fungsi + '</div>';
+        }
+        
+        if (infoHtml) {
+            $('#pupuk-details').html(infoHtml);
+            $('#pupuk-info').show();
+        } else {
+            $('#pupuk-info').hide();
+        }
+    });
 });
 
 function calculateDosis() {
@@ -54,6 +110,8 @@ function calculateDosis() {
 function displayResult(dosis, jumlahPohon) {
     var dosisPerPohon = parseFloat(dosis.dosis_per_pohon) || 2.5;
     var totalDosis = dosisPerPohon * jumlahPohon;
+    var periodePerTahun = parseInt($('#periode_per_tahun').val()) || 2;
+    var dosisPerPeriode = totalDosis / periodePerTahun;
     
     // Format number with thousand separator
     function formatNumber(num) {
@@ -87,10 +145,18 @@ function displayResult(dosis, jumlahPohon) {
     html += '</div>';
     
     html += '<div class="result-card">';
+    html += '<div class="result-card-icon">📅</div>';
+    html += '<div class="result-card-content">';
+    html += '<div class="result-card-label">Periode per Tahun</div>';
+    html += '<div class="result-card-value">' + periodePerTahun + ' <span class="unit">kali</span></div>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="result-card">';
     html += '<div class="result-card-icon">📐</div>';
     html += '<div class="result-card-content">';
-    html += '<div class="result-card-label">Perhitungan</div>';
-    html += '<div class="result-card-value-small">' + formatNumber(dosisPerPohon.toFixed(2)) + ' kg × ' + formatNumber(jumlahPohon) + ' pohon</div>';
+    html += '<div class="result-card-label">Dosis per Periode</div>';
+    html += '<div class="result-card-value">' + formatNumber(dosisPerPeriode.toFixed(2)) + ' <span class="unit">kg</span></div>';
     html += '</div>';
     html += '</div>';
     
@@ -108,8 +174,8 @@ function displayResult(dosis, jumlahPohon) {
     
     html += '<div class="result-actions">';
     html += '<button type="button" class="btn btn-success btn-block" id="btnSaveDosis">';
-    html += '<span class="btn-icon-left">💾</span>';
-    html += '<span class="btn-text">Simpan Data Dosis</span>';
+    html += '<span class="btn-icon-left">📤</span>';
+    html += '<span class="btn-text">Simpan Kalkulasi</span>';
     html += '</button>';
     html += '</div>';
     
@@ -122,17 +188,30 @@ function displayResult(dosis, jumlahPohon) {
     
     // Save button handler
     $('#btnSaveDosis').on('click', function() {
-        saveDosis(dosis, jumlahPohon);
+        saveDosis(dosis, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTahun);
     });
 }
 
-function saveDosis(dosis, jumlahPohon) {
+function saveDosis(dosis, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTahun) {
+    var keteranganAplikasi = $('#keterangan_aplikasi').val();
+    if (!keteranganAplikasi && dosis.keterangan_aplikasi) {
+        keteranganAplikasi = dosis.keterangan_aplikasi;
+    }
+    if (!keteranganAplikasi) {
+        keteranganAplikasi = 'Aplikasikan pupuk secara merata di sekitar pangkal pohon. Pastikan tanah dalam kondisi lembab.';
+    }
+    
     var formData = {
         id_pupuk: $('#id_pupuk').val(),
         id_tanah: $('#id_tanah').val(),
         usia_tanaman: $('#usia_tanaman').val(),
+        jumlah_pohon: jumlahPohon,
         dosis_per_pohon: dosis.dosis_per_pohon || 2.5,
-        keterangan_aplikasi: dosis.keterangan_aplikasi || 'Aplikasikan pupuk secara merata di sekitar pangkal pohon. Pastikan tanah dalam kondisi lembab.'
+        total_dosis: totalDosis,
+        dosis_per_periode: dosisPerPeriode,
+        periode_per_tahun: periodePerTahun,
+        rekomendasi_pupuk: $('#id_pupuk option:selected').text(),
+        keterangan_aplikasi: keteranganAplikasi
     };
     
     $.ajax({
@@ -143,7 +222,7 @@ function saveDosis(dosis, jumlahPohon) {
         success: function(response) {
             if (response.success) {
                 alert('Data dosis berhasil disimpan!');
-                $('#btnSaveDosis').prop('disabled', true).text('Tersimpan');
+                $('#btnSaveDosis').prop('disabled', true).html('<span class="btn-icon-left">✓</span><span class="btn-text">Tersimpan</span>');
             } else {
                 alert('Gagal menyimpan: ' + response.message);
             }

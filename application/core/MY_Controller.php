@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
     protected $user_role;
@@ -8,18 +8,19 @@ class MY_Controller extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->user_id = $this->session->userdata('user_id');
-        $this->user_role = $this->session->userdata('user_role');
-        $this->user_name = $this->session->userdata('user_name');
+        // Support untuk session keys baru (id_user, role) dan lama (user_id, user_role)
+        $this->user_id = $this->session->userdata('id_user') ?: $this->session->userdata('user_id');
+        $this->user_role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
+        $this->user_name = $this->session->userdata('nama_lengkap') ?: $this->session->userdata('user_name');
     }
     
-    protected function require_login() {
+    protected function require_login(): void {
         if (!$this->user_id) {
-            redirect('admin/login');
+            redirect('auth/login');
         }
     }
     
-    protected function require_role($allowed_roles = []) {
+    protected function require_role($allowed_roles = []): void {
         $this->require_login();
         if (!in_array($this->user_role, $allowed_roles)) {
             $this->session->set_flashdata('error', 'Akses ditolak. Anda tidak memiliki izin untuk mengakses halaman ini.');
@@ -27,19 +28,15 @@ class MY_Controller extends CI_Controller {
         }
     }
     
-    protected function require_admin() {
+    protected function require_admin(): void {
         $this->require_role(['admin']);
     }
     
-    protected function require_admin_or_penyuluh() {
-        $this->require_role(['admin', 'penyuluh']);
+    protected function can_edit(): bool {
+        return $this->user_role === 'admin';
     }
     
-    protected function can_edit() {
-        return in_array($this->user_role, ['admin', 'penyuluh']);
-    }
-    
-    protected function can_delete() {
+    protected function can_delete(): bool {
         return $this->user_role === 'admin';
     }
 }

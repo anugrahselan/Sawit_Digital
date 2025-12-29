@@ -1,58 +1,54 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin_pupuk extends MY_Controller {
-    
-    public function __construct() {
+class Admin_pupuk extends MY_Controller
+{
+
+    public function __construct()
+    {
         parent::__construct();
-        $this->require_admin_or_penyuluh();
+        $this->require_admin();
         $this->load->model('Jenis_pupuk_model');
         $this->load->library('form_validation');
         $this->load->library('upload');
     }
-    
-    public function index() {
+
+    public function index(): void
+    {
         $data['page_title'] = 'Jenis Pupuk & Dosis Pupuk';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Pupuk', 'url' => site_url('admin/pupuk')]
         ];
-        
+
         $data['pupuk'] = $this->Jenis_pupuk_model->get_all();
         $data['can_edit'] = $this->can_edit();
         $data['can_delete'] = $this->can_delete();
-        
-        // Get dosis pupuk yang diinput user dengan join jenis_pupuk dan jenis_tanah
-        $this->db->select('dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah');
-        $this->db->from('dosis_pupuk');
-        $this->db->join('jenis_pupuk', 'jenis_pupuk.id_pupuk = dosis_pupuk.id_pupuk', 'left');
-        $this->db->join('jenis_tanah', 'jenis_tanah.id_tanah = dosis_pupuk.id_tanah', 'left');
-        $this->db->order_by('dosis_pupuk.id_dosis', 'DESC');
-        $data['dosis'] = $this->db->get()->result();
-        
-        $this->load->view('admin/layout/header', $data);
+
+        $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/pupuk/index', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function create() {
+
+    public function tambah_pupuk(): void
+    {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/pupuk');
         }
-        
+
         $data['page_title'] = 'Tambah Jenis Pupuk';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Pupuk', 'url' => site_url('admin/pupuk')],
-            ['label' => 'Tambah', 'url' => site_url('admin/pupuk/create')]
+            ['label' => 'Tambah', 'url' => site_url('admin/pupuk/tambah_pupuk')]
         ];
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->form_validation->set_rules('nama_pupuk', 'Nama Pupuk', 'required');
             $this->form_validation->set_rules('kandungan', 'Kandungan', 'required');
             $this->form_validation->set_rules('fungsi', 'Fungsi', 'required');
-            
+
             if ($this->form_validation->run() == TRUE) {
                 $data_insert = [
                     'nama_pupuk' => $this->input->post('nama_pupuk'),
@@ -61,9 +57,9 @@ class Admin_pupuk extends MY_Controller {
                     'waktu_aplikasi' => $this->input->post('waktu_aplikasi'),
                     'catatan_khusus' => $this->input->post('catatan_khusus')
                 ];
-                
+
                 // Upload gambar
-                if (!empty($_FILES['gambar_pupuk']['name'])) {
+                if (isset($_FILES['gambar_pupuk']) && !empty($_FILES['gambar_pupuk']['name']) && $_FILES['gambar_pupuk']['error'] === UPLOAD_ERR_OK) {
                     $upload_result = $this->upload_gambar('gambar_pupuk', 'pupuk');
                     if ($upload_result['success']) {
                         $data_insert['gambar_pupuk'] = $upload_result['file_name'];
@@ -71,7 +67,7 @@ class Admin_pupuk extends MY_Controller {
                         $data['error'] = $upload_result['error'];
                     }
                 }
-                
+
                 if (!isset($data['error'])) {
                     if ($this->Jenis_pupuk_model->create($data_insert)) {
                         $this->session->set_flashdata('success', 'Jenis pupuk berhasil ditambahkan');
@@ -82,37 +78,38 @@ class Admin_pupuk extends MY_Controller {
                 }
             }
         }
-        
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/pupuk/form', $data);
-        $this->load->view('admin/layout/footer');
+
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/pupuk/Tambah_pupuk', $data);
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function update($id) {
+
+    public function ubah_pupuk($id): void
+    {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/pupuk');
         }
-        
+
         $pupuk = $this->Jenis_pupuk_model->get_by_id($id);
         if (!$pupuk) {
             $this->session->set_flashdata('error', 'Data tidak ditemukan');
             redirect('admin/pupuk');
         }
-        
+
         $data['page_title'] = 'Edit Jenis Pupuk';
         $data['pupuk'] = $pupuk;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Pupuk', 'url' => site_url('admin/pupuk')],
-            ['label' => 'Edit', 'url' => site_url('admin/pupuk/update/' . $id)]
+            ['label' => 'Edit', 'url' => site_url('admin/pupuk/ubah_pupuk/' . $id)]
         ];
-        
+
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->form_validation->set_rules('nama_pupuk', 'Nama Pupuk', 'required');
             $this->form_validation->set_rules('kandungan', 'Kandungan', 'required');
             $this->form_validation->set_rules('fungsi', 'Fungsi', 'required');
-            
+
             if ($this->form_validation->run() == TRUE) {
                 $data_update = [
                     'nama_pupuk' => $this->input->post('nama_pupuk'),
@@ -121,9 +118,14 @@ class Admin_pupuk extends MY_Controller {
                     'waktu_aplikasi' => $this->input->post('waktu_aplikasi'),
                     'catatan_khusus' => $this->input->post('catatan_khusus')
                 ];
+
+                // Upload gambar baru jika ada - dengan pengecekan yang sangat ketat
+                $has_file = isset($_FILES['gambar_pupuk']) 
+                    && !empty($_FILES['gambar_pupuk']['name']) 
+                    && $_FILES['gambar_pupuk']['error'] === UPLOAD_ERR_OK
+                    && is_uploaded_file($_FILES['gambar_pupuk']['tmp_name']);
                 
-                // Upload gambar baru jika ada
-                if (!empty($_FILES['gambar_pupuk']['name'])) {
+                if ($has_file) {
                     $upload_result = $this->upload_gambar('gambar_pupuk', 'pupuk');
                     if ($upload_result['success']) {
                         // Hapus gambar lama
@@ -138,7 +140,8 @@ class Admin_pupuk extends MY_Controller {
                         $data['error'] = $upload_result['error'];
                     }
                 }
-                
+                // Jika tidak ada file yang diupload, gambar lama tetap digunakan (tidak perlu update field gambar_pupuk)
+
                 if (!isset($data['error'])) {
                     if ($this->Jenis_pupuk_model->update($id, $data_update)) {
                         $this->session->set_flashdata('success', 'Jenis pupuk berhasil diupdate');
@@ -147,20 +150,24 @@ class Admin_pupuk extends MY_Controller {
                         $data['error'] = 'Gagal mengupdate jenis pupuk';
                     }
                 }
+            } else {
+                // Jika form validation gagal, tampilkan error validation
+                $data['validation_errors'] = validation_errors();
             }
         }
-        
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/pupuk/form', $data);
-        $this->load->view('admin/layout/footer');
+
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/pupuk/ubah_pupuk', $data);
+        $this->load->view('admin/templates/footer');
     }
-    
-    public function delete($id) {
+
+    public function hapus_pupuk($id): void
+    {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/pupuk');
         }
-        
+
         $pupuk = $this->Jenis_pupuk_model->get_by_id($id);
         if ($pupuk && !empty($pupuk->gambar_pupuk)) {
             $file_path = FCPATH . 'assets/img/pupuk/' . $pupuk->gambar_pupuk;
@@ -168,33 +175,73 @@ class Admin_pupuk extends MY_Controller {
                 unlink($file_path);
             }
         }
-        
+
         if ($this->Jenis_pupuk_model->delete($id)) {
             $this->session->set_flashdata('success', 'Jenis pupuk berhasil dihapus');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus jenis pupuk');
         }
-        
+
         redirect('admin/pupuk');
     }
-    
-    private function upload_gambar($field_name, $folder) {
+
+    private function upload_gambar($field_name, $folder): array
+    {
+        // Cek apakah file benar-benar diupload dengan pengecekan yang lebih ketat
+        if (!isset($_FILES[$field_name])) {
+            return ['success' => false, 'error' => 'Field file tidak ditemukan'];
+        }
+
+        $file = $_FILES[$field_name];
+        
+        // Cek apakah file benar-benar diupload (bukan kosong)
+        if (empty($file['name']) || $file['error'] !== UPLOAD_ERR_OK) {
+            // Jika error adalah UPLOAD_ERR_NO_FILE, itu normal (tidak ada file yang diupload)
+            if ($file['error'] === UPLOAD_ERR_NO_FILE) {
+                return ['success' => false, 'error' => 'Tidak ada file yang diupload'];
+            }
+            return ['success' => false, 'error' => 'Error saat upload file: ' . $file['error']];
+        }
+
+        // Cek apakah file benar-benar ada di temporary directory
+        if (!is_uploaded_file($file['tmp_name'])) {
+            return ['success' => false, 'error' => 'File tidak valid atau tidak diupload dengan benar'];
+        }
+
         $upload_path = FCPATH . 'assets/img/' . $folder . '/';
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0755, true);
         }
+
+        // Validasi ekstensi file sebelum upload
+        $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         
-        $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = 'jpg|jpeg|png|gif|webp';
-        $config['max_size'] = 2048;
-        $config['encrypt_name'] = TRUE;
-        
-        $this->upload->initialize($config);
-        
-        if ($this->upload->do_upload($field_name)) {
-            return ['success' => true, 'file_name' => $this->upload->data('file_name')];
+        if (!in_array($file_ext, $allowed_extensions)) {
+            return ['success' => false, 'error' => 'Format file tidak didukung. Format yang diizinkan: JPG, JPEG, PNG, GIF, WEBP'];
+        }
+
+        // Validasi bahwa file adalah gambar valid menggunakan getimagesize
+        $image_info = @getimagesize($file['tmp_name']);
+        if ($image_info === FALSE) {
+            return ['success' => false, 'error' => 'File yang diupload bukan gambar valid. Pastikan file adalah gambar dengan format JPG, JPEG, PNG, GIF, atau WEBP.'];
+        }
+
+        // Validasi ukuran file (max 2MB)
+        $max_size = 2048 * 1024; // 2MB dalam bytes
+        if ($file['size'] > $max_size) {
+            return ['success' => false, 'error' => 'Ukuran file terlalu besar. Maksimal 2MB.'];
+        }
+
+        // Generate nama file unik
+        $new_filename = uniqid() . '_' . time() . '.' . $file_ext;
+        $destination = $upload_path . $new_filename;
+
+        // Upload file secara manual
+        if (move_uploaded_file($file['tmp_name'], $destination)) {
+            return ['success' => true, 'file_name' => $new_filename];
         } else {
-            return ['success' => false, 'error' => $this->upload->display_errors('', '')];
+            return ['success' => false, 'error' => 'Gagal mengupload file. Pastikan folder upload memiliki permission yang benar.'];
         }
     }
 }

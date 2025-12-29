@@ -1,118 +1,113 @@
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="h3 mb-1">Jenis Tanah</h1>
-            <p class="text-muted mb-0">Kelola data jenis tanah</p>
-        </div>
-        <?php if (isset($can_edit) && $can_edit): ?>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">
-                <i class="bi bi-plus-circle"></i> Tambah Jenis Tanah
-            </button>
-        <?php endif; ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header. (Page Header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><?= $page_title ?></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item active"><?= $page_title ?></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content-header -->
 
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Tanah</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($tanah)): ?>
-                            <?php $no = 1; foreach ($tanah as $t): ?>
-                                <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= $t->nama_tanah ?></td>
-                                    <td>
-                                        <?php if (isset($can_edit) && $can_edit): ?>
-                                            <button class="btn btn-sm btn-warning" onclick="editTanah(<?= $t->id_tanah ?>, '<?= htmlspecialchars($t->nama_tanah) ?>')">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">
+                                <?php if ($this->session->flashdata('message')): ?>
+                                    <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
+                                        <?= $this->session->flashdata('message') ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <a href="<?= base_url('admin/tanah/tambah') ?>" class="btn btn-labeled btn-primary">
+                                    <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
+                                </a>
+                                
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Nama Tanah</th>
+                                            <th scope="col">pH</th>
+                                            <th scope="col">Kandungan NPK</th>
+                                            <th scope="col">Rekomendasi</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (!empty($tanah)): ?>
+                                            <?php $i = 1; foreach ($tanah as $t): ?>
+                                                <tr>
+                                                    <td><?= $i ?></td>
+                                                    <td><strong><?= htmlspecialchars($t->nama_tanah) ?></strong></td>
+                                                    <td>
+                                                        <?php if ($t->ph_min || $t->ph_max): ?>
+                                                            <?= $t->ph_min ?: '?' ?> - <?= $t->ph_max ?: '?' ?>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php 
+                                                        $kandungan = [];
+                                                        if ($t->kandungan_n) $kandungan[] = 'N: ' . $t->kandungan_n . '%';
+                                                        if ($t->kandungan_p) $kandungan[] = 'P: ' . $t->kandungan_p . '%';
+                                                        if ($t->kandungan_k) $kandungan[] = 'K: ' . $t->kandungan_k . '%';
+                                                        echo !empty($kandungan) ? implode(', ', $kandungan) : '<span class="text-muted">-</span>';
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($t->rekomendasi): ?>
+                                                            <span title="<?= htmlspecialchars($t->rekomendasi) ?>" style="cursor: help;">
+                                                                <?= strlen($t->rekomendasi) > 50 ? substr($t->rekomendasi, 0, 50) . '...' : $t->rekomendasi ?>
+                                                            </span>
+                                                        <?php else: ?>
+                                                            <span class="text-muted">-</span>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($can_edit): ?>
+                                                            <a href="<?= base_url('admin/tanah/ubah/' . $t->id_tanah) ?>" class="badge badge-success">Edit</a>
+                                                        <?php endif; ?>
+                                                        <?php if ($can_delete): ?>
+                                                            <a href="<?= base_url('admin/tanah/hapus/' . $t->id_tanah) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php $i++; endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="6" class="text-center">Tidak ada data</td>
+                                            </tr>
                                         <?php endif; ?>
-                                        <?php if (isset($can_delete) && $can_delete): ?>
-                                            <button class="btn btn-sm btn-danger" onclick="deleteTanah(<?= $t->id_tanah ?>)">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="3" class="text-center text-muted py-4">
-                                    <i class="bi bi-inbox"></i> Belum ada data jenis tanah
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Form -->
-<div class="modal fade" id="formModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Tambah Jenis Tanah</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form id="tanahForm" method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="id_tanah" id="id_tanah">
-                    <div class="mb-3">
-                        <label class="form-label">Nama Tanah <span class="text-danger">*</span></label>
-                        <input type="text" name="nama_tanah" id="nama_tanah" class="form-control" required>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
                     </div>
+                    <!-- /.col-md-6 -->
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
         </div>
+        <!-- /.content -->
     </div>
-</div>
-
-<script>
-function editTanah(id, nama) {
-    document.getElementById('id_tanah').value = id;
-    document.getElementById('nama_tanah').value = nama;
-    document.querySelector('#formModal .modal-title').textContent = 'Edit Jenis Tanah';
-    new bootstrap.Modal(document.getElementById('formModal')).show();
-}
-
-function deleteTanah(id) {
-    if (confirm('Yakin ingin menghapus data ini?')) {
-        window.location.href = '<?= site_url('admin/tanah/delete/') ?>' + id;
-    }
-}
-
-document.getElementById('tanahForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const id = formData.get('id_tanah');
-    const url = id ? '<?= site_url('admin/tanah/update/') ?>' + id : '<?= site_url('admin/tanah/create') ?>';
-    
-    fetch(url, {
-        method: 'POST',
-        body: formData
-    }).then(() => {
-        location.reload();
-    });
-});
-
-document.getElementById('formModal').addEventListener('hidden.bs.modal', function() {
-    document.getElementById('tanahForm').reset();
-    document.getElementById('id_tanah').value = '';
-    document.querySelector('#formModal .modal-title').textContent = 'Tambah Jenis Tanah';
-});
-</script>
-
+    <!-- /.content-wrapper -->

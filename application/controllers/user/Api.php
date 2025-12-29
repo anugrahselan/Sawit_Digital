@@ -1,10 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api extends CI_Controller
-{
-    public function __construct()
-    {
+class Api extends CI_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Harga_tbs_model');
         $this->load->model('Informasi_tambahan_model');
@@ -12,8 +10,7 @@ class Api extends CI_Controller
         $this->load->model('Penyakit_model');
     }
 
-    public function tbs_prices()
-    {
+    public function tbs_prices(): void {
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if ($id_kabupaten) {
@@ -55,8 +52,7 @@ class Api extends CI_Controller
         $this->load->view('user/partials/tabel_tbs', $data);
     }
 
-    public function search()
-    {
+    public function search(): void {
         $keyword = $this->input->get('q');
         if (empty($keyword)) {
             echo json_encode(['error' => 'Keyword required']);
@@ -72,8 +68,7 @@ class Api extends CI_Controller
         ]);
     }
 
-    public function get_dosis()
-    {
+    public function get_dosis(): void {
         $id_pupuk = $this->input->get('id_pupuk');
         $id_tanah = $this->input->get('id_tanah');
         $usia_tanaman = $this->input->get('usia_tanaman');

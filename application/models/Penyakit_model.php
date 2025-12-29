@@ -1,48 +1,54 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Penyakit_model extends CI_Model {
-
     public function __construct() {
         parent::__construct();
         $this->load->database();
     }
 
-    /**
-     * Get all diseases
-     */
-    public function get_all($limit = null, $offset = null) {
+    // Get all diseases
+    public function get_all($limit = null, $offset = null): array {
         if ($limit !== null && $offset !== null) {
             $this->db->limit($limit, $offset);
         }
         $this->db->order_by('nama_penyakit', 'ASC');
-        return $this->db->get('penyakit')->result();
+        return $this->db->get('jenis_penyakit')->result();
     }
 
-    /**
-     * Get disease by ID
-     */
+    // Get disease by ID
     public function get_by_id($id) {
         $this->db->where('id_penyakit', $id);
-        return $this->db->get('penyakit')->row();
+        return $this->db->get('jenis_penyakit')->row();
     }
 
-    /**
-     * Search diseases
-     */
-    public function search($keyword) {
+    // Search diseases
+    public function search($keyword): array {
         $this->db->like('nama_penyakit', $keyword);
         $this->db->or_like('penyebab', $keyword);
         $this->db->or_like('gejala', $keyword);
         $this->db->order_by('nama_penyakit', 'ASC');
-        return $this->db->get('penyakit')->result();
+        return $this->db->get('jenis_penyakit')->result();
     }
 
-    /**
-     * Count total records
-     */
-    public function count_all() {
-        return $this->db->count_all_results('penyakit');
+    // Count total records
+    public function count_all(): int {
+        return $this->db->count_all_results('jenis_penyakit');
+    }
+
+    public function create($data): int {
+        $this->db->insert('jenis_penyakit', $data);
+        return $this->db->insert_id();
+    }
+
+    public function update($id, $data): bool {
+        $this->db->where('id_penyakit', $id);
+        return $this->db->update('jenis_penyakit', $data);
+    }
+
+    public function delete($id): bool {
+        $this->db->where('id_penyakit', $id);
+        return $this->db->delete('jenis_penyakit');
     }
 }
 

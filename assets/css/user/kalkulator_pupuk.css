@@ -171,6 +171,14 @@
     cursor: not-allowed;
 }
 
+.form-control textarea,
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
 .btn-primary {
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     border: none;
@@ -503,6 +511,88 @@
 
 .tips-box li:last-child {
     margin-bottom: 0;
+}
+
+/* User Info Display */
+.user-info-display {
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border: 2px solid rgba(27, 94, 32, 0.15);
+    margin-bottom: 1.75rem;
+}
+
+.user-info-value {
+    color: var(--text-color);
+    font-size: 1rem;
+    padding-top: 0.5rem;
+}
+
+.user-info-value strong {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.user-info-value .user-name {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+/* Tanah Info Box */
+.tanah-info-box,
+.pupuk-info-box {
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.02) 100%);
+    border-left: 3px solid #1B5E20;
+    border-radius: 8px;
+    margin-top: 10px;
+    padding: 12px 15px;
+    font-size: 0.9em;
+    animation: slideInDown 0.3s ease-out;
+}
+
+.pupuk-info-box {
+    border-left-color: #1976D2;
+    background: linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(33, 150, 243, 0.02) 100%);
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tanah-info-box #tanah-details,
+.pupuk-info-box #pupuk-details {
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
+.tanah-info-box #tanah-details div,
+.pupuk-info-box #pupuk-details div {
+    margin-bottom: 0.5rem;
+}
+
+.tanah-info-box #tanah-details div:last-child,
+.pupuk-info-box #pupuk-details div:last-child {
+    margin-bottom: 0;
+}
+
+.tanah-info-box #tanah-details strong,
+.pupuk-info-box #pupuk-details strong {
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.pupuk-info-box #pupuk-details strong {
+    color: #1976D2;
 }
 
 @media (max-width: 768px) {

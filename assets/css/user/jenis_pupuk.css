@@ -137,3 +137,113 @@
     font-size: 0.9rem;
 }
 
+.fertilizer-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.fertilizer-card-footer {
+    padding: 1rem;
+    border-top: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--bg-color), #FAFAFA);
+    text-align: center;
+}
+
+.fertilizer-card-footer .read-more {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.fertilizer-card:hover .fertilizer-card-footer .read-more {
+    color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+/* Fertilizer Detail Page */
+.fertilizer-detail {
+    background-color: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin: 3rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.fertilizer-header-image {
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--bg-color), #e9ecef);
+    position: relative;
+}
+
+.fertilizer-header-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.fertilizer-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.fertilizer-detail-content {
+    padding: 3rem;
+}
+
+.fertilizer-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+}
+
+.fertilizer-section {
+    margin-bottom: 2.5rem;
+}
+
+.fertilizer-section:last-child {
+    margin-bottom: 0;
+}
+
+.fertilizer-section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.fertilizer-section-content {
+    color: var(--text-color);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.fertilizer-section-content p {
+    margin-bottom: 1.5rem;
+}
+
+.fertilizer-actions {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--bg-color), #FAFAFA);
+    display: flex;
+    justify-content: center;
+}
+

@@ -1,0 +1,146 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Auth extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Pengguna_model');
+        $this->load->library('form_validation');
+    }
+
+    public function login(): void
+    {
+        if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
+            $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
+            if ($role === 'admin') {
+                redirect('admin/dashboard');
+            } else {
+                // User biasa redirect ke beranda (home page)
+                redirect('beranda');
+            }
+        }
+
+        $data['page_title'] = 'Masuk - Sistem Penyuluhan Sawit';
+        $data['error'] = '';
+
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $this->form_validation->set_rules('username', 'Username/Email', 'required|trim');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+
+            if ($this->form_validation->run() !== FALSE) {
+                $username_or_email = trim($this->input->post('username'));
+                $password = trim($this->input->post('password'));
+                $user = $this->Pengguna_model->login($username_or_email, $password);
+
+                if ($user) {
+                    $this->session->set_userdata([
+                        'id_user' => $user->id_user,
+                        'username' => $user->username,
+                        'role' => $user->role,
+                        'nama_lengkap' => $user->nama_lengkap,
+                        'email' => $user->email,
+                        'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                        'user_id' => $user->id_user,
+                        'user_role' => $user->role,
+                        'user_name' => $user->nama_lengkap,
+                        'user_email' => $user->email
+                    ]);
+
+                    // Redirect berdasarkan role
+                    if ($user->role === 'admin') {
+                        redirect('admin/dashboard');
+                    } else {
+                        // User biasa redirect ke beranda (home page)
+                        redirect('beranda');
+                    }
+                } else {
+                    $data['error'] = 'Username/Email atau password salah';
+                }
+            } else {
+                $data['error'] = validation_errors('', '');
+            }
+        }
+
+        $this->load->view('auth/login', $data);
+    }
+
+    public function register(): void
+    {
+        // Jika sudah login, redirect sesuai role
+        if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
+            $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
+            if ($role === 'admin') {
+                redirect('admin/dashboard');
+            } else {
+                redirect('beranda');
+            }
+        }
+
+        $data['page_title'] = 'Daftar - Sistem Penyuluhan Sawit';
+        $data['register_error'] = '';
+
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[3]|max_length[50]|is_unique[users.username]', [
+                'is_unique' => 'Username sudah digunakan'
+            ]);
+            $this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required|trim|min_length[3]|max_length[100]');
+            $this->form_validation->set_rules('email', 'Email', 'trim|valid_email|max_length[100]|is_unique[users.email]', [
+                'is_unique' => 'Email sudah digunakan'
+            ]);
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]', [
+                'min_length' => 'Password minimal 8 karakter'
+            ]);
+            $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'required|matches[password]', [
+                'matches' => 'Password tidak cocok'
+            ]);
+
+            if ($this->form_validation->run() !== FALSE) {
+                $user_data = [
+                    'username' => trim($this->input->post('username')),
+                    'nama_lengkap' => trim($this->input->post('nama_lengkap')),
+                    'email' => trim($this->input->post('email')) ?: null,
+                    'password' => trim($this->input->post('password')),
+                    'role' => 'user' // Default role adalah user
+                ];
+
+                $user_id = $this->Pengguna_model->create($user_data);
+                if ($user_id) {
+                    // Auto login setelah register
+                    $user = $this->Pengguna_model->get_by_id($user_id);
+                    if ($user) {
+                        $this->session->set_userdata([
+                            'id_user' => $user->id_user,
+                            'username' => $user->username,
+                            'role' => $user->role,
+                            'nama_lengkap' => $user->nama_lengkap,
+                            'email' => $user->email,
+                            'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                            'user_id' => $user->id_user,
+                            'user_role' => $user->role,
+                            'user_name' => $user->nama_lengkap,
+                            'user_email' => $user->email
+                        ]);
+
+                        // Redirect ke beranda user (karena role default adalah 'user')
+                        redirect('beranda');
+                    }
+                } else {
+                    $data['register_error'] = 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.';
+                }
+            } else {
+                $data['register_error'] = validation_errors('', '');
+            }
+        }
+
+        // Load login view dengan register form (toggle)
+        $this->load->view('auth/login', $data);
+    }
+
+    public function logout(): void
+    {
+        $this->session->sess_destroy();
+        redirect('auth/login');
+    }
+}

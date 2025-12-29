@@ -63,9 +63,9 @@
                                 </a>
                             </li>
                             <?php 
-                            // Jika admin/penyuluh, tampilkan link ke admin
+                            // Jika admin, tampilkan link ke admin
                             $user_role = $this->session->userdata('user_role');
-                            if (in_array($user_role, ['admin', 'penyuluh'])): 
+                            if ($user_role === 'admin'): 
                             ?>
                                 <li><a href="<?= site_url('admin/dashboard') ?>">Kembali ke Admin</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -114,7 +114,6 @@
             <h1 class="hero-title">Sistem Penyuluhan Sawit Digital</h1>
             <p class="hero-subtitle">Platform lengkap untuk petani sawit mendapatkan informasi, kalkulator, dan edukasi
                 terbaik</p>
-            <a href="<?= site_url('daftar') ?>" class="btn btn-primary hero-register-btn" style="position: relative; z-index: 10; pointer-events: auto; cursor: pointer; text-decoration: none; display: inline-block;">Daftar Gratis</a>
         </div>
     </section>
 

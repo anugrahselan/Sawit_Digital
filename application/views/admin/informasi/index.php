@@ -1,67 +1,88 @@
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="h3 mb-1">Informasi (Artikel)</h1>
-            <p class="text-muted mb-0">Kelola artikel dan informasi</p>
-        </div>
-        <?php if (isset($can_edit) && $can_edit): ?>
-            <a href="#" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Tambah Artikel
-            </a>
-        <?php endif; ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header. (Page Header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"><?= $page_title ?></h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item active"><?= $page_title ?></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content-header -->
 
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Judul</th>
-                            <th>Kategori</th>
-                            <th>Penulis</th>
-                            <th>Tanggal</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($articles)): ?>
-                            <?php $no = 1; foreach ($articles as $art): ?>
-                                <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= $art->judul ?></td>
-                                    <td><?= $art->kategori ?: '-' ?></td>
-                                    <td><?= $art->penulis ?: '-' ?></td>
-                                    <td><?= date('d M Y', strtotime($art->tanggal)) ?></td>
-                                    <td>
-                                        <a href="<?= site_url('informasi/' . $art->id_info) ?>" class="btn btn-sm btn-info" target="_blank">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                        <?php if (isset($can_edit) && $can_edit): ?>
-                                            <button class="btn btn-sm btn-warning">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <p class="card-text">
+                                <?php if ($this->session->flashdata('message')): ?>
+                                    <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
+                                        <?= $this->session->flashdata('message') ?>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <a href="<?= base_url('admin/informasi/tambah') ?>" class="btn btn-labeled btn-primary">
+                                    <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
+                                </a>
+                                
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Judul</th>
+                                            <th scope="col">Kategori</th>
+                                            <th scope="col">Penulis</th>
+                                            <th scope="col">Tanggal</th>
+                                            <th scope="col">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (!empty($articles)): ?>
+                                            <?php $i = 1; foreach ($articles as $art): ?>
+                                                <tr>
+                                                    <td><?= $i ?></td>
+                                                    <td><?= $art->judul ?></td>
+                                                    <td><?= $art->kategori ?: '-' ?></td>
+                                                    <td><?= $art->penulis ?: '-' ?></td>
+                                                    <td><?= date('d M Y', strtotime($art->tanggal)) ?></td>
+                                                    <td>
+                                                        <a href="<?= base_url('informasi/' . $art->id_info) ?>" class="badge badge-info" target="_blank">view</a>
+                                                        <a href="<?= base_url('admin/informasi/ubah/' . $art->id_info) ?>" class="badge badge-success">edit</a>
+                                                        <a href="<?= base_url('admin/informasi/hapus/' . $art->id_info) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
+                                                    </td>
+                                                </tr>
+                                            <?php $i++; endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="6" class="text-center">Tidak ada data</td>
+                                            </tr>
                                         <?php endif; ?>
-                                        <?php if (isset($can_delete) && $can_delete): ?>
-                                            <button class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
-                                    <i class="bi bi-inbox"></i> Belum ada artikel
-                                </td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+                <!-- /.row -->
             </div>
+            <!-- /.container-fluid -->
         </div>
+        <!-- /.content -->
     </div>
-</div>
-
+    <!-- /.content-wrapper -->

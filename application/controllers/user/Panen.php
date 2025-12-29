@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Panen extends CI_Controller
 {
@@ -9,8 +9,17 @@ class Panen extends CI_Controller
         $this->load->database();
         $this->load->model('Perusahaan_model');
     }
+    
+    private function require_login(): void
+    {
+        if (!$this->session->userdata('id_user')) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Anda harus login terlebih dahulu']);
+            exit;
+        }
+    }
 
-    public function index()
+    public function index(): void
     {
         $data['page_title'] = 'Kalkulator Panen - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/kalkulator_panen.css';
@@ -19,14 +28,20 @@ class Panen extends CI_Controller
         $data['perusahaan'] = $this->Perusahaan_model->get_all();
 
         $this->load->view('user/templates/header', $data);
-        $this->load->view('user/kalkulator/panen', $data);
+        $this->load->view('user/kalkulator_panen/index', $data);
         $this->load->view('user/templates/footer');
     }
 
-    public function save()
+    public function save(): void
     {
         header('Content-Type: application/json');
         
+        // Cek apakah user sudah login
+        $this->require_login();
+        
+        $id_user = $this->session->userdata('id_user');
+        $username = $this->session->userdata('username');
+
         if ($this->input->server('REQUEST_METHOD') !== 'POST') {
             echo json_encode(['success' => false, 'message' => 'Method not allowed']);
             return;
@@ -47,7 +62,16 @@ class Panen extends CI_Controller
             return;
         }
 
+        // Hitung hasil bersih jika tidak dikirim dari frontend
+        if (!$hasil_bersih) {
+            $total_pendapatan = $harga_per_kg * $berat_kotor;
+            $potongan_rp = ($total_pendapatan * $potongan) / 100;
+            $hasil_bersih = $total_pendapatan - $potongan_rp - $upah_panen - $biaya_transportasi - $potong_hutang;
+        }
+
         $data = [
+            'id_user' => $id_user,
+            'username' => $username,
             'id_kabupaten' => $id_kabupaten,
             'id_perusahaan' => $id_perusahaan ?: null,
             'harga_per_kg' => $harga_per_kg,
@@ -56,8 +80,7 @@ class Panen extends CI_Controller
             'upah_panen' => $upah_panen ?: 0,
             'biaya_transportasi' => $biaya_transportasi ?: 0,
             'potong_hutang' => $potong_hutang ?: 0,
-            'hasil_bersih' => $hasil_bersih,
-            'tanggal' => date('Y-m-d')
+            'hasil_bersih' => $hasil_bersih
         ];
 
         if ($this->db->insert('kalkulasi_panen', $data)) {

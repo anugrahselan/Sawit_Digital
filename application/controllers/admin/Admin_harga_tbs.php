@@ -1,11 +1,11 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_harga_tbs extends MY_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->require_admin_or_penyuluh();
+        $this->require_admin();
         
         $this->load->model('Harga_tbs_model');
         $this->load->model('Kabupaten_model');
@@ -14,10 +14,8 @@ class Admin_harga_tbs extends MY_Controller {
         $this->load->library('pagination');
     }
     
-    /**
-     * List Harga TBS
-     */
-    public function index() {
+    // List Harga TBS
+    public function index(): void {
         $data['page_title'] = 'Harga TBS';
         
         $data['breadcrumbs'] = [
@@ -53,15 +51,13 @@ class Admin_harga_tbs extends MY_Controller {
         $data['can_edit'] = $this->can_edit();
         $data['can_delete'] = $this->can_delete();
         
-        $this->load->view('admin/layout/header', $data);
+        $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/harga_tbs/index', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/footer');
     }
     
-    /**
-     * Create Harga TBS
-     */
-    public function create() {
+    // Create Harga TBS
+    public function tambah_harga_tbs(): void {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk membuat data');
             redirect('admin/harga_tbs');
@@ -71,7 +67,7 @@ class Admin_harga_tbs extends MY_Controller {
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Harga TBS', 'url' => site_url('admin/harga_tbs')],
-            ['label' => 'Tambah', 'url' => site_url('admin/harga_tbs/create')]
+            ['label' => 'Tambah', 'url' => site_url('admin/harga_tbs/tambah_harga_tbs')]
         ];
         
         if ($this->input->method() === 'post') {
@@ -128,15 +124,13 @@ class Admin_harga_tbs extends MY_Controller {
         $data['kabupaten_list'] = $this->Kabupaten_model->get_all();
         $data['perusahaan_list'] = $this->Perusahaan_model->get_all();
         
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/harga_tbs/form', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/harga_tbs/Tambah_harga_tbs', $data);
+        $this->load->view('admin/templates/footer');
     }
     
-    /**
-     * Update Harga TBS
-     */
-    public function update($id) {
+    // Update Harga TBS
+    public function ubah_harga_tbs($id): void {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk mengubah data');
             redirect('admin/harga_tbs');
@@ -153,7 +147,7 @@ class Admin_harga_tbs extends MY_Controller {
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Harga TBS', 'url' => site_url('admin/harga_tbs')],
-            ['label' => 'Edit', 'url' => site_url('admin/harga_tbs/update/' . $id)]
+            ['label' => 'Edit', 'url' => site_url('admin/harga_tbs/ubah_harga_tbs/' . $id)]
         ];
         
         if ($this->input->method() === 'post') {
@@ -193,15 +187,13 @@ class Admin_harga_tbs extends MY_Controller {
         $data['kabupaten_list'] = $this->Kabupaten_model->get_all();
         $data['perusahaan_list'] = $this->Perusahaan_model->get_all();
         
-        $this->load->view('admin/layout/header', $data);
-        $this->load->view('admin/harga_tbs/form', $data);
-        $this->load->view('admin/layout/footer');
+        $this->load->view('admin/templates/header', $data);
+        $this->load->view('admin/harga_tbs/ubah_harga_tbs', $data);
+        $this->load->view('admin/templates/footer');
     }
     
-    /**
-     * Delete Harga TBS
-     */
-    public function delete($id) {
+    // Delete Harga TBS
+    public function hapus_harga_tbs($id): void {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk menghapus data');
             redirect('admin/harga_tbs');
@@ -222,7 +214,7 @@ class Admin_harga_tbs extends MY_Controller {
                 if ($backup_exists) {
                     $this->session->set_flashdata('success', 'Harga TBS berhasil dihapus. Data telah di-backup untuk perbandingan harga.');
                 } else {
-                    $this->session->set_flashdata('warning', 'Harga TBS berhasil dihapus. Catatan: Tabel backup belum dibuat. Jalankan script database/backup_harga_tbs.sql untuk mengaktifkan fitur backup.');
+                    $this->session->set_flashdata('warning', 'Harga TBS berhasil dihapus. Catatan: Tabel backup belum dibuat. Buat tabel harga_tbs_backup di database untuk mengaktifkan fitur backup. Lihat dokumentasi BACKUP_SYSTEM.md untuk struktur tabel.');
                 }
             } else {
                 $this->session->set_flashdata('error', 'Gagal menghapus harga TBS');
@@ -234,11 +226,8 @@ class Admin_harga_tbs extends MY_Controller {
         redirect('admin/harga_tbs');
     }
     
-    /**
-     * API: Get perusahaan berdasarkan kabupaten (untuk AJAX)
-     */
-    public function get_perusahaan_by_kabupaten()
-    {
+    // API: Get perusahaan berdasarkan kabupaten (untuk AJAX)
+    public function get_perusahaan_by_kabupaten(): void {
         $id_kabupaten = $this->input->get('id_kabupaten');
         
         if (!$id_kabupaten) {

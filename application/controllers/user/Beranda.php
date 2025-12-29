@@ -1,18 +1,15 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Beranda extends CI_Controller
-{
-    public function __construct()
-    {
+class Beranda extends CI_Controller {
+    public function __construct() {
         parent::__construct();
         $this->load->model('Harga_tbs_model');
         $this->load->model('Informasi_tambahan_model');
         $this->load->library('pagination');
     }
 
-    public function index()
-    {
+    public function index(): void {
         $data['page_title'] = 'Beranda - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/beranda.css';
         $data['page_js'] = 'user/beranda.js';

@@ -97,9 +97,9 @@ function displayResult(data) {
     html += '</div>';
     
     $('#resultContent').html(html);
-    $('#resultContainer').show();
     
-    // Draw simple chart
+    // Show chart container and draw chart
+    $('.chart-container').show();
     drawChart(data);
     
     // Save button handler

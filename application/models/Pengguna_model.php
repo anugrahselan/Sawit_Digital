@@ -1,74 +1,71 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pengguna_model extends CI_Model
-{
-    public function __construct()
-    {
+class Pengguna_model extends CI_Model {
+    private $_table = 'users';
+
+    public function __construct() {
         parent::__construct();
         $this->load->database();
     }
 
-    public function get_by_email($email)
-    {
+    public function get_by_email($email) {
         $this->db->where('email', $email);
-        return $this->db->get('users')->row();
+        return $this->db->get($this->_table)->row();
     }
 
-    public function get_by_username($username)
-    {
+    public function get_by_username($username) {
         $this->db->where('username', $username);
-        return $this->db->get('users')->row();
+        return $this->db->get($this->_table)->row();
     }
 
-    public function get_by_id($id)
-    {
+    public function get_by_id($id) {
         $this->db->where('id_user', $id);
-        return $this->db->get('users')->row();
+        return $this->db->get($this->_table)->row();
     }
 
-    public function create($data)
-    {
+    public function create($data) {
         if (isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
-        $this->db->insert('users', $data);
+        $this->db->insert($this->_table, $data);
         return $this->db->insert_id();
     }
 
-    public function update($id, $data)
-    {
+    public function update($id, $data): bool {
         if (isset($data['password'])) {
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
         $this->db->where('id_user', $id);
-        return $this->db->update('users', $data);
+        return $this->db->update($this->_table, $data);
     }
 
-    public function verify($email, $password)
-    {
-        $user = $this->get_by_email($email);
-        if ($user && password_verify($password, $user->password)) {
-            return $user;
+    public function login($username_or_email, $password) {
+        if (filter_var($username_or_email, FILTER_VALIDATE_EMAIL)) {
+            $user = $this->get_by_email($username_or_email);
+        } else {
+            $user = $this->get_by_username($username_or_email);
+        }
+
+        if ($user && !empty($user->password)) {
+            if (password_verify($password, $user->password)) {
+                return $user;
+            }
         }
         return false;
     }
 
-    public function email_exists($email)
-    {
+    public function email_exists($email): bool {
         $this->db->where('email', $email);
-        return $this->db->count_all_results('users') > 0;
+        return $this->db->count_all_results($this->_table) > 0;
     }
 
-    public function username_exists($username)
-    {
+    public function username_exists($username): bool {
         $this->db->where('username', $username);
-        return $this->db->count_all_results('users') > 0;
+        return $this->db->count_all_results($this->_table) > 0;
     }
 
-    public function count_all()
-    {
-        return $this->db->count_all_results('users');
+    public function count_all(): int {
+        return $this->db->count_all_results($this->_table);
     }
 }
-
