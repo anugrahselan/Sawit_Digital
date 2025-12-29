@@ -1034,6 +1034,159 @@ CREATE TABLE kalkulasi_dosis_pupuk (
 
 4. **Format File Upload**: JPG, JPEG, PNG, GIF, WEBP (maksimal 2MB)
 
+### 10. Redesign Halaman Login & Register
+
+✅ **Desain Split Screen (45:55)**
+
+**Left Side - Illustration Section (45%)**
+- Background gradient: #E8F5E9 → #C8E6C9
+- Logo dengan icon sawit (50x50px, rounded 12px)
+- Logo text: "SAWIT DIGITAL" dan "Sistem Penyuluhan"
+- Main illustration: Icon sawit 3D (200x200px) dengan floating animation
+- Text: "Selamat Datang" dan deskripsi
+- Footer: Copyright "© 2025 Sawit Digital | Powered by UKM"
+- Background blur circles effect
+
+**Right Side - Form Section (55%)**
+- Background: Pure White
+- Padding: 60px
+- Max-width form: 400px
+- Center aligned content
+
+**Form Login:**
+- Title: "Login" (32px, bold, #1B5E20)
+- Subtitle: "Silakan masuk ke akun Anda" (14px, #757575)
+- Field Username/Email dengan label "Username Or Email"
+- Field Password dengan label "Password"
+- Link "Lupa Password?" (right aligned)
+- Button "Login" dengan gradient dan hover effect
+- Toggle: "Belum punya akun? Daftar Sekarang"
+- Footer: "Terms and Services"
+
+**Form Register:**
+- Title: "Daftar" (32px, bold, #1B5E20)
+- Subtitle: "Buat akun baru Anda" (14px, #757575)
+- Field Username (max 50 karakter)
+- Field Nama Lengkap (max 100 karakter)
+- Field Email (max 100 karakter, optional)
+- Field Password (min 8 karakter)
+- Field Confirm Password (min 8 karakter)
+- Button "Daftar" dengan gradient
+- Toggle: "Sudah punya akun? Login"
+- Footer: "Dengan mendaftar, Anda menyetujui Terms and Services"
+
+**Fitur Toggle Form:**
+- JavaScript untuk toggle antara login dan register
+- Smooth scroll ke top saat toggle
+- Form register muncul otomatis jika ada error
+- Form login muncul otomatis jika tidak ada error register
+
+**Controller & Backend:**
+- Method `login()` - sudah ada, redirect sesuai role
+- Method `register()` - baru ditambahkan
+- Auto login setelah register
+- Validasi form dengan CodeIgniter form_validation
+- Password hashing menggunakan `password_hash()`
+
+**Routes:**
+- `auth/login` → `Auth/login`
+- `auth/register` → `Auth/register`
+- `masuk` → `Auth/login`
+- `daftar` → `Auth/register`
+
+**CSS Styling:**
+- Color Scheme: Primary #1B5E20, Secondary #2E7D32, Accent #4CAF50
+- Background Gradient: #E8F5E9 → #C8E6C9
+- Typography: Font Family 'Poppins', 'Inter', 'Segoe UI'
+- Animations: Floating icon, button hover, input focus
+- Responsive: Mobile (<968px) stack layout
+
+**Security Features:**
+- Password hashing dengan `password_hash()`
+- Form validation di frontend dan backend
+- CSRF protection (CodeIgniter default)
+- Input sanitization dengan `trim()`
+- Max length validation
+- Email validation
+- Username/Email uniqueness check
+
+**File yang Diubah/Dibuat:**
+1. ✅ `application/views/auth/login.php` - Redesign lengkap
+2. ✅ `assets/css/auth/login.css` - CSS baru sesuai spesifikasi
+3. ✅ `application/controllers/Auth.php` - Method register ditambahkan
+4. ✅ `application/config/routes.php` - Routes register diupdate
+
+### 11. Cleanup File yang Tidak Terpakai
+
+✅ **File yang Sudah Dihapus:**
+
+**View File:**
+- ❌ `application/views/user/autentikasi/daftar.php`
+  - **Alasan:** Form register sekarang ada di `application/views/auth/login.php` dengan toggle
+  - **Pengganti:** Form register di halaman login (split screen design)
+
+**Controller File:**
+- ❌ `application/controllers/user/Autentikasi.php`
+  - **Alasan:** Routes sudah diarahkan ke `Auth/register`
+  - **Pengganti:** Method `register()` di `application/controllers/Auth.php`
+
+**Alasan Perubahan:**
+1. **Unified Auth System:** Semua autentikasi (login & register) sekarang di `Auth` controller
+2. **Better UX:** Login dan register di halaman yang sama dengan toggle
+3. **Code Organization:** Semua auth logic di satu tempat, lebih mudah maintenance
+
+**Routes Baru (Aktif):**
+```php
+$route['daftar'] = 'Auth/register';
+$route['register'] = 'Auth/register';
+```
+
+### 12. Home Controller Usage
+
+✅ **Lokasi Penggunaan:**
+
+**Routes Configuration:**
+- File: `application/config/routes.php` (Baris 53)
+- `$route['default_controller'] = 'Home';`
+
+**URL yang Memicu Home Controller:**
+1. Root URL (tanpa path): `http://localhost/Sawit_Digital/`
+2. URL dengan Home controller: `http://localhost/Sawit_Digital/Home`
+
+**Alur Kerja:**
+```
+1. User mengakses: http://localhost/Sawit_Digital/
+   ↓
+2. CodeIgniter Router memeriksa routes.php
+   ↓
+3. Router menemukan: $route['default_controller'] = 'Home'
+   ↓
+4. Router memanggil: Home::index()
+   ↓
+5. Home::index() menjalankan: redirect('beranda')
+   ↓
+6. Browser redirect ke: http://localhost/Sawit_Digital/beranda
+   ↓
+7. Routes memanggil: user/Beranda::index()
+   ↓
+8. Halaman beranda ditampilkan
+```
+
+**Mengapa Home Controller Diperlukan?**
+- CodeIgniter 3 **tidak mendukung subfolder** di `default_controller`
+- Tidak bisa langsung: `$route['default_controller'] = 'user/Beranda';` (ERROR)
+- Solusi: Membuat wrapper controller di root yang melakukan redirect ke controller di subfolder
+
+**Kapan Home Controller Dipanggil?**
+- ✅ User mengakses root URL (`/`)
+- ✅ User mengakses URL tanpa path
+- ✅ URL tidak cocok dengan route lain
+
+**Tidak dipanggil ketika:**
+- ❌ User mengakses `/beranda` (langsung ke Beranda)
+- ❌ User mengakses `/login` (langsung ke Auth)
+- ❌ User mengakses URL yang sudah didefinisikan di routes
+
 #   S a w i t - D i g i t a l 
  
  
