@@ -11,6 +11,7 @@ class Admin_users extends MY_Controller {
     
     public function index(): void {
         $data['page_title'] = 'Users & Roles';
+        $data['page_css'] = 'users.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Users & Roles', 'url' => site_url('admin/users')]

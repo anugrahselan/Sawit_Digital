@@ -10,6 +10,7 @@ class Admin_settings extends MY_Controller {
     
     public function index(): void {
         $data['page_title'] = 'Settings / Audit Log';
+        $data['page_css'] = 'settings.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Settings', 'url' => site_url('admin/settings')]

@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -31,7 +31,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">ID User</th>
                                             <th scope="col">Username</th>
                                             <th scope="col">Kabupaten</th>
                                             <th scope="col">Perusahaan</th>
@@ -49,11 +48,16 @@
                                             <?php $i = 1; foreach ($kalkulasi as $k): ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
-                                                    <td><?= $k->id_user ?: '-' ?></td>
                                                     <td>
-                                                        <strong><?= htmlspecialchars($k->user_username ?: ($k->username ?: '-')) ?></strong>
-                                                        <?php if (!empty($k->user_nama)): ?>
-                                                            <br><small class="text-muted"><?= htmlspecialchars($k->user_nama) ?></small>
+                                                        <?php if (isset($k->user_username) && !empty($k->user_username)): ?>
+                                                            <strong><?= htmlspecialchars($k->user_username) ?></strong>
+                                                            <?php if (!empty($k->user_nama)): ?>
+                                                                <br><small class="text-muted"><?= htmlspecialchars($k->user_nama) ?></small>
+                                                            <?php endif; ?>
+                                                        <?php elseif (isset($k->username) && !empty($k->username)): ?>
+                                                            <strong><?= htmlspecialchars($k->username) ?></strong>
+                                                        <?php else: ?>
+                                                            <strong>-</strong>
                                                         <?php endif; ?>
                                                     </td>
                                                     <td><?= $k->nama_kabupaten ?: '-' ?></td>
@@ -84,7 +88,7 @@
                                             <?php $i++; endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="12" class="text-center">Tidak ada data</td>
+                                                <td colspan="11" class="text-center">Tidak ada data</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>

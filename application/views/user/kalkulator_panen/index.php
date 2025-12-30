@@ -25,15 +25,13 @@
                 </div>
                 <div class="form-group">
                     <label for="id_perusahaan">
-                        <span class="label-text">Perusahaan</span>
-                        <span class="label-hint">(Opsional)</span>
+                        <span class="label-text">Perusahaan / Mitra</span>
+                        <span class="label-hint">(Pilih PT untuk auto-fill harga, atau Mitra untuk input manual)</span>
                     </label>
                     <select name="id_perusahaan" id="id_perusahaan" class="form-control">
-                        <option value="">-- Pilih Perusahaan --</option>
-                        <?php foreach ($perusahaan as $pt): ?>
-                            <option value="<?= $pt->id_perusahaan ?>"><?= htmlspecialchars($pt->nama_perusahaan) ?></option>
-                        <?php endforeach; ?>
+                        <option value="">-- Pilih Kabupaten terlebih dahulu --</option>
                     </select>
+                    <small class="form-text text-muted" id="harga-info" style="display: none;"></small>
                 </div>
                 <div class="form-group">
                     <label for="harga_per_kg">
@@ -112,4 +110,8 @@
     </div>
 </div>
 
+<script>
+    // Set login status untuk JavaScript
+    var isLoggedIn = <?= isset($is_logged_in) && $is_logged_in ? 'true' : 'false' ?>;
+</script>
 

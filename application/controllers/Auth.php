@@ -23,7 +23,8 @@ class Auth extends CI_Controller
         }
 
         $data['page_title'] = 'Masuk - Sistem Penyuluhan Sawit';
-        $data['error'] = '';
+        // Ambil error dari flashdata atau dari form validation
+        $data['error'] = $this->session->flashdata('error') ?: '';
 
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $this->form_validation->set_rules('username', 'Username/Email', 'required|trim');
@@ -141,6 +142,6 @@ class Auth extends CI_Controller
     public function logout(): void
     {
         $this->session->sess_destroy();
-        redirect('auth/login');
+        redirect('beranda');
     }
 }

@@ -13,6 +13,7 @@ class Admin_informasi extends MY_Controller {
     
     public function index(): void {
         $data['page_title'] = 'Informasi (Artikel)';
+        $data['page_css'] = 'informasi.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Informasi', 'url' => site_url('admin/informasi')]
@@ -34,6 +35,7 @@ class Admin_informasi extends MY_Controller {
         }
         
         $data['page_title'] = 'Tambah Artikel';
+        $data['page_css'] = 'informasi.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Informasi', 'url' => site_url('admin/informasi')],
@@ -100,6 +102,7 @@ class Admin_informasi extends MY_Controller {
         }
         
         $data['page_title'] = 'Edit Artikel';
+        $data['page_css'] = 'informasi.css';
         $data['article'] = $article;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

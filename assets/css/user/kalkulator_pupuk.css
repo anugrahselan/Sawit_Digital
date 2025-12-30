@@ -52,7 +52,7 @@
 }
 
 .form-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
     text-align: center;
 }
 
@@ -108,18 +108,18 @@
 }
 
 .form-group {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
 }
 
 .form-group:last-of-type {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
 }
 
 .form-group label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--text-color);
     font-weight: 600;
     font-size: 0.95rem;
@@ -145,7 +145,7 @@
 
 .form-control {
     width: 100%;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--border-color);
     border-radius: 12px;
     font-size: 1rem;
@@ -516,10 +516,10 @@ textarea.form-control {
 /* User Info Display */
 .user-info-display {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     border-radius: 12px;
     border: 2px solid rgba(27, 94, 32, 0.15);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
 }
 
 .user-info-value {
@@ -595,6 +595,337 @@ textarea.form-control {
     color: #1976D2;
 }
 
+/* Result Section */
+.result-section {
+    margin-bottom: 2rem;
+}
+
+.result-section-title {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(27, 94, 32, 0.2);
+}
+
+/* Result Info Card */
+.result-info-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 1.75rem;
+    border-radius: 16px;
+    border: 2px solid rgba(27, 94, 32, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    animation: slideInUp 0.5s ease-out;
+}
+
+.result-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+.result-info-row:last-child {
+    border-bottom: none;
+}
+
+.result-info-label {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.result-info-value {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 0.95rem;
+    text-align: right;
+    flex: 1;
+}
+
+/* Status Badges */
+.status-asam {
+    color: #e53935;
+    font-weight: 700;
+    background: rgba(229, 57, 53, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.status-netral {
+    color: #2E7D32;
+    font-weight: 700;
+    background: rgba(46, 125, 50, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.status-basa {
+    color: #1976D2;
+    font-weight: 700;
+    background: rgba(25, 118, 210, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.status-rendah {
+    color: #e53935;
+    font-weight: 700;
+    background: rgba(229, 57, 53, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.status-sedang {
+    color: #FF9800;
+    font-weight: 700;
+    background: rgba(255, 152, 0, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.status-tinggi {
+    color: #2E7D32;
+    font-weight: 700;
+    background: rgba(46, 125, 50, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Result Dosis Card */
+.result-dosis-card {
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.02) 100%);
+    padding: 1.75rem;
+    border-radius: 16px;
+    border: 2px solid rgba(27, 94, 32, 0.15);
+    margin-bottom: 1.5rem;
+    animation: slideInUp 0.5s ease-out 0.2s both;
+}
+
+.result-dosis-title {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(27, 94, 32, 0.2);
+}
+
+.result-dosis-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+.result-dosis-item:last-child {
+    border-bottom: none;
+}
+
+.result-dosis-label {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.result-dosis-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    text-align: right;
+    flex: 1;
+}
+
+/* Result Rekomendasi Card */
+.result-rekomendasi-card {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 235, 59, 0.05) 100%);
+    border-left: 4px solid #FFC107;
+    padding: 1.75rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.15);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    animation: slideInUp 0.5s ease-out 0.3s both;
+}
+
+.result-rekomendasi-title {
+    color: #F57C00;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.result-rekomendasi-text {
+    color: var(--text-color);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Result Login Prompt */
+.result-login-prompt {
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
+    border: 2px solid rgba(27, 94, 32, 0.2);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 2rem;
+    text-align: center;
+    animation: slideInUp 0.5s ease-out 0.4s both;
+}
+
+.login-prompt-title {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.login-prompt-text {
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.login-link,
+.register-link {
+    color: var(--primary-color);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 0 0.5rem;
+    background: rgba(27, 94, 32, 0.1);
+}
+
+.login-link:hover,
+.register-link:hover {
+    background: rgba(27, 94, 32, 0.2);
+    text-decoration: underline;
+    transform: translateY(-2px);
+}
+
+.login-prompt-benefits {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-top: 1.5rem;
+}
+
+.login-prompt-benefits p {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.login-prompt-benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.login-prompt-benefits li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.login-prompt-benefits li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Result Success Message */
+.result-success-message {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
+    border: 2px solid rgba(46, 125, 50, 0.3);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    animation: slideInUp 0.5s ease-out;
+}
+
+.success-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.success-content {
+    flex: 1;
+}
+
+.success-content h4 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+}
+
+.btn-sm {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+}
+
+/* Form Text Muted */
+.form-text {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 0.35rem;
+    display: block;
+}
+
+.text-muted {
+    color: var(--text-light);
+}
+
 @media (max-width: 768px) {
     .calculator-container {
         grid-template-columns: 1fr;
@@ -635,6 +966,35 @@ textarea.form-control {
     
     .page-title {
         font-size: 2rem;
+    }
+    
+    .result-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .result-info-value {
+        text-align: left;
+    }
+    
+    .result-dosis-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .result-dosis-value {
+        text-align: left;
+    }
+    
+    .result-success-message {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .login-prompt-benefits {
+        text-align: left;
     }
     
 }

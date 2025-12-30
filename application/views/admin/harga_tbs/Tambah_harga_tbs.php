@@ -9,8 +9,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/harga_tbs') ?>">Harga TBS</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/harga_tbs') ?>">Harga TBS</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -67,7 +67,7 @@
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">Tambah</button>
-                                    <a href="<?= base_url('admin/harga_tbs') ?>" class="btn btn-danger">Kembali</a>
+                                    <a href="<?= base_url(uri: 'admin/harga_tbs') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         perusahaanSelect.innerHTML = '<option value="">Memuat...</option>';
         perusahaanSelect.disabled = true;
         
-        fetch('<?= base_url('admin/harga_tbs/get_perusahaan') ?>?id_kabupaten=' + id_kabupaten)
+        fetch('<?= base_url(uri: 'admin/harga_tbs/get_perusahaan') ?>?id_kabupaten=' + id_kabupaten)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

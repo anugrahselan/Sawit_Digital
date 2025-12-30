@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -31,7 +31,6 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>
-                                            <th scope="col">ID User</th>
                                             <th scope="col">Username</th>
                                             <th scope="col">Jenis Pupuk</th>
                                             <th scope="col">Jenis Tanah</th>
@@ -48,7 +47,6 @@
                                             <?php $i = 1; foreach ($dosis as $d): ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
-                                                    <td><?= $d->id_user ?: '-' ?></td>
                                                     <td>
                                                         <strong><?= htmlspecialchars($d->user_username ?: '-') ?></strong>
                                                         <?php if (!empty($d->user_nama)): ?>
@@ -75,7 +73,7 @@
                                             <?php $i++; endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="11" class="text-center">Tidak ada data</td>
+                                                <td colspan="10" class="text-center">Tidak ada data</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>

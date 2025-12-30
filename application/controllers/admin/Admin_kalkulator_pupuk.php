@@ -11,6 +11,7 @@ class Admin_kalkulator_pupuk extends MY_Controller {
     
     public function index(): void {
         $data['page_title'] = 'Kalkulasi Pupuk';
+        $data['page_css'] = 'kalkulator_pupuk.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Kalkulasi Pupuk', 'url' => site_url('admin/kalkulator_pupuk')]

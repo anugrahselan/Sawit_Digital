@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,7 +36,7 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <a href="<?= base_url('admin/pupuk/tambah') ?>" class="btn btn-labeled btn-primary">
+                                <a href="<?= base_url(uri: 'admin/pupuk/tambah') ?>" class="btn btn-labeled btn-primary">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
                                 </a>
                                 
@@ -61,7 +61,7 @@
                                                             if (strpos($gambar_pupuk, 'assets/img/pupuk/') !== false) {
                                                                 $gambar_pupuk = basename($gambar_pupuk);
                                                             }
-                                                            $gambar_url = base_url('assets/img/pupuk/' . $gambar_pupuk);
+                                                            $gambar_url = base_url(uri: 'assets/img/pupuk/' . $gambar_pupuk);
                                                         ?>
                                                             <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($p->nama_pupuk) ?>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-muted\'>-</span>';">
                                                         <?php else: ?>
@@ -71,8 +71,8 @@
                                                     <td><?= $p->nama_pupuk ?></td>
                                                     <td><?= $p->kandungan ?: '-' ?></td>
                                                     <td>
-                                                        <a href="<?= base_url('admin/pupuk/ubah/' . $p->id_pupuk) ?>" class="badge badge-success">edit</a>
-                                                        <a href="<?= base_url('admin/pupuk/hapus/' . $p->id_pupuk) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus?')">delete</a>
+                                                        <a href="<?= base_url(uri: 'admin/pupuk/ubah/') ?><?= $p->id_pupuk ?>" class="badge badge-success">edit</a>
+                                                        <a href="<?= base_url(uri: 'admin/pupuk/hapus/') ?><?= $p->id_pupuk ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus?')">delete</a>
                                                     </td>
                                                 </tr>
                                             <?php $i++; endforeach; ?>

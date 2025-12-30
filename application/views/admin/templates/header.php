@@ -20,104 +20,14 @@
 </head>
 <body>
     <div class="admin-wrapper">
-        <!-- Sidebar -->
-        <aside class="admin-sidebar" id="adminSidebar">
-            <div class="sidebar-header">
-                <a href="<?= site_url('admin/dashboard') ?>" class="sidebar-logo">
-                    <i class="bi bi-tree-fill"></i>
-                    <span class="logo-text">Sawit Digital</span>
-                </a>
-                <button class="sidebar-toggle" id="sidebarToggle">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/dashboard') ?>" class="nav-link <?= uri_string() == 'admin/dashboard' ? 'active' : '' ?>">
-                            <i class="bi bi-speedometer2"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/pupuk') ?>" class="nav-link <?= strpos(uri_string(), 'admin/pupuk') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-flower1"></i>
-                            <span>Jenis Pupuk</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/penyakit') ?>" class="nav-link <?= strpos(uri_string(), 'admin/penyakit') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-bug"></i>
-                            <span>Jenis Penyakit</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/kabupaten') ?>" class="nav-link <?= strpos(uri_string(), 'admin/kabupaten') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-geo-alt"></i>
-                            <span>Kabupaten</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/perusahaan') ?>" class="nav-link <?= strpos(uri_string(), 'admin/perusahaan') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-building"></i>
-                            <span>Perusahaan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/informasi') ?>" class="nav-link <?= strpos(uri_string(), 'admin/informasi') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-file-text"></i>
-                            <span>Informasi Tambahan</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/harga_tbs') ?>" class="nav-link <?= strpos(uri_string(), 'admin/harga_tbs') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-currency-dollar"></i>
-                            <span>Harga TBS</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/tanah') ?>" class="nav-link <?= strpos(uri_string(), 'admin/tanah') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-moisture"></i>
-                            <span>Jenis Tanah</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/kalkulator_panen') ?>" class="nav-link <?= strpos(uri_string(), 'admin/kalkulator_panen') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-calculator"></i>
-                            <span>Kalkulasi Panen</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/kalkulator_pupuk') ?>" class="nav-link <?= strpos(uri_string(), 'admin/kalkulator_pupuk') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-calculator"></i>
-                            <span>Kalkulasi Pupuk</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/pupuk') ?>" class="nav-link <?= strpos(uri_string(), 'admin/pupuk') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-box-seam"></i>
-                            <span>Jenis Pupuk</span>
-                        </a>
-                    </li>
-                    <?php if ($this->session->userdata('user_role') == 'admin'): ?>
-                    <li class="nav-item">
-                        <a href="<?= site_url('admin/users') ?>" class="nav-link <?= strpos(uri_string(), 'admin/users') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-people"></i>
-                            <span>Users</span>
-                        </a>
-                    </li>
-                    <?php endif; ?>
-                </ul>
-            </nav>
-        </aside>
+        <?php $this->load->view('admin/templates/sidebar'); ?>
         
         <!-- Main Content -->
         <div class="admin-main">
             <!-- Top Header -->
             <header class="admin-header">
                 <div class="header-left">
-                    <button class="sidebar-toggle-mobile" id="sidebarToggleMobile">
+                    <button class="sidebar-toggle-btn" id="sidebarToggle">
                         <i class="bi bi-list"></i>
                     </button>
                     <nav aria-label="breadcrumb">
@@ -140,8 +50,8 @@
                 <div class="header-right">
                     <!-- Global Search -->
                     <div class="header-search">
-                        <form action="<?= site_url('admin/search') ?>" method="get" class="search-form">
-                            <input type="text" name="q" class="form-control" placeholder="Cari..." value="<?= $this->input->get('q') ?>">
+                        <form id="adminSearchForm" class="search-form">
+                            <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari di halaman ini..." autocomplete="off">
                             <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
                         </form>
                     </div>
@@ -181,6 +91,11 @@
             
             <!-- Content Area -->
             <main class="admin-content">
+                <!-- Search Results -->
+                <div id="adminSearchResults" class="alert alert-info" style="display: none; margin-bottom: 1rem;">
+                    <div id="adminSearchResultsContent"></div>
+                </div>
+                
                 <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i> <?= $this->session->flashdata('success') ?>

@@ -12,6 +12,7 @@ class Admin_tanah extends MY_Controller {
     
     public function index(): void {
         $data['page_title'] = 'Jenis Tanah';
+        $data['page_css'] = 'tanah.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Tanah', 'url' => site_url('admin/tanah')]
@@ -28,11 +29,12 @@ class Admin_tanah extends MY_Controller {
 
     public function tambah_tanah(): void {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');
         }
         
         $data['page_title'] = 'Tambah Jenis Tanah';
+        $data['page_css'] = 'tanah.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Tanah', 'url' => site_url('admin/tanah')],
@@ -54,7 +56,7 @@ class Admin_tanah extends MY_Controller {
                 ];
                 
                 if ($this->Tanah_model->create($data_insert)) {
-                    $this->session->set_flashdata('success', 'Jenis tanah berhasil ditambahkan');
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Jenis tanah berhasil ditambahkan!</div>');
                     redirect('admin/tanah');
                 } else {
                     $data['error'] = 'Gagal menambahkan jenis tanah';
@@ -69,17 +71,18 @@ class Admin_tanah extends MY_Controller {
     
     public function ubah_tanah($id): void {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');
         }
         
         $tanah = $this->Tanah_model->get_by_id($id);
         if (!$tanah) {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan');
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data tidak ditemukan</div>');
             redirect('admin/tanah');
         }
         
         $data['page_title'] = 'Edit Jenis Tanah';
+        $data['page_css'] = 'tanah.css';
         $data['tanah'] = $tanah;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
@@ -102,7 +105,7 @@ class Admin_tanah extends MY_Controller {
                 ];
                 
                 if ($this->Tanah_model->update($id, $data_update)) {
-                    $this->session->set_flashdata('success', 'Jenis tanah berhasil diupdate');
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Jenis tanah berhasil diubah!</div>');
                     redirect('admin/tanah');
                 } else {
                     $data['error'] = 'Gagal mengupdate jenis tanah';
@@ -117,14 +120,14 @@ class Admin_tanah extends MY_Controller {
     
     public function hapus_tanah($id): void {
         if (!$this->can_delete()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');
         }
         
         if ($this->Tanah_model->delete($id)) {
-            $this->session->set_flashdata('success', 'Jenis tanah berhasil dihapus');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil di hapus</div>');
         } else {
-            $this->session->set_flashdata('error', 'Gagal menghapus jenis tanah');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal di hapus</div>');
         }
         
         redirect('admin/tanah');

@@ -16,7 +16,7 @@
                 <?php if ($this->session->userdata('id_user')): ?>
                 <div class="form-group user-info-display">
                     <label>
-                        <span class="label-text">👤 Username</span>
+                        <span class="label-text">Username</span>
                     </label>
                     <div class="user-info-value">
                         <strong><?= htmlspecialchars($this->session->userdata('username')) ?></strong>
@@ -30,7 +30,7 @@
                 <!-- Pilih Jenis Tanah -->
                 <div class="form-group">
                     <label for="id_tanah">
-                        <span class="label-text">📌 Pilih Jenis Tanah</span>
+                        <span class="label-text">Pilih Jenis Tanah</span>
                         <span class="label-required">*</span>
                     </label>
                     <select name="id_tanah" id="id_tanah" class="form-control" required>
@@ -55,7 +55,7 @@
                 <!-- Pilih Jenis Pupuk -->
                 <div class="form-group">
                     <label for="id_pupuk">
-                        <span class="label-text">📌 Pilih Jenis Pupuk</span>
+                        <span class="label-text">Pilih Jenis Pupuk</span>
                         <span class="label-required">*</span>
                     </label>
                     <select name="id_pupuk" id="id_pupuk" class="form-control" required>
@@ -76,7 +76,7 @@
                 <!-- Usia Tanaman -->
                 <div class="form-group">
                     <label for="usia_tanaman">
-                        <span class="label-text">🌱 Usia Tanaman</span>
+                        <span class="label-text">Usia Tanaman</span>
                         <span class="label-required">*</span>
                         <span class="label-hint">(bulan)</span>
                     </label>
@@ -86,7 +86,7 @@
                 <!-- Jumlah Pohon -->
                 <div class="form-group">
                     <label for="jumlah_pohon">
-                        <span class="label-text">🌳 Jumlah Pohon</span>
+                        <span class="label-text">Jumlah Pohon</span>
                         <span class="label-required">*</span>
                     </label>
                     <input type="number" name="jumlah_pohon" id="jumlah_pohon" class="form-control" required min="1" step="1" value="1" placeholder="Contoh: 100">
@@ -95,16 +95,26 @@
                 <!-- Periode Pemupukan per Tahun -->
                 <div class="form-group">
                     <label for="periode_per_tahun">
-                        <span class="label-text">📆 Periode Pemupukan per Tahun</span>
+                        <span class="label-text">Periode Pemupukan per Tahun</span>
                         <span class="label-required">*</span>
                     </label>
                     <input type="number" name="periode_per_tahun" id="periode_per_tahun" class="form-control" required min="1" step="1" value="4" placeholder="Contoh: 4">
                 </div>
                 
+                <!-- Input pH Aktual Tanah (Opsional) -->
+                <div class="form-group">
+                    <label for="ph_aktual">
+                        <span class="label-text">Input pH Aktual Tanah</span>
+                        <span class="label-hint">(opsional)</span>
+                    </label>
+                    <input type="number" name="ph_aktual" id="ph_aktual" class="form-control" min="0" max="14" step="0.1" placeholder="Contoh: 6.5">
+                    <small class="form-text text-muted">Jika tidak diisi, akan menggunakan estimasi pH dari jenis tanah yang dipilih</small>
+                </div>
+                
                 <!-- Keterangan Aplikasi -->
                 <div class="form-group">
                     <label for="keterangan_aplikasi">
-                        <span class="label-text">📝 Keterangan Aplikasi</span>
+                        <span class="label-text">Keterangan Aplikasi</span>
                         <span class="label-hint">(opsional)</span>
                     </label>
                     <textarea name="keterangan_aplikasi" id="keterangan_aplikasi" class="form-control" rows="3" placeholder="Masukkan keterangan tambahan untuk aplikasi pupuk (opsional)"></textarea>
@@ -140,4 +150,8 @@
     </div>
 </div>
 
+<script>
+    // Set login status untuk JavaScript
+    var isLoggedIn = <?= isset($is_logged_in) && $is_logged_in ? 'true' : 'false' ?>;
+</script>
 

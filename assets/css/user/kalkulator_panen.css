@@ -1,8 +1,8 @@
 /* Kalkulator Panen Styles */
 .page-header {
     text-align: center;
-    margin: 3rem 0 2.5rem;
-    padding: 2rem 0;
+    margin: 2rem 0 1.5rem;
+    padding: 1.5rem 0;
 }
 
 .page-title {
@@ -25,14 +25,14 @@
 .calculator-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    margin: 3rem 0;
+    gap: 2rem;
+    margin: 2rem 0;
 }
 
 .calculator-form,
 .calculator-result {
     background: linear-gradient(135deg, #FAFAFA 0%, #ffffff 100%);
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
     border: 1px solid rgba(27, 94, 32, 0.1);
@@ -52,7 +52,7 @@
 }
 
 .form-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
@@ -77,7 +77,7 @@
 
 .calculator-result h2 {
     color: var(--primary-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     font-size: 1.75rem;
     font-weight: 700;
     display: flex;
@@ -89,13 +89,13 @@
 /* Result Placeholder */
 .result-placeholder {
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 2rem 1.5rem;
     color: var(--text-light);
 }
 
 .placeholder-icon {
     font-size: 4rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     opacity: 0.5;
 }
 
@@ -108,18 +108,18 @@
 }
 
 .form-group {
-    margin-bottom: 1.75rem;
+    margin-bottom: 1rem;
 }
 
 .form-group:last-of-type {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .form-group label {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     color: var(--text-color);
     font-weight: 600;
     font-size: 0.95rem;
@@ -145,7 +145,7 @@
 
 .form-control {
     width: 100%;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     border: 2px solid var(--border-color);
     border-radius: 12px;
     font-size: 1rem;
@@ -216,19 +216,19 @@
 
 #resultContent {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.03) 100%);
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 16px;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     border: 1px solid rgba(27, 94, 32, 0.1);
 }
 
 .result-summary {
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     color: var(--white);
-    padding: 2.5rem;
+    padding: 2rem;
     border-radius: 20px;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     box-shadow: 0 8px 24px rgba(27, 94, 32, 0.3);
     position: relative;
     overflow: hidden;
@@ -246,10 +246,13 @@
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.5;
     }
+
     50% {
         transform: scale(1.1);
         opacity: 0.8;
@@ -276,8 +279,8 @@
 }
 
 .result-item {
-    margin-bottom: 1.5rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
     border-bottom: 2px solid rgba(27, 94, 32, 0.1);
 }
 
@@ -314,11 +317,106 @@
 }
 
 .chart-container {
-    margin-top: 2rem;
-    padding: 1.5rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.03) 100%);
     border-radius: 16px;
     border: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+/* Login Prompt Styles */
+.result-login-prompt {
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
+    border: 2px solid rgba(27, 94, 32, 0.2);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-top: 2rem;
+    text-align: center;
+    animation: slideInUp 0.5s ease-out 0.4s both;
+}
+
+.login-prompt-title {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.login-prompt-text {
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.login-link,
+.register-link {
+    color: var(--primary-color);
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 0 0.5rem;
+    background: rgba(27, 94, 32, 0.1);
+}
+
+.login-link:hover,
+.register-link:hover {
+    background: rgba(27, 94, 32, 0.2);
+    text-decoration: underline;
+    transform: translateY(-2px);
+}
+
+.login-prompt-benefits {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-top: 1.5rem;
+}
+
+.login-prompt-benefits p {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.login-prompt-benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.login-prompt-benefits li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.login-prompt-benefits li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media (max-width: 768px) {
@@ -326,14 +424,17 @@
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .calculator-form,
     .calculator-result {
         padding: 1.75rem;
     }
-    
+
     .result-summary .amount {
         font-size: 2.25rem;
     }
-}
 
+    .login-prompt-benefits {
+        text-align: left;
+    }
+}

@@ -1,0 +1,89 @@
+/* Settings Admin Custom Styles */
+
+.settings-section {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.settings-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.setting-value {
+    color: #666;
+}
+
+.audit-log-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.audit-log-table table {
+    margin: 0;
+}
+
+.audit-log-table th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+}
+
+.audit-log-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.audit-log-table tr:hover {
+    background: #f9f9f9;
+}
+
+.action-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.action-badge.create {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.action-badge.update {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.action-badge.delete {
+    background: #ffebee;
+    color: #c62828;
+}
+

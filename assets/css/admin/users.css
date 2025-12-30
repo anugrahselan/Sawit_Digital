@@ -1,0 +1,81 @@
+/* Users Admin Custom Styles */
+
+.users-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.users-table table {
+    margin: 0;
+}
+
+.users-table th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+}
+
+.users-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.users-table tr:hover {
+    background: #f9f9f9;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.5rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.user-username {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.role-badge.admin {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.role-badge.user {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.user-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+

@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,14 +36,14 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <a href="<?= base_url('admin/harga_tbs/tambah') ?>" class="btn btn-labeled btn-primary">
+                                <a href="<?= base_url(uri: 'admin/harga_tbs/tambah') ?>" class="btn btn-labeled btn-primary">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
                                 </a>
                                 
                                 <!-- Filters -->
                                 <div class="card mb-4">
                                     <div class="card-body">
-                                        <form method="get" action="<?= base_url('admin/harga_tbs') ?>" class="row g-3">
+                                        <form method="get" action="<?= base_url(uri: 'admin/harga_tbs') ?>" class="row g-3">
                                             <div class="col-md-3">
                                                 <label class="form-label">Kabupaten</label>
                                                 <select name="kabupaten" class="form-control">
@@ -99,8 +99,8 @@
                                                     <td><?= $price->nama_perusahaan ?: '-' ?></td>
                                                     <td><strong>Rp <?= number_format($price->harga_per_kg, 0, ',', '.') ?></strong></td>
                                                     <td>
-                                                        <a href="<?= base_url('admin/harga_tbs/ubah/' . $price->id_harga) ?>" class="badge badge-success">edit</a>
-                                                        <a href="<?= base_url('admin/harga_tbs/hapus/' . $price->id_harga) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
+                                                        <a href="<?= base_url(uri: 'admin/harga_tbs/ubah/') ?><?= $price->id_harga ?>" class="badge badge-success">edit</a>
+                                                        <a href="<?= base_url(uri: 'admin/harga_tbs/hapus/') ?><?= $price->id_harga ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
                                                     </td>
                                                 </tr>
                                             <?php $i++; endforeach; ?>

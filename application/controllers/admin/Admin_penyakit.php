@@ -16,6 +16,7 @@ class Admin_penyakit extends MY_Controller
     public function index(): void
     {
         $data['page_title'] = 'Penyakit';
+        $data['page_css'] = 'penyakit.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Penyakit', 'url' => site_url('admin/penyakit')]
@@ -38,6 +39,7 @@ class Admin_penyakit extends MY_Controller
         }
 
         $data['page_title'] = 'Tambah Penyakit';
+        $data['page_css'] = 'penyakit.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Penyakit', 'url' => site_url('admin/penyakit')],
@@ -95,6 +97,7 @@ class Admin_penyakit extends MY_Controller
         }
 
         $data['page_title'] = 'Edit Penyakit';
+        $data['page_css'] = 'penyakit.css';
         $data['penyakit'] = $penyakit;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

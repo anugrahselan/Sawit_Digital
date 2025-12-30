@@ -1,4 +1,16 @@
 <div class="container">
+    <?php if ($this->session->flashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= $this->session->flashdata('success') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('error')): ?>
+        <div class="alert alert-error">
+            <?= $this->session->flashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Tabel Harga TBS -->
     <section class="tbs-section">
         <h2 class="section-title">Harga TBS Terkini</h2>
@@ -21,7 +33,7 @@
             $this->load->view('user/partials/kartu_shortcut', ['title' => 'Jenis Pupuk', 'description' => 'Pelajari berbagai jenis pupuk', 'icon' => $icon_jenis, 'link' => site_url('jenis-pupuk')]);
 
             $icon_penyakit = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 5V11C4 16.55 7.16 21.74 12 23C16.84 21.74 20 16.55 20 11V5L12 2Z" fill="currentColor" opacity="0.15" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>';
-            $this->load->view('user/partials/kartu_shortcut', ['title' => 'Penyakit', 'description' => 'Kenali penyakit pada sawit', 'icon' => $icon_penyakit, 'link' => site_url('penyakit')]);
+            $this->load->view('user/partials/kartu_shortcut', ['title' => 'Jenis Penyakit', 'description' => 'Kenali penyakit pada sawit', 'icon' => $icon_penyakit, 'link' => site_url('penyakit')]);
 
             $icon_info = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 19.5C4 18.67 4.67 18 5.5 18H18.5C19.33 18 20 18.67 20 19.5C20 20.33 19.33 21 18.5 21H5.5C4.67 21 4 20.33 4 19.5Z" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="2"/><path d="M4 4.5C4 3.67 4.67 3 5.5 3H18.5C19.33 3 20 3.67 20 4.5C20 5.33 19.33 6 18.5 6H5.5C4.67 6 4 5.33 4 4.5Z" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="2"/><path d="M4 12C4 11.17 4.67 10.5 5.5 10.5H18.5C19.33 10.5 20 11.17 20 12C20 12.83 19.33 13.5 18.5 13.5H5.5C4.67 13.5 4 12.83 4 12Z" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="2"/><path d="M6 7V17M18 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/></svg>';
             ?>

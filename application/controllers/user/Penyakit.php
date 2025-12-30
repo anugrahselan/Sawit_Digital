@@ -9,7 +9,7 @@ class Penyakit extends CI_Controller {
     }
 
     public function index(): void {
-        $data['page_title'] = 'Penyakit Sawit - Sistem Penyuluhan Sawit';
+        $data['page_title'] = 'Jenis Penyakit Sawit - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/penyakit.css';
         $data['penyakit'] = $this->Penyakit_model->get_all();
 
@@ -19,10 +19,19 @@ class Penyakit extends CI_Controller {
     }
 
     public function detail($id = null): void {
-        if (!$id) show_404();
+        // Convert string ID to integer if needed
+        if ($id !== null) {
+            $id = (int) $id;
+        }
+        
+        if (!$id || $id <= 0) {
+            show_404();
+        }
 
         $penyakit = $this->Penyakit_model->get_by_id($id);
-        if (!$penyakit) show_404();
+        if (!$penyakit) {
+            show_404();
+        }
 
         $data['page_title'] = $penyakit->nama_penyakit . ' - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/penyakit.css';

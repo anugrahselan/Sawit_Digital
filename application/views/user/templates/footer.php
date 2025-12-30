@@ -19,15 +19,30 @@
                 <!-- Brand Section Below Button -->
                 <div class="footer-brand-section">
                     <div class="footer-logo">
-                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3V21" stroke="#6ba83a" stroke-width="2" stroke-linecap="round" />
-                            <path d="M12 3C12 3 9 5 9 8C9 10 11 12 12 12C13 12 15 10 15 8C15 5 12 3 12 3Z"
-                                fill="#6ba83a" opacity="0.3" />
-                            <path d="M10 7C10 7 7 9 7 12C7 13.5 8.5 15 10 15" stroke="#6ba83a" stroke-width="2"
-                                stroke-linecap="round" fill="none" />
-                            <path d="M14 7C14 7 17 9 17 12C17 13.5 15.5 15 14 15" stroke="#6ba83a" stroke-width="2"
-                                stroke-linecap="round" fill="none" />
-                        </svg>
+                        <?php
+                        $footer_logo = '';
+                        // Cek berbagai format gambar logo
+                        $logo_formats = ['logo.png', 'logo.svg', 'logo.jpg', 'logo.jpeg', 'logo.webp'];
+                        foreach ($logo_formats as $format) {
+                            $logo_path = FCPATH . 'assets/img/logo/' . $format;
+                            if (file_exists($logo_path)) {
+                                $footer_logo = base_url('assets/img/logo/' . $format);
+                                break;
+                            }
+                        }
+                        if ($footer_logo): ?>
+                            <img src="<?= $footer_logo ?>" alt="Sawit Digital" class="footer-logo-image">
+                        <?php else: ?>
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 3V21" stroke="#6ba83a" stroke-width="2" stroke-linecap="round" />
+                                <path d="M12 3C12 3 9 5 9 8C9 10 11 12 12 12C13 12 15 10 15 8C15 5 12 3 12 3Z"
+                                    fill="#6ba83a" opacity="0.3" />
+                                <path d="M10 7C10 7 7 9 7 12C7 13.5 8.5 15 10 15" stroke="#6ba83a" stroke-width="2"
+                                    stroke-linecap="round" fill="none" />
+                                <path d="M14 7C14 7 17 9 17 12C17 13.5 15.5 15 14 15" stroke="#6ba83a" stroke-width="2"
+                                    stroke-linecap="round" fill="none" />
+                            </svg>
+                        <?php endif; ?>
                         <span class="footer-logo-text">SawitDigital</span>
                     </div>
                     <p class="footer-description">
@@ -35,7 +50,7 @@
                         yang berkelanjutan dan sejahtera.
                     </p>
                     <div class="footer-social-icons">
-                        <a href="#" class="social-icon-circle" aria-label="Website">
+                        <a href="<?= site_url('perusahaan/tentang-kami') ?>" class="social-icon-circle" aria-label="Website" title="Website Resmi">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
@@ -43,7 +58,7 @@
                                     stroke-width="2" />
                             </svg>
                         </a>
-                        <a href="#" class="social-icon-circle" aria-label="Share">
+                        <a href="javascript:void(0);" class="social-icon-circle" aria-label="Share" title="Bagikan" onclick="sharePage()">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2" />
@@ -53,7 +68,7 @@
                                     stroke-width="2" stroke-linecap="round" />
                             </svg>
                         </a>
-                        <a href="#" class="social-icon-circle" aria-label="Email">
+                        <a href="javascript:void(0);" class="social-icon-circle" aria-label="Email" title="Hubungi via Email" onclick="openEmailContact()">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor"
@@ -78,7 +93,9 @@
                     <ul>
                         <li><a href="<?= site_url('kalkulator-pupuk') ?>">Kalkulator Pupuk</a></li>
                         <li><a href="<?= site_url('kalkulator-panen') ?>">Kalkulator Panen</a></li>
-                        <li><a href="<?= site_url('penyakit') ?>">Identifikasi Penyakit</a></li>
+                        <li><a href="<?= site_url('jenis-pupuk') ?>">Jenis Pupuk</a></li>
+                        <li><a href="<?= site_url('penyakit') ?>">Jenis Penyakit</a></li>
+                        <li><a href="<?= site_url('informasi') ?>">Artikel</a></li>
                         <li><a href="<?= site_url('beranda') ?>">Info Harga TBS</a></li>
                     </ul>
                 </div>
@@ -87,10 +104,10 @@
                 <div class="footer-column">
                     <h3>Perusahaan</h3>
                     <ul>
-                        <li><a href="#">Tentang Kami</a></li>
-                        <li><a href="#">Mitra Kerjasama</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">Berita Terkini</a></li>
+                        <li><a href="<?= site_url('perusahaan/tentang-kami') ?>">Tentang Kami</a></li>
+                        <li><a href="<?= site_url('perusahaan/visi-misi') ?>">Visi & Misi</a></li>
+                        <li><a href="<?= site_url('perusahaan/mitra-kerjasama') ?>">Mitra Kerjasama</a></li>
+                        <li><a href="<?= site_url('perusahaan/program') ?>">Program</a></li>
                     </ul>
                 </div>
 
@@ -98,10 +115,11 @@
                 <div class="footer-column">
                     <h3>Bantuan</h3>
                     <ul>
-                        <li><a href="#">Pusat Bantuan</a></li>
-                        <li><a href="#">Syarat & Ketentuan</a></li>
-                        <li><a href="#">Kebijakan Privasi</a></li>
-                        <li><a href="#">Hubungi Kami</a></li>
+                        <li><a href="<?= site_url('bantuan/pusat-bantuan') ?>">Pusat Bantuan</a></li>
+                        <li><a href="<?= site_url('bantuan/faq') ?>">FAQ</a></li>
+                        <li><a href="<?= site_url('bantuan/syarat-ketentuan') ?>">Syarat & Ketentuan</a></li>
+                        <li><a href="<?= site_url('bantuan/kebijakan-privasi') ?>">Kebijakan Privasi</a></li>
+                        <li><a href="<?= site_url('bantuan/hubungi-kami') ?>">Hubungi Kami</a></li>
                     </ul>
                 </div>
             </div>
@@ -124,6 +142,92 @@
 <script>
     // Set base URL untuk JavaScript
     var baseUrl = '<?= base_url() ?>';
+    // Set user login status untuk JavaScript
+    var userId = '<?= $this->session->userdata("id_user") ?: "" ?>';
+    var isLoggedIn = <?= $this->session->userdata("id_user") ? "true" : "false" ?>;
+    
+    // Fungsi untuk share halaman
+    function sharePage() {
+        const url = window.location.href;
+        const title = document.title;
+        const text = 'Lihat informasi menarik di Sawit Digital: ' + title;
+        
+        // Cek apakah browser mendukung Web Share API
+        if (navigator.share) {
+            navigator.share({
+                title: title,
+                text: text,
+                url: url
+            }).catch(err => {
+                console.log('Error sharing:', err);
+                fallbackShare(url, title);
+            });
+        } else {
+            // Fallback untuk browser yang tidak mendukung Web Share API
+            fallbackShare(url, title);
+        }
+    }
+    
+    // Fallback share function
+    function fallbackShare(url, title) {
+        // Copy URL ke clipboard
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link berhasil disalin ke clipboard!\n\n' + url);
+            }).catch(() => {
+                promptShare(url, title);
+            });
+        } else {
+            promptShare(url, title);
+        }
+    }
+    
+    // Prompt untuk copy manual
+    function promptShare(url, title) {
+        const shareText = 'Bagikan: ' + title + '\n\n' + url;
+        if (prompt('Salin link berikut:', shareText)) {
+            // User bisa copy manual dari prompt
+        }
+    }
+    
+    // Fungsi untuk membuka email contact
+    function openEmailContact() {
+        const email = 'info@sawitdigital.id';
+        const subject = encodeURIComponent('Pertanyaan dari ' + document.title);
+        const body = encodeURIComponent('Halo,\n\nSaya ingin bertanya tentang:\n\n\n\nTerima kasih.');
+        
+        // Coba buka mailto link
+        const mailtoLink = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+        
+        // Cek apakah ada email client yang tersedia
+        try {
+            window.location.href = mailtoLink;
+            
+            // Fallback: jika tidak ada email client, tampilkan opsi setelah 1 detik
+            setTimeout(() => {
+                const choice = confirm('Tidak ada aplikasi email yang terdeteksi.\n\nPilih cara menghubungi kami:\n\nOK = Buka halaman Hubungi Kami\nCancel = Salin email ke clipboard');
+                
+                if (choice) {
+                    // Redirect ke halaman hubungi kami
+                    window.location.href = baseUrl + 'index.php/bantuan/hubungi-kami';
+                } else {
+                    // Copy email ke clipboard
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(email).then(() => {
+                            alert('Email berhasil disalin ke clipboard!\n\nEmail: ' + email + '\n\nAnda bisa paste di aplikasi email Anda.');
+                        }).catch(() => {
+                            prompt('Salin email berikut:', email);
+                        });
+                    } else {
+                        prompt('Salin email berikut:', email);
+                    }
+                }
+            }, 1000);
+        } catch (e) {
+            // Jika error, langsung redirect ke halaman hubungi kami
+            window.location.href = baseUrl + 'index.php/bantuan/hubungi-kami';
+        }
+    }
 </script>
 <?php if (isset($page_js)): ?>
     <script src="<?= base_url('assets/js/' . $page_js); ?>" defer></script>

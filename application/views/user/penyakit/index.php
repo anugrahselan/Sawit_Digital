@@ -1,5 +1,5 @@
 <div class="container">
-    <h1 class="page-title">Penyakit Sawit</h1>
+    <h1 class="page-title">Jenis Penyakit Sawit</h1>
     <p class="page-subtitle">Kenali berbagai penyakit yang dapat menyerang tanaman sawit</p>
 
     <div class="disease-grid">

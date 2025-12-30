@@ -62,11 +62,30 @@ $route['api/get_dosis'] = 'user/Api/get_dosis';
 $route['kalkulator-pupuk'] = 'user/Pupuk/index';
 $route['kalkulator-panen'] = 'user/Panen/index';
 $route['panen/save'] = 'user/Panen/save';
+$route['panen/get_perusahaan'] = 'user/Panen/get_perusahaan_by_kabupaten';
+$route['panen/get_harga_tbs'] = 'user/Panen/get_harga_tbs';
 $route['pupuk/save_dosis'] = 'user/Pupuk/save_dosis';
 $route['jenis-pupuk'] = 'user/Pupuk/list';
+$route['pupuk/list'] = 'user/Pupuk/list';
+$route['pupuk/detail/(:num)'] = 'user/Pupuk/detail/$1';
+$route['pupuk/detail/(:any)'] = 'user/Pupuk/detail/$1';
 $route['penyakit'] = 'user/Penyakit/index';
+$route['penyakit/detail/(:num)'] = 'user/Penyakit/detail/$1';
+$route['penyakit/detail/(:any)'] = 'user/Penyakit/detail/$1';
 $route['informasi'] = 'user/Informasi/index';
 $route['informasi/(:any)'] = 'user/Informasi/detail/$1';
+$route['profil'] = 'user/Profil/index';
+// Perusahaan Routes
+$route['perusahaan/tentang-kami'] = 'user/Perusahaan/tentang_kami';
+$route['perusahaan/visi-misi'] = 'user/Perusahaan/visi_misi';
+$route['perusahaan/mitra-kerjasama'] = 'user/Perusahaan/mitra_kerjasama';
+$route['perusahaan/program'] = 'user/Perusahaan/program';
+// Bantuan Routes
+$route['bantuan/pusat-bantuan'] = 'user/Bantuan/pusat_bantuan';
+$route['bantuan/faq'] = 'user/Bantuan/faq';
+$route['bantuan/syarat-ketentuan'] = 'user/Bantuan/syarat_ketentuan';
+$route['bantuan/kebijakan-privasi'] = 'user/Bantuan/kebijakan_privasi';
+$route['bantuan/hubungi-kami'] = 'user/Bantuan/hubungi_kami';
 // Unified Auth Routes (untuk semua role)
 $route['masuk'] = 'Auth/login';
 $route['login'] = 'Auth/login';
@@ -113,6 +132,7 @@ $route['admin/informasi/tambah'] = 'admin/Admin_informasi/tambah_informasi';
 $route['admin/informasi/ubah/(:num)'] = 'admin/Admin_informasi/ubah_informasi/$1';
 $route['admin/informasi/hapus/(:num)'] = 'admin/Admin_informasi/hapus_informasi/$1';
 $route['admin/users'] = 'admin/Admin_users/index';
+$route['admin/profile'] = 'admin/Admin_profile/index';
 $route['admin/settings'] = 'admin/Admin_settings/index';
 
 $route['404_override'] = '';

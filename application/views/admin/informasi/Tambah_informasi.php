@@ -9,8 +9,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/informasi') ?>">Informasi</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/informasi') ?>">Informasi</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -80,7 +80,7 @@
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">Tambah</button>
-                                    <a href="<?= base_url('admin/informasi') ?>" class="btn btn-danger">Kembali</a>
+                                    <a href="<?= base_url(uri: 'admin/informasi') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>

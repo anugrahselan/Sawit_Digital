@@ -16,6 +16,7 @@ class Admin_pupuk extends MY_Controller
     public function index(): void
     {
         $data['page_title'] = 'Jenis Pupuk & Dosis Pupuk';
+        $data['page_css'] = 'pupuk.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Pupuk', 'url' => site_url('admin/pupuk')]
@@ -38,6 +39,7 @@ class Admin_pupuk extends MY_Controller
         }
 
         $data['page_title'] = 'Tambah Jenis Pupuk';
+        $data['page_css'] = 'pupuk.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Jenis Pupuk', 'url' => site_url('admin/pupuk')],
@@ -98,6 +100,7 @@ class Admin_pupuk extends MY_Controller
         }
 
         $data['page_title'] = 'Edit Jenis Pupuk';
+        $data['page_css'] = 'pupuk.css';
         $data['pupuk'] = $pupuk;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

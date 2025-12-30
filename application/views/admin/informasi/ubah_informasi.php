@@ -9,8 +9,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/informasi') ?>">Informasi</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/informasi') ?>">Informasi</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -61,7 +61,7 @@
                                             if (strpos($gambar_header, 'assets/img/articles/') !== false) {
                                                 $gambar_header = basename($gambar_header);
                                             }
-                                            $gambar_url = base_url('assets/img/articles/' . $gambar_header);
+                                            $gambar_url = base_url(uri: 'assets/img/articles/' . $gambar_header);
                                         ?>
                                             <div class="mb-2">
                                                 <img src="<?= $gambar_url ?>" alt="Gambar Header saat ini" style="max-width: 200px; height: auto; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none';">
@@ -79,7 +79,7 @@
                                             if (strpos($thumbnail, 'assets/img/articles/') !== false) {
                                                 $thumbnail = basename($thumbnail);
                                             }
-                                            $thumbnail_url = base_url('assets/img/articles/' . $thumbnail);
+                                            $thumbnail_url = base_url(uri: 'assets/img/articles/' . $thumbnail);
                                         ?>
                                             <div class="mb-2">
                                                 <img src="<?= $thumbnail_url ?>" alt="Thumbnail saat ini" style="max-width: 200px; height: auto; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none';">
@@ -104,7 +104,7 @@
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">Tambah</button>
-                                    <a href="<?= base_url('admin/informasi') ?>" class="btn btn-danger">Kembali</a>
+                                    <a href="<?= base_url(uri: 'admin/informasi') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>

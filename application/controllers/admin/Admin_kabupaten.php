@@ -17,6 +17,7 @@ class Admin_kabupaten extends MY_Controller
     public function index(): void
     {
         $data['page_title'] = 'Kabupaten';
+        $data['page_css'] = 'kabupaten.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Kabupaten', 'url' => site_url('admin/kabupaten')]
@@ -50,6 +51,7 @@ class Admin_kabupaten extends MY_Controller
         }
 
         $data['page_title'] = 'Tambah Kabupaten';
+        $data['page_css'] = 'kabupaten.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Kabupaten', 'url' => site_url('admin/kabupaten')],
@@ -92,6 +94,7 @@ class Admin_kabupaten extends MY_Controller
         }
 
         $data['page_title'] = 'Edit Kabupaten';
+        $data['page_css'] = 'kabupaten.css';
         $data['kabupaten'] = $kabupaten;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

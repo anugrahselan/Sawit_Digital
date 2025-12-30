@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,7 +36,7 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <a href="<?= base_url('admin/penyakit/tambah') ?>" class="btn btn-labeled btn-primary">
+                                <a href="<?= base_url(uri: 'admin/penyakit/tambah') ?>" class="btn btn-labeled btn-primary">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
                                 </a>
                                 
@@ -63,7 +63,7 @@
                                                             if (strpos($gambar_penyakit, 'assets/img/penyakit/') !== false) {
                                                                 $gambar_penyakit = basename($gambar_penyakit);
                                                             }
-                                                            $gambar_url = base_url('assets/img/penyakit/' . $gambar_penyakit);
+                                                            $gambar_url = base_url(uri: 'assets/img/penyakit/' . $gambar_penyakit);
                                                         ?>
                                                             <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($p->nama_penyakit) ?>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-muted\'>-</span>';">
                                                         <?php else: ?>
@@ -75,8 +75,8 @@
                                                     <td><?= character_limiter($p->gejala, 50) ?: '-' ?></td>
                                                     <td><?= character_limiter($p->cara_pengendalian, 50) ?: '-' ?></td>
                                                     <td>
-                                                        <a href="<?= base_url('admin/penyakit/ubah/' . $p->id_penyakit) ?>" class="badge badge-success">edit</a>
-                                                        <a href="<?= base_url('admin/penyakit/hapus/' . $p->id_penyakit) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
+                                                        <a href="<?= base_url(uri: 'admin/penyakit/ubah/') ?><?= $p->id_penyakit ?>" class="badge badge-success">edit</a>
+                                                        <a href="<?= base_url(uri: 'admin/penyakit/hapus/') ?><?= $p->id_penyakit ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
                                                     </td>
                                                 </tr>
                                             <?php $i++; endforeach; ?>

@@ -1,0 +1,91 @@
+/* Kalkulator Pupuk Admin Custom Styles */
+
+.kalkulasi-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.kalkulasi-table table {
+    margin: 0;
+}
+
+.kalkulasi-table th {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+}
+
+.kalkulasi-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.kalkulasi-table tr:hover {
+    background: #f9f9f9;
+}
+
+.kalkulasi-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.kalkulasi-badge.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.kalkulasi-badge.warning {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.kalkulasi-badge.info {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dosis-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.dosis-item {
+    padding: 0.75rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.dosis-label {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.dosis-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+

@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,7 +36,7 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <a href="<?= base_url('admin/tanah/tambah') ?>" class="btn btn-labeled btn-primary">
+                                <a href="<?= base_url(uri: 'admin/tanah/tambah') ?>" class="btn btn-labeled btn-primary">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
                                 </a>
                                 
@@ -84,10 +84,10 @@
                                                     </td>
                                                     <td>
                                                         <?php if ($can_edit): ?>
-                                                            <a href="<?= base_url('admin/tanah/ubah/' . $t->id_tanah) ?>" class="badge badge-success">Edit</a>
+                                                            <a href="<?= base_url(uri: 'admin/tanah/ubah/') ?><?= $t->id_tanah ?>" class="badge badge-success">Edit</a>
                                                         <?php endif; ?>
                                                         <?php if ($can_delete): ?>
-                                                            <a href="<?= base_url('admin/tanah/hapus/' . $t->id_tanah) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                                            <a href="<?= base_url(uri: 'admin/tanah/hapus/') ?><?= $t->id_tanah ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
                                                         <?php endif; ?>
                                                     </td>
                                                 </tr>

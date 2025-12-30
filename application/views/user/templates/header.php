@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="<?= base_url('assets/css/' . $page_css) . $cache; ?>">
     <?php endif; ?>
     <script src="<?= base_url('assets/js/user/dropdown.js') ?>" defer></script>
+    <script src="<?= base_url('assets/js/user/pencarian.js') ?>" defer></script>
 </head>
 
 <body>
@@ -21,16 +22,20 @@
                 <a href="<?= site_url('beranda') ?>" class="logo-link">
                     <?php
                     $logo = '';
-                    if (file_exists(FCPATH . 'assets/img/logo/logo.png')) {
-                        $logo = base_url('assets/img/logo/logo.png');
-                    } elseif (file_exists(FCPATH . 'assets/img/logo/logo.svg')) {
-                        $logo = base_url('assets/img/logo/logo.svg');
+                    // Cek berbagai format gambar logo
+                    $logo_formats = ['logo.png', 'logo.svg', 'logo.jpg', 'logo.jpeg', 'logo.webp'];
+                    foreach ($logo_formats as $format) {
+                        $logo_path = FCPATH . 'assets/img/logo/' . $format;
+                        if (file_exists($logo_path)) {
+                            $logo = base_url('assets/img/logo/' . $format);
+                            break;
+                        }
                     }
                     if ($logo): ?>
-                        <img src="<?= $logo ?>" alt="Sawit Digital" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
-                        <span class="logo-text" style="display: none;">🌴 Sawit Digital</span>
+                        <img src="<?= $logo ?>" alt="Sawit Digital" class="logo-image">
+                        <span class="logo-text">Sawit Digital</span>
                     <?php else: ?>
-                        <span class="logo-text">🌴 Sawit Digital</span>
+                        <span class="logo-text">Sawit Digital</span>
                     <?php endif; ?>
                 </a>
             </div>
@@ -42,23 +47,25 @@
                         <li><a href="<?= site_url('kalkulator-pupuk') ?>">Kalkulator Pupuk</a></li>
                         <li><a href="<?= site_url('kalkulator-panen') ?>">Kalkulator Panen</a></li>
                         <li><a href="<?= site_url('jenis-pupuk') ?>">Jenis Pupuk</a></li>
-                        <li><a href="<?= site_url('penyakit') ?>">Penyakit</a></li>
+                        <li><a href="<?= site_url('penyakit') ?>">Jenis Penyakit</a></li>
                     </ul>
                 </li>
                 <li><a href="<?= site_url('informasi') ?>">Informasi</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Profil <span class="arrow">▼</span></a>
                     <ul class="dropdown-menu">
-                        <?php if ($this->session->userdata('user_id')): ?>
+                        <?php if ($this->session->userdata('user_id') || $this->session->userdata('id_user')): ?>
                             <li>
-                                <a href="#" class="user-profile-link">
+                                <a href="<?= site_url('profil') ?>" class="user-profile-link">
                                     <?php
                                     $foto = $this->session->userdata('foto_profil');
+                                    $foto_url = base_url('assets/img/users/default.png');
                                     if (!empty($foto)):
                                         $foto = strpos($foto, 'assets/img/users/') !== false ? basename($foto) : basename(trim($foto));
-                                        ?>
-                                        <img src="<?= base_url('assets/img/users/' . $foto) ?>" alt="Profile" class="user-avatar" onerror="this.style.display='none';">
-                                    <?php endif; ?>
+                                        $foto_url = base_url('assets/img/users/' . $foto);
+                                    endif;
+                                    ?>
+                                    <img src="<?= $foto_url ?>" alt="Profile" class="user-avatar" onerror="this.src='<?= base_url('assets/img/users/default.png') ?>'">
                                     <span class="user-name"><?= $this->session->userdata('user_name') ?></span>
                                 </a>
                             </li>
@@ -120,11 +127,14 @@
     <!-- Search Bar -->
     <section class="search-section">
         <div class="container">
-            <form action="<?= site_url('pencarian') ?>" method="get" class="search-form" id="searchForm">
+            <form class="search-form" id="searchForm">
                 <input type="text" name="q" placeholder="Cari artikel, pupuk, atau informasi..." class="search-input"
                     id="searchInput">
                 <button type="submit" class="btn btn-search">Cari</button>
             </form>
+            <div id="searchResults" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <div id="searchResultsContent"></div>
+            </div>
         </div>
     </section>
     <?php endif; ?>

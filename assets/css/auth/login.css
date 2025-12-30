@@ -73,7 +73,7 @@ body.auth-page {
     z-index: 0;
 }
 
-.auth-illustration > * {
+.auth-illustration>* {
     position: relative;
     z-index: 1;
 }
@@ -198,9 +198,12 @@ body.auth-page {
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-20px);
     }
@@ -357,14 +360,24 @@ body.auth-page {
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
 }
 
 /* Form Group */
 .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     position: relative;
 }
 
@@ -373,14 +386,14 @@ body.auth-page {
     font-size: 14px;
     font-weight: 500;
     color: var(--text-gray);
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .label-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .forgot-link {

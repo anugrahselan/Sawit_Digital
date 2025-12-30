@@ -9,7 +9,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -36,7 +36,7 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <a href="<?= base_url('admin/informasi/tambah') ?>" class="btn btn-labeled btn-primary">
+                                <a href="<?= base_url(uri: 'admin/informasi/tambah') ?>" class="btn btn-labeled btn-primary">
                                     <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
                                 </a>
                                 
@@ -61,9 +61,9 @@
                                                     <td><?= $art->penulis ?: '-' ?></td>
                                                     <td><?= date('d M Y', strtotime($art->tanggal)) ?></td>
                                                     <td>
-                                                        <a href="<?= base_url('informasi/' . $art->id_info) ?>" class="badge badge-info" target="_blank">view</a>
-                                                        <a href="<?= base_url('admin/informasi/ubah/' . $art->id_info) ?>" class="badge badge-success">edit</a>
-                                                        <a href="<?= base_url('admin/informasi/hapus/' . $art->id_info) ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
+                                                        <a href="<?= base_url(uri: 'informasi/') ?><?= $art->id_info ?>" class="badge badge-info" target="_blank">view</a>
+                                                        <a href="<?= base_url(uri: 'admin/informasi/ubah/') ?><?= $art->id_info ?>" class="badge badge-success">edit</a>
+                                                        <a href="<?= base_url(uri: 'admin/informasi/hapus/') ?><?= $art->id_info ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
                                                     </td>
                                                 </tr>
                                             <?php $i++; endforeach; ?>

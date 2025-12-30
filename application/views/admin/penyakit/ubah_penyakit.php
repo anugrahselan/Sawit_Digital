@@ -9,8 +9,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/penyakit') ?>">Penyakit</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/penyakit') ?>">Penyakit</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -66,7 +66,7 @@
                                             if (strpos($gambar_penyakit, 'assets/img/penyakit/') !== false) {
                                                 $gambar_penyakit = basename($gambar_penyakit);
                                             }
-                                            $gambar_url = base_url('assets/img/penyakit/' . $gambar_penyakit);
+                                            $gambar_url = base_url(uri: 'assets/img/penyakit/' . $gambar_penyakit);
                                         ?>
                                             <div class="mb-2">
                                                 <img src="<?= $gambar_url ?>" alt="Gambar saat ini" style="max-width: 200px; height: auto; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none';">
@@ -78,7 +78,7 @@
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">Tambah</button>
-                                    <a href="<?= base_url('admin/penyakit') ?>" class="btn btn-danger">Kembali</a>
+                                    <a href="<?= base_url(uri: 'admin/penyakit') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>

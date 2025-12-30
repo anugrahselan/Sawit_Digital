@@ -17,6 +17,7 @@ class Admin_harga_tbs extends MY_Controller {
     // List Harga TBS
     public function index(): void {
         $data['page_title'] = 'Harga TBS';
+        $data['page_css'] = 'harga_tbs.css';
         
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
@@ -64,6 +65,7 @@ class Admin_harga_tbs extends MY_Controller {
         }
         
         $data['page_title'] = 'Tambah Harga TBS';
+        $data['page_css'] = 'harga_tbs.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Harga TBS', 'url' => site_url('admin/harga_tbs')],
@@ -143,6 +145,7 @@ class Admin_harga_tbs extends MY_Controller {
         }
         
         $data['page_title'] = 'Edit Harga TBS';
+        $data['page_css'] = 'harga_tbs.css';
         $data['price'] = $price;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

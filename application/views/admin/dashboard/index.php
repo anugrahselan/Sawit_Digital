@@ -1,69 +1,107 @@
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item active"><?= $page_title ?></li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
+<!-- Dashboard Content -->
+<div class="dashboard-container">
             <!-- Stats Cards -->
             <div class="row g-4 mb-4">
                 <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-card-icon primary">
-                            <i class="bi bi-building"></i>
+                    <a href="<?= site_url('admin/users') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon info">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_users) ?></div>
+                            <div class="stats-card-label">Total Users</div>
                         </div>
-                        <div class="stats-card-value"><?= number_format($total_perusahaan) ?></div>
-                        <div class="stats-card-label">Total Perusahaan</div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-card-icon success">
-                            <i class="bi bi-geo-alt"></i>
+                    <a href="<?= site_url('admin/kalkulator_panen') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon warning">
+                                <i class="bi bi-calculator"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_kalkulasi_panen) ?></div>
+                            <div class="stats-card-label">Kalkulasi Panen</div>
                         </div>
-                        <div class="stats-card-value"><?= number_format($total_kabupaten) ?></div>
-                        <div class="stats-card-label">Total Kabupaten</div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-card-icon warning">
-                            <i class="bi bi-currency-dollar"></i>
+                    <a href="<?= site_url('admin/kalkulator_pupuk') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon warning">
+                                <i class="bi bi-calculator"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_kalkulasi_pupuk) ?></div>
+                            <div class="stats-card-label">Kalkulasi Pupuk</div>
                         </div>
-                        <div class="stats-card-value"><?= number_format($total_harga_tbs) ?></div>
-                        <div class="stats-card-label">Total Harga TBS</div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col-md-3">
-                    <div class="stats-card">
-                        <div class="stats-card-icon info">
-                            <i class="bi bi-people"></i>
+                    <a href="<?= site_url('admin/harga_tbs') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon success">
+                                <i class="bi bi-currency-dollar"></i>
+                            </div>
+                            <div class="stats-card-value">Rp <?= number_format($avg_harga_tbs, 0, ',', '.') ?></div>
+                            <div class="stats-card-label">Harga TBS Rata-rata</div>
+                            <div class="stats-card-subtitle">
+                                <small class="text-muted">per kilogram</small>
+                            </div>
                         </div>
-                        <div class="stats-card-value"><?= number_format($total_users) ?></div>
-                        <div class="stats-card-label">Total Users</div>
-                    </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Additional Stats Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <a href="<?= site_url('admin/kabupaten') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon success">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_kabupaten) ?></div>
+                            <div class="stats-card-label">Total Kabupaten</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="<?= site_url('admin/pupuk') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon warning">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_jenis_pupuk) ?></div>
+                            <div class="stats-card-label">Jenis Pupuk</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="<?= site_url('admin/penyakit') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon danger">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_penyakit) ?></div>
+                            <div class="stats-card-label">Jenis Penyakit</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a href="<?= site_url('admin/perusahaan') ?>" class="stats-card-link">
+                        <div class="stats-card">
+                            <div class="stats-card-icon primary">
+                                <i class="bi bi-building"></i>
+                            </div>
+                            <div class="stats-card-value"><?= number_format($total_perusahaan) ?></div>
+                            <div class="stats-card-label">Total Perusahaan</div>
+                        </div>
+                    </a>
                 </div>
             </div>
             
             <div class="row g-4">
                 <!-- Harga TBS Terbaru -->
-                <div class="col-lg-8">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0"><i class="bi bi-currency-dollar"></i> Harga TBS Terbaru per Perusahaan</h5>
@@ -78,7 +116,6 @@
                                             <th>Kabupaten</th>
                                             <th>Tanggal</th>
                                             <th>Harga/Kg</th>
-                                            <th>Perubahan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,81 +126,16 @@
                                                     <td><?= $price->nama_kabupaten ?: '-' ?></td>
                                                     <td><?= date('d M Y', strtotime($price->tanggal)) ?></td>
                                                     <td><strong>Rp <?= number_format($price->harga_per_kg, 0, ',', '.') ?></strong></td>
-                                                    <td>
-                                                        <?php if (isset($price->status_perubahan)): ?>
-                                                            <?php if ($price->status_perubahan == 'naik'): ?>
-                                                                <span class="badge badge-success">
-                                                                    <i class="bi bi-arrow-up"></i> Rp <?= number_format(abs($price->perubahan), 0, ',', '.') ?>
-                                                                </span>
-                                                            <?php elseif ($price->status_perubahan == 'turun'): ?>
-                                                                <span class="badge badge-danger">
-                                                                    <i class="bi bi-arrow-down"></i> Rp <?= number_format(abs($price->perubahan), 0, ',', '.') ?>
-                                                                </span>
-                                                            <?php else: ?>
-                                                                <span class="badge badge-secondary">
-                                                                    <i class="bi bi-dash"></i> -
-                                                                </span>
-                                                            <?php endif; ?>
-                                                        <?php else: ?>
-                                                            <span class="badge badge-secondary">-</span>
-                                                        <?php endif; ?>
-                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
                                             <tr>
-                                                <td colspan="5" class="text-center text-muted">Belum ada data harga TBS</td>
+                                                <td colspan="4" class="text-center text-muted">Belum ada data harga TBS</td>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Perubahan Harga Widget -->
-                <div class="col-lg-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0"><i class="bi bi-graph-up"></i> Perubahan Harga</h5>
-                        </div>
-                        <div class="card-body">
-                            <?php 
-                            $perubahan_data = [];
-                            foreach ($tbs_prices as $price) {
-                                if (isset($price->status_perubahan) && $price->status_perubahan != 'tidak_ada') {
-                                    $perubahan_data[] = $price;
-                                }
-                            }
-                            ?>
-                            <?php if (!empty($perubahan_data)): ?>
-                                <div class="list-group list-group-flush">
-                                    <?php foreach (array_slice($perubahan_data, 0, 5) as $price): ?>
-                                        <div class="list-group-item border-0 px-0 py-2">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <strong><?= $price->nama_perusahaan ?: '-' ?></strong>
-                                                    <small class="d-block text-muted"><?= $price->nama_kabupaten ?: '-' ?></small>
-                                                </div>
-                                                <div class="text-end">
-                                                    <?php if ($price->status_perubahan == 'naik'): ?>
-                                                        <span class="badge badge-success">
-                                                            <i class="bi bi-arrow-up"></i> Rp <?= number_format(abs($price->perubahan), 0, ',', '.') ?>
-                                                        </span>
-                                                    <?php elseif ($price->status_perubahan == 'turun'): ?>
-                                                        <span class="badge badge-danger">
-                                                            <i class="bi bi-arrow-down"></i> Rp <?= number_format(abs($price->perubahan), 0, ',', '.') ?>
-                                                        </span>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            <?php else: ?>
-                                <p class="text-muted text-center mb-0">Belum ada data perubahan harga</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

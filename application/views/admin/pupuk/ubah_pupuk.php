@@ -9,8 +9,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/dashboard') ?>">Home</a></li>
-                        <li class="breadcrumb-item"><a href="<?= base_url('admin/pupuk') ?>">Pupuk</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
+                        <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/pupuk') ?>">Pupuk</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
                 </div><!-- /.col -->
@@ -76,7 +76,7 @@
                                             if (strpos($gambar_pupuk, 'assets/img/pupuk/') !== false) {
                                                 $gambar_pupuk = basename($gambar_pupuk);
                                             }
-                                            $gambar_url = base_url('assets/img/pupuk/' . $gambar_pupuk);
+                                            $gambar_url = base_url(uri: 'assets/img/pupuk/' . $gambar_pupuk);
                                         ?>
                                             <div class="mb-2">
                                                 <img src="<?= $gambar_url ?>" alt="Gambar saat ini" style="max-width: 200px; height: auto; border-radius: 4px;" onerror="this.onerror=null; this.style.display='none';">
@@ -88,7 +88,7 @@
                                     </div>
                                     
                                     <button type="submit" class="btn btn-primary">Update</button>
-                                    <a href="<?= base_url('admin/pupuk') ?>" class="btn btn-danger">Kembali</a>
+                                    <a href="<?= base_url(uri: 'admin/pupuk') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
