@@ -186,56 +186,68 @@ function calculateHarvest() {
 }
 
 function displayResult(data) {
-    var html = '<div class="result-summary">';
+    var html = '<div class="result-section">';
+    html += '<h3 class="result-section-title">Hasil Kalkulasi</h3>';
+    
+    // Hasil Bersih (Highlighted)
+    html += '<div class="result-summary">';
     html += '<h3>Hasil Bersih</h3>';
     html += '<div class="amount">Rp ' + formatNumber(data.hasilBersih) + '</div>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Berat Kotor</div>';
-    html += '<div class="result-value">' + formatNumber(data.beratKotor) + ' kg</div>';
+    // Informasi Detail
+    html += '<div class="result-info-card">';
+    html += '<div class="result-info-row">';
+    html += '<span class="result-info-label">Berat Kotor:</span>';
+    html += '<span class="result-info-value">' + formatNumber(data.beratKotor) + ' kg</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Potongan (' + data.potongan + '%)</div>';
-    html += '<div class="result-value">' + formatNumber(data.beratKotor - data.beratBersih) + ' kg</div>';
+    html += '<div class="result-info-row">';
+    html += '<span class="result-info-label">Potongan (' + data.potongan + '%):</span>';
+    html += '<span class="result-info-value">' + formatNumber(data.beratKotor - data.beratBersih) + ' kg</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Berat Bersih</div>';
-    html += '<div class="result-value">' + formatNumber(data.beratBersih) + ' kg</div>';
+    html += '<div class="result-info-row">';
+    html += '<span class="result-info-label">Berat Bersih:</span>';
+    html += '<span class="result-info-value">' + formatNumber(data.beratBersih) + ' kg</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Harga per KG</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.hargaPerKg) + '</div>';
+    html += '<div class="result-info-row">';
+    html += '<span class="result-info-label">Harga per KG:</span>';
+    html += '<span class="result-info-value">Rp ' + formatNumber(data.hargaPerKg) + '</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Pendapatan Kotor</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.pendapatanKotor) + '</div>';
+    html += '<div class="result-info-row">';
+    html += '<span class="result-info-label">Pendapatan Kotor:</span>';
+    html += '<span class="result-info-value">Rp ' + formatNumber(data.pendapatanKotor) + '</span>';
+    html += '</div>';
     html += '</div>';
     
-    html += '<hr style="margin: 1rem 0; border: none; border-top: 1px solid var(--border-color);">';
+    // Total Biaya
+    html += '<div class="result-dosis-card">';
+    html += '<h4 class="result-dosis-title">Total Biaya</h4>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Upah Panen</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.upahPanen) + '</div>';
+    html += '<div class="result-dosis-item">';
+    html += '<span class="result-dosis-label">Upah Panen:</span>';
+    html += '<span class="result-dosis-value">Rp ' + formatNumber(data.upahPanen) + '</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Biaya Transportasi</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.biayaTransportasi) + '</div>';
+    html += '<div class="result-dosis-item">';
+    html += '<span class="result-dosis-label">Biaya Transportasi:</span>';
+    html += '<span class="result-dosis-value">Rp ' + formatNumber(data.biayaTransportasi) + '</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Potong Hutang</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.potongHutang) + '</div>';
+    html += '<div class="result-dosis-item">';
+    html += '<span class="result-dosis-label">Potong Hutang:</span>';
+    html += '<span class="result-dosis-value">Rp ' + formatNumber(data.potongHutang) + '</span>';
     html += '</div>';
     
-    html += '<div class="result-item">';
-    html += '<div class="result-label">Total Biaya</div>';
-    html += '<div class="result-value">Rp ' + formatNumber(data.totalBiaya) + '</div>';
+    html += '<div class="result-dosis-item" style="border-top: 2px solid rgba(27, 94, 32, 0.2); padding-top: 0.75rem; margin-top: 0.75rem;">';
+    html += '<span class="result-dosis-label" style="font-weight: 700; color: var(--primary-color);">Total Biaya:</span>';
+    html += '<span class="result-dosis-value" style="font-weight: 700; color: var(--primary-color);">Rp ' + formatNumber(data.totalBiaya) + '</span>';
+    html += '</div>';
+    html += '</div>';
+    
     html += '</div>';
     
     // Cek apakah user sudah login
@@ -244,8 +256,8 @@ function displayResult(data) {
     if (!userLoggedIn) {
         // Pesan untuk user yang belum login
         html += '<div class="result-login-prompt">';
-        html += '<h4 class="login-prompt-title">🔒 Ingin menyimpan hasil kalkulasi ini?</h4>';
-        html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">🔑 Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">📝 Daftar</a> terlebih dahulu.</p>';
+        html += '<h4 class="login-prompt-title">Ingin menyimpan hasil kalkulasi ini?</h4>';
+        html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">Daftar</a> terlebih dahulu.</p>';
         html += '<div class="login-prompt-benefits">';
         html += '<p>Dengan login, Anda bisa:</p>';
         html += '<ul>';
@@ -257,16 +269,19 @@ function displayResult(data) {
         html += '</div>';
     } else {
         // Button untuk menyimpan (jika sudah login)
-        html += '<div class="mt-3">';
-        html += '<button type="button" class="btn btn-success btn-block" id="btnSave">Simpan Hasil Perhitungan</button>';
+        html += '<div class="result-actions">';
+        html += '<button type="button" class="btn btn-success btn-block" id="btnSave">';
+        html += '<span class="btn-text">Simpan Kalkulasi</span>';
+        html += '</button>';
         html += '</div>';
     }
     
     $('#resultContent').html(html);
     
-    // Show chart container and draw chart
-    $('.chart-container').show();
-    drawChart(data);
+    // Scroll to result
+    $('html, body').animate({
+        scrollTop: $('#resultContainer').offset().top - 100
+    }, 500);
     
     // Save button handler (jika ada)
     if (userLoggedIn) {
@@ -309,7 +324,6 @@ function saveCalculation(data) {
             if (response.success) {
                 // Tampilkan pesan sukses yang bagus
                 var successHtml = '<div class="result-success-message">';
-                successHtml += '<div class="success-icon">✅</div>';
                 successHtml += '<div class="success-content">';
                 successHtml += '<h4>Hasil kalkulasi berhasil disimpan!</h4>';
                 successHtml += '<p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Data kalkulasi Anda telah tersimpan ke histori dan dapat dilihat kapan saja.</p>';
@@ -350,22 +364,22 @@ function showNotification(type, title, message, showLoginButton) {
     
     switch(type) {
         case 'success':
-            icon = '✅';
+            icon = '';
             bgColor = 'rgba(46, 125, 50, 0.1)';
             borderColor = 'rgba(46, 125, 50, 0.3)';
             break;
         case 'error':
-            icon = '❌';
+            icon = '';
             bgColor = 'rgba(211, 47, 47, 0.1)';
             borderColor = 'rgba(211, 47, 47, 0.3)';
             break;
         case 'warning':
-            icon = '⚠️';
+            icon = '';
             bgColor = 'rgba(255, 193, 7, 0.1)';
             borderColor = 'rgba(255, 193, 7, 0.3)';
             break;
         default:
-            icon = 'ℹ️';
+            icon = '';
             bgColor = 'rgba(33, 150, 243, 0.1)';
             borderColor = 'rgba(33, 150, 243, 0.3)';
     }
@@ -391,7 +405,7 @@ function showNotification(type, title, message, showLoginButton) {
         notificationHtml += 'color: white; padding: 0.625rem 1.25rem; border-radius: 8px; ';
         notificationHtml += 'text-decoration: none; font-weight: 600; font-size: 0.9rem; ';
         notificationHtml += 'display: inline-block; transition: all 0.3s ease;';
-        notificationHtml += '">🔑 Login Sekarang</a>';
+        notificationHtml += '">Login Sekarang</a>';
         notificationHtml += '<button onclick="$(this).closest(\'.custom-notification\').fadeOut(300, function(){$(this).remove()})" style="';
         notificationHtml += 'background: transparent; border: 2px solid var(--border-color); ';
         notificationHtml += 'color: var(--text-color); padding: 0.625rem 1.25rem; border-radius: 8px; ';
@@ -432,43 +446,10 @@ if (!$('#notification-styles').length) {
 }
 
 function formatNumber(num) {
-    return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    if (typeof num === 'string' && num === 'Tidak tersedia') return num;
+    return parseFloat(num).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-function drawChart(data) {
-    var canvas = document.getElementById('harvestChart');
-    if (!canvas) return;
-    
-    var ctx = canvas.getContext('2d');
-    var width = canvas.width;
-    var height = canvas.height;
-    
-    // Clear canvas
-    ctx.clearRect(0, 0, width, height);
-    
-    // Simple bar chart
-    var maxValue = Math.max(data.pendapatanKotor, data.totalBiaya, data.hasilBersih);
-    var barWidth = 80;
-    var spacing = 30;
-    var startX = 50;
-    var chartHeight = height - 60;
-    
-    // Draw bars
-    drawBar(ctx, startX, chartHeight, barWidth, (data.pendapatanKotor / maxValue) * chartHeight, '#4a7c2a', 'Pendapatan');
-    drawBar(ctx, startX + barWidth + spacing, chartHeight, barWidth, (data.totalBiaya / maxValue) * chartHeight, '#c0392b', 'Biaya');
-    drawBar(ctx, startX + (barWidth + spacing) * 2, chartHeight, barWidth, (data.hasilBersih / maxValue) * chartHeight, '#2d5016', 'Bersih');
-}
-
-function drawBar(ctx, x, baseY, width, height, color, label) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x, baseY - height, width, height);
-    
-    // Label
-    ctx.fillStyle = '#333';
-    ctx.font = '12px Arial';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, x + width / 2, baseY + 15);
-}
-
+// Fungsi untuk cek dan simpan data pending dari localStorage
 // baseUrl sudah diset di footer.php
 

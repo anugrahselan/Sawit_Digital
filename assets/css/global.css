@@ -13,12 +13,47 @@ body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    padding-top: 80px; /* Space untuk fixed navbar */
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 24px;
+}
+
+/* Full width untuk layar sangat besar */
+@media (min-width: 1600px) {
+    .container {
+        max-width: 1600px;
+        padding: 0 32px;
+    }
+}
+
+/* Padding lebih kecil untuk mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 16px;
+    }
+}
+
+/* Khusus untuk mobile sangat kecil (320px) */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 8px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 8px;
+    }
 }
 
 /* Colors */
@@ -42,8 +77,11 @@ body {
     color: var(--white);
     padding: 1rem 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.25);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     z-index: 1000;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(250, 250, 250, 0.1);
@@ -57,6 +95,30 @@ body {
     align-items: center;
     position: relative;
     overflow: visible;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Responsive padding untuk navbar */
+@media (min-width: 1600px) {
+    .navbar .container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
 
 .logo-link {
@@ -181,6 +243,22 @@ body {
     align-items: center;
 }
 
+/* Tambahkan padding untuk item terakhir (Profil) agar tidak terlalu pinggir */
+.navbar-menu > li:last-child {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.navbar-menu > li:last-child > a {
+    padding-right: 1rem;
+    padding-left: 0.75rem;
+}
+
+/* Pastikan spacing yang baik untuk semua item navbar */
+.navbar-menu a {
+    padding: 0.75rem 0.75rem;
+}
+
 .navbar-menu a {
     color: var(--white);
     text-decoration: none;
@@ -258,6 +336,7 @@ body {
 .navbar-menu > li:last-child .dropdown-menu {
     left: auto;
     right: 0;
+    margin-right: 0;
 }
 
 /* Pastikan semua dropdown menu tidak terpotong dan memiliki ukuran yang konsisten */
@@ -392,8 +471,14 @@ body {
     min-height: 500px;
     display: flex;
     align-items: center;
-    margin-top: -40px;
+    margin-top: 0;
     margin-bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .hero-banner .container * {
@@ -474,7 +559,7 @@ body {
 /* Page Header Styles */
 .page-header {
     text-align: center;
-    margin: 3rem 0 2.5rem;
+    margin: 1.5rem 0 2.5rem !important;
     padding: 2rem 0;
 }
 
@@ -497,40 +582,131 @@ body {
 
 /* Search Section */
 .search-section {
-    background-color: var(--white);
-    padding: 2.5rem 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, var(--white) 0%, #FAFAFA 100%);
+    padding: 2.5rem 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     margin-top: -2rem;
     position: relative;
     z-index: 10;
-    border-radius: 16px;
-    margin-left: 24px;
-    margin-right: 24px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    border: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+.search-section .container {
+    padding: 0;
+}
+
+/* Responsive untuk mobile */
+@media (max-width: 1200px) {
+    .search-section {
+        margin-left: 24px;
+        margin-right: 24px;
+        max-width: calc(100% - 48px);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-section {
+        margin-left: 16px;
+        margin-right: 16px;
+        max-width: calc(100% - 32px);
+        padding: 2rem 1.25rem;
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-section {
+        margin-left: 12px;
+        margin-right: 12px;
+        max-width: calc(100% - 24px);
+        padding: 1.5rem 1rem;
+        border-radius: 12px;
+    }
+}
+
+/* Khusus untuk mobile sangat kecil (320px) */
+@media (max-width: 360px) {
+    .search-section {
+        margin-left: 8px;
+        margin-right: 8px;
+        max-width: calc(100% - 16px);
+        padding: 1.25rem 0.75rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .search-section {
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+        padding: 1rem 0.75rem;
+        border-radius: 0;
+    }
 }
 
 .search-form {
     display: flex;
     gap: 1rem;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    align-items: center;
+    position: relative;
 }
 
 .search-input {
     flex: 1;
-    padding: 1rem 1.5rem;
+    padding: 1.125rem 1.5rem 1.125rem 3.5rem;
     border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 14px;
     font-size: 1rem;
-    transition: var(--transition);
-    background-color: var(--bg-color);
+    transition: all 0.3s ease;
+    background-color: var(--white);
+    color: var(--text-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    width: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 1.25rem center;
+    background-size: 20px 20px;
+}
+
+.search-input::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
 }
 
 .search-input:focus {
     outline: none;
     border-color: var(--accent-color);
     background-color: var(--white);
-    box-shadow: 0 0 0 4px rgba(27, 94, 32, 0.1);
+    box-shadow: 0 4px 16px rgba(27, 94, 32, 0.15), 0 0 0 4px rgba(27, 94, 32, 0.08);
     transform: translateY(-2px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%231B5E20' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+}
+
+@media (max-width: 768px) {
+    .search-input {
+        padding-left: 3rem;
+        font-size: 0.95rem;
+        background-position: left 1rem center;
+        background-size: 18px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input {
+        padding-left: 2.75rem;
+        padding-right: 1.25rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        background-position: left 0.875rem center;
+        background-size: 16px 16px;
+    }
 }
 
 /* Buttons */
@@ -593,13 +769,76 @@ body {
 .btn-search {
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     color: var(--white);
-    padding: 1rem 2.5rem;
+    padding: 1.125rem 2.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    min-width: 120px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-search::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.btn-search:hover::after {
+    width: 300px;
+    height: 300px;
 }
 
 .btn-search:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4);
+    box-shadow: 0 6px 24px rgba(27, 94, 32, 0.4);
     background: linear-gradient(135deg, #0D4A12 0%, #1B5E20 100%);
+}
+
+.btn-search:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(27, 94, 32, 0.3);
+}
+
+@media (max-width: 768px) {
+    .btn-search {
+        padding: 1rem 2rem;
+        min-width: 100px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-form {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .search-input {
+        width: 100%;
+    }
+    
+    .btn-search {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        min-width: auto;
+    }
+    
+    .search-form::before {
+        left: 1rem;
+    }
+    
+    .search-input {
+        padding-left: 3rem;
+    }
 }
 
 /* Search Highlight */
@@ -630,6 +869,52 @@ body {
 
 #searchResults {
     animation: slideDown 0.3s ease-out;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#searchResultsContent {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+#searchResultsContent p {
+    margin-bottom: 0.75rem;
+    color: var(--text-light);
+}
+
+#searchResultsContent ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#searchResultsContent li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#searchResultsContent li:last-child {
+    border-bottom: none;
+}
+
+#searchResultsContent a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+#searchResultsContent a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
 
 @keyframes slideDown {
@@ -640,6 +925,22 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    #searchResults {
+        margin-top: 1.25rem;
+        padding: 1.25rem;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    #searchResults {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 10px;
     }
 }
 

@@ -230,7 +230,7 @@
     }
 </script>
 <?php if (isset($page_js)): ?>
-    <script src="<?= base_url('assets/js/' . $page_js); ?>" defer></script>
+    <script src="<?= base_url('assets/js/' . $page_js) . '?v=' . time(); ?>" defer></script>
 <?php endif; ?>
 </body>
 </html>

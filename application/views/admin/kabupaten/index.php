@@ -24,56 +24,97 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3 class="card-title">Daftar Kabupaten</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="<?= base_url(uri: 'admin/kabupaten/tambah') ?>" class="btn btn-primary">
+                                        <i class="fa fa-plus"></i> Tambah Data
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
-                            <p class="card-text">
-                                <?php if ($this->session->flashdata('message')): ?>
-                                    <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
-                                        <?= $this->session->flashdata('message') ?>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                            <?php if ($this->session->flashdata('message')): ?>
+                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show"
+                                    role="alert">
+                                    <?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
+
+                            <!-- Search Bar -->
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" id="searchInput" class="form-control"
+                                                placeholder="Cari nama kabupaten...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-success w-100" type="button" id="searchBtn">
+                                            <i class="fa fa-search"></i> Cari
                                         </button>
                                     </div>
-                                <?php endif; ?>
-                                
-                                <a href="<?= base_url(uri: 'admin/kabupaten/tambah') ?>" class="btn btn-labeled btn-primary">
-                                    <span class="btn-label"><i class="fa fa-plus"></i></span> Tambah Data
-                                </a>
-                                
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">No</th>
-                                            <th scope="col">Nama Kabupaten</th>
-                                            <th scope="col">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (!empty($kabupaten)): ?>
-                                            <?php $i = 1; foreach ($kabupaten as $kab): ?>
-                                                <tr>
-                                                    <td><?= $i ?></td>
-                                                    <td><?= $kab->nama_kabupaten ?></td>
+                                </div>
+                            </div>
+
+                            <?php if (!empty($kabupaten)): ?>
+                                <div class="riwayat-table-wrapper">
+                                    <table class="riwayat-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">NO</th>
+                                                <th style="text-align: center;">NAMA KABUPATEN</th>
+                                                <th style="width: 150px; text-align: center;">AKSI</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1;
+                                            foreach ($kabupaten as $kab): ?>
+                                                <tr class="riwayat-row" data-id="<?= $kab->id_kabupaten ?>">
+                                                    <td style="text-align: center;"><?= $i ?></td>
+                                                    <td><strong><?= htmlspecialchars($kab->nama_kabupaten) ?></strong></td>
                                                     <td>
-                                                        <a href="<?= base_url(uri: 'admin/kabupaten/ubah/') ?><?= $kab->id_kabupaten ?>" class="badge badge-success">edit</a>
-                                                        <a href="<?= base_url(uri: 'admin/kabupaten/hapus/') ?><?= $kab->id_kabupaten ?>" class="badge badge-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">delete</a>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="<?= base_url(uri: 'admin/kabupaten/ubah/') ?><?= $kab->id_kabupaten ?>"
+                                                                class="btn btn-sm btn-success" title="Edit">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a href="<?= base_url(uri: 'admin/kabupaten/hapus/') ?><?= $kab->id_kabupaten ?>"
+                                                                class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Yakin ingin menghapus data ini?')"
+                                                                title="Hapus">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
-                                            <?php $i++; endforeach; ?>
-                                        <?php else: ?>
-                                            <tr>
-                                                <td colspan="3" class="text-center">Tidak ada data</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                </table>
-                                
+                                                <?php $i++; endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
                                 <?php if (isset($pagination_links)): ?>
                                     <div class="mt-3">
                                         <?= $pagination_links ?>
                                     </div>
                                 <?php endif; ?>
-                            </p>
+                            <?php else: ?>
+                                <div class="empty-state">
+                                    <div class="empty-icon">📍</div>
+                                    <h3>Belum Ada Data Kabupaten</h3>
+                                    <p>Anda belum menambahkan data kabupaten. Klik tombol "Tambah Data" untuk menambahkan
+                                        data baru.</p>
+                                    <a href="<?= base_url(uri: 'admin/kabupaten/tambah') ?>" class="btn btn-primary">Tambah
+                                        Data</a>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <!-- /.col-md-6 -->
@@ -85,3 +126,264 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <style>
+        /* Hybrid Table Styles for Admin */
+        :root {
+            --admin-primary: #1B5E20;
+            --admin-secondary: #2E7D32;
+            --admin-accent: #388E3C;
+            --admin-bg: #FAFAFA;
+            --admin-text: #2c3e50;
+            --admin-border: #e9ecef;
+            --admin-text-light: #6c757d;
+        }
+
+        /* Card Header Styles */
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+        }
+
+        .card-header .row {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0;
+        }
+
+        .card-header .col-md-6:first-child {
+            flex: 1;
+        }
+
+        .card-header .col-md-6:last-child {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: 700 !important;
+            font-size: 1.5rem;
+            color: var(--admin-text);
+            margin: 0;
+        }
+
+        .riwayat-table-wrapper {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 16px;
+            border: 2px solid rgba(27, 94, 32, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .riwayat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            table-layout: fixed;
+        }
+
+        .riwayat-table thead {
+            background: linear-gradient(135deg, rgba(27, 94, 32, 0.1) 0%, rgba(46, 125, 50, 0.05) 100%);
+        }
+
+        .riwayat-table thead th {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            color: var(--admin-primary);
+            font-size: 0.95rem;
+            border-bottom: 2px solid rgba(27, 94, 32, 0.2);
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .riwayat-table thead th:last-child {
+            width: 150px;
+        }
+
+        .riwayat-table tbody tr.riwayat-row {
+            border-bottom: 1px solid rgba(27, 94, 32, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .riwayat-table tbody tr.riwayat-row:hover {
+            background: rgba(27, 94, 32, 0.03);
+        }
+
+        .riwayat-table tbody td {
+            padding: 1rem;
+            font-size: 0.95rem;
+            color: var(--admin-text);
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            text-align: center;
+        }
+
+        .riwayat-table tbody td:nth-child(2) {
+            text-align: left;
+        }
+
+        .riwayat-table tbody td:last-child {
+            width: 150px;
+            text-align: center;
+        }
+
+        .riwayat-table tbody td .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .riwayat-table tbody td .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(27, 94, 32, 0.03) 0%, rgba(46, 125, 50, 0.01) 100%);
+            border-radius: 16px;
+            border: 2px dashed rgba(27, 94, 32, 0.2);
+            margin-top: 2rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--admin-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            color: var(--admin-text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Search Bar Styles */
+        .input-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: stretch;
+        }
+
+        .input-group .form-control {
+            flex: 1;
+            margin: 0;
+            padding: 0.75rem 1.25rem !important;
+            border-radius: 10px !important;
+            border-top-right-radius: 10px !important;
+            border-bottom-right-radius: 10px !important;
+            border-top-left-radius: 10px !important;
+            border-bottom-left-radius: 10px !important;
+            border: 1px solid rgba(27, 94, 32, 0.2);
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+            height: auto !important;
+            min-height: 42px !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-group .form-control:focus {
+            border-color: var(--admin-primary);
+            box-shadow: 0 0 0 0.2rem rgba(27, 94, 32, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
+            outline: none;
+        }
+
+        .input-group-append {
+            margin-left: 0;
+            display: flex;
+        }
+
+        .input-group-append .btn,
+        #searchBtn {
+            margin: 0;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 10px !important;
+            font-weight: 600;
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+            height: auto !important;
+            min-height: 42px !important;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 2px 4px rgba(27, 94, 32, 0.2);
+        }
+
+        .input-group-append .btn:hover,
+        #searchBtn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(27, 94, 32, 0.3);
+        }
+    </style>
+
+    <script>
+        // Search Functionality
+        (function () {
+            'use strict';
+
+            function performSearch() {
+                var searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
+                var rows = document.querySelectorAll('tbody tr.riwayat-row');
+                var visibleCount = 0;
+
+                rows.forEach(function (row) {
+                    var namaCell = row.cells[1]; // Kolom NAMA KABUPATEN
+
+                    var namaText = namaCell ? namaCell.textContent.toLowerCase().trim() : '';
+
+                    var match = !searchInput || namaText.includes(searchInput);
+
+                    if (match) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            function initSearch() {
+                var searchBtn = document.getElementById('searchBtn');
+                var searchInput = document.getElementById('searchInput');
+
+                if (searchBtn) {
+                    searchBtn.addEventListener('click', performSearch);
+                }
+
+                if (searchInput) {
+                    searchInput.addEventListener('keyup', function (e) {
+                        if (e.key === 'Enter') {
+                            performSearch();
+                        } else {
+                            performSearch();
+                        }
+                    });
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSearch);
+            } else {
+                initSearch();
+            }
+        })();
+    </script>

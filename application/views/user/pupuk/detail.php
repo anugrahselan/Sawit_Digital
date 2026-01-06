@@ -41,7 +41,6 @@
                         <?php if(!empty($pupuk->kandungan)): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
-                                <span class="section-icon">🧪</span>
                                 <h2 class="fertilizer-section-title">Kandungan</h2>
                             </div>
                             <div class="fertilizer-section-content">
@@ -53,7 +52,6 @@
                         <?php if(!empty($pupuk->fungsi)): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
-                                <span class="section-icon">⚡</span>
                                 <h2 class="fertilizer-section-title">Fungsi</h2>
                             </div>
                             <div class="fertilizer-section-content">
@@ -65,7 +63,6 @@
                         <?php if(!empty($pupuk->waktu_aplikasi)): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
-                                <span class="section-icon">📅</span>
                                 <h2 class="fertilizer-section-title">Waktu Aplikasi</h2>
                             </div>
                             <div class="fertilizer-section-content">
@@ -77,7 +74,6 @@
                         <?php if(!empty($pupuk->catatan_khusus)): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
-                                <span class="section-icon">📝</span>
                                 <h2 class="fertilizer-section-title">Catatan Khusus</h2>
                             </div>
                             <div class="fertilizer-section-content">

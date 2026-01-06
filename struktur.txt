@@ -1,0 +1,580 @@
+Folder PATH listing for volume OS
+Volume serial number is 24D5-903F
+C:.
+¦   .editorconfig
+¦   .gitignore
+¦   .htaccess
+¦   composer.json
+¦   index.php
+¦   README.md
+¦   sawit.sql
+¦   struktur.txt
+¦   
++---application
+¦   ¦   .htaccess
+¦   ¦   index.html
+¦   ¦   
+¦   +---cache
+¦   +---config
+¦   ¦       autoload.php
+¦   ¦       config.php
+¦   ¦       constants.php
+¦   ¦       database.php
+¦   ¦       doctypes.php
+¦   ¦       foreign_chars.php
+¦   ¦       hooks.php
+¦   ¦       index.html
+¦   ¦       memcached.php
+¦   ¦       migration.php
+¦   ¦       mimes.php
+¦   ¦       profiler.php
+¦   ¦       routes.php
+¦   ¦       smileys.php
+¦   ¦       user_agents.php
+¦   ¦       
+¦   +---controllers
+¦   ¦   ¦   Auth.php
+¦   ¦   ¦   Home.php
+¦   ¦   ¦   index.html
+¦   ¦   ¦   
+¦   ¦   +---admin
+¦   ¦   ¦       Admin_dashboard.php
+¦   ¦   ¦       Admin_harga_tbs.php
+¦   ¦   ¦       Admin_informasi.php
+¦   ¦   ¦       Admin_kabupaten.php
+¦   ¦   ¦       Admin_kalkulator_panen.php
+¦   ¦   ¦       Admin_kalkulator_pupuk.php
+¦   ¦   ¦       Admin_penyakit.php
+¦   ¦   ¦       Admin_perusahaan.php
+¦   ¦   ¦       Admin_profile.php
+¦   ¦   ¦       Admin_pupuk.php
+¦   ¦   ¦       Admin_settings.php
+¦   ¦   ¦       Admin_tanah.php
+¦   ¦   ¦       Admin_users.php
+¦   ¦   ¦       
+¦   ¦   +---user
+¦   ¦           Api.php
+¦   ¦           Bantuan.php
+¦   ¦           Beranda.php
+¦   ¦           Informasi.php
+¦   ¦           Panen.php
+¦   ¦           Pencarian.php
+¦   ¦           Penyakit.php
+¦   ¦           Profil.php
+¦   ¦           Profil_perusahaan.php
+¦   ¦           Pupuk.php
+¦   ¦           Riwayat.php
+¦   ¦           
+¦   +---core
+¦   ¦       index.html
+¦   ¦       MY_Controller.php
+¦   ¦       
+¦   +---helpers
+¦   ¦       index.html
+¦   ¦       
+¦   +---logs
+¦   ¦       index.html
+¦   ¦       log-2025-12-28.php
+¦   ¦       log-2025-12-29.php
+¦   ¦       log-2025-12-30.php
+¦   ¦       
+¦   +---models
+¦   ¦       Harga_tbs_model.php
+¦   ¦       index.html
+¦   ¦       Informasi_tambahan_model.php
+¦   ¦       Jenis_pupuk_model.php
+¦   ¦       Kabupaten_model.php
+¦   ¦       Pengguna_model.php
+¦   ¦       Penyakit_model.php
+¦   ¦       Perusahaan_model.php
+¦   ¦       Tanah_model.php
+¦   ¦       
+¦   +---views
+¦       ¦   index.html
+¦       ¦   
+¦       +---admin
+¦       ¦   +---dashboard
+¦       ¦   ¦       index.php
+¦       ¦   ¦       
+¦       ¦   +---harga_tbs
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_harga_tbs.php
+¦       ¦   ¦       ubah_harga_tbs.php
+¦       ¦   ¦       
+¦       ¦   +---informasi
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_informasi.php
+¦       ¦   ¦       ubah_informasi.php
+¦       ¦   ¦       
+¦       ¦   +---kabupaten
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_kabupaten.php
+¦       ¦   ¦       ubah_kabupaten.php
+¦       ¦   ¦       
+¦       ¦   +---kalkulator_panen
+¦       ¦   ¦       index.php
+¦       ¦   ¦       
+¦       ¦   +---kalkulator_pupuk
+¦       ¦   ¦       index.php
+¦       ¦   ¦       
+¦       ¦   +---penyakit
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_penyakit.php
+¦       ¦   ¦       ubah_penyakit.php
+¦       ¦   ¦       
+¦       ¦   +---perusahaan
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_perusahaan.php
+¦       ¦   ¦       ubah_perusahaan.php
+¦       ¦   ¦       
+¦       ¦   +---profile
+¦       ¦   ¦       index.php
+¦       ¦   ¦       
+¦       ¦   +---pupuk
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_pupuk.php
+¦       ¦   ¦       ubah_pupuk.php
+¦       ¦   ¦       
+¦       ¦   +---settings
+¦       ¦   ¦       index.php
+¦       ¦   ¦       
+¦       ¦   +---tanah
+¦       ¦   ¦       index.php
+¦       ¦   ¦       Tambah_tanah.php
+¦       ¦   ¦       ubah_tanah.php
+¦       ¦   ¦       
+¦       ¦   +---templates
+¦       ¦   ¦       footer.php
+¦       ¦   ¦       header.php
+¦       ¦   ¦       sidebar.php
+¦       ¦   ¦       
+¦       ¦   +---users
+¦       ¦           index.php
+¦       ¦           
+¦       +---auth
+¦       ¦       login.php
+¦       ¦       
+¦       +---errors
+¦       ¦   ¦   index.html
+¦       ¦   ¦   
+¦       ¦   +---cli
+¦       ¦   ¦       error_404.php
+¦       ¦   ¦       error_db.php
+¦       ¦   ¦       error_exception.php
+¦       ¦   ¦       error_general.php
+¦       ¦   ¦       error_php.php
+¦       ¦   ¦       index.html
+¦       ¦   ¦       
+¦       ¦   +---html
+¦       ¦           error_404.php
+¦       ¦           error_db.php
+¦       ¦           error_exception.php
+¦       ¦           error_general.php
+¦       ¦           error_php.php
+¦       ¦           index.html
+¦       ¦           
+¦       +---user
+¦           +---bantuan
+¦           ¦       faq.php
+¦           ¦       hubungi_kami.php
+¦           ¦       kebijakan_privasi.php
+¦           ¦       pusat_bantuan.php
+¦           ¦       syarat_ketentuan.php
+¦           ¦       
+¦           +---beranda
+¦           ¦       index.php
+¦           ¦       
+¦           +---informasi
+¦           ¦       detail.php
+¦           ¦       index.php
+¦           ¦       
+¦           +---kalkulator_panen
+¦           ¦       index.php
+¦           ¦       
+¦           +---kalkulator_pupuk
+¦           ¦       index.php
+¦           ¦       
+¦           +---partials
+¦           ¦       kartu_artikel.php
+¦           ¦       kartu_shortcut.php
+¦           ¦       tabel_tbs.php
+¦           ¦       
+¦           +---pencarian
+¦           ¦       hasil.php
+¦           ¦       
+¦           +---penyakit
+¦           ¦       detail.php
+¦           ¦       index.php
+¦           ¦       
+¦           +---perusahaan
+¦           ¦       mitra_kerjasama.php
+¦           ¦       program.php
+¦           ¦       tentang_kami.php
+¦           ¦       visi_misi.php
+¦           ¦       
+¦           +---profil
+¦           ¦       edit.php
+¦           ¦       
+¦           +---pupuk
+¦           ¦       detail.php
+¦           ¦       jenis.php
+¦           ¦       
+¦           +---riwayat
+¦           ¦       index.php
+¦           ¦       
+¦           +---templates
+¦                   footer.php
+¦                   header.php
+¦                   
++---assets
+¦   +---css
+¦   ¦   ¦   global.css
+¦   ¦   ¦   
+¦   ¦   +---admin
+¦   ¦   ¦       dashboard.css
+¦   ¦   ¦       harga_tbs.css
+¦   ¦   ¦       informasi.css
+¦   ¦   ¦       kabupaten.css
+¦   ¦   ¦       kalkulator_panen.css
+¦   ¦   ¦       kalkulator_pupuk.css
+¦   ¦   ¦       main.css
+¦   ¦   ¦       penyakit.css
+¦   ¦   ¦       perusahaan.css
+¦   ¦   ¦       pupuk.css
+¦   ¦   ¦       settings.css
+¦   ¦   ¦       tanah.css
+¦   ¦   ¦       users.css
+¦   ¦   ¦       
+¦   ¦   +---auth
+¦   ¦   ¦       login.css
+¦   ¦   ¦       
+¦   ¦   +---user
+¦   ¦           bantuan.css
+¦   ¦           beranda.css
+¦   ¦           informasi.css
+¦   ¦           jenis_pupuk.css
+¦   ¦           kalkulator_panen.css
+¦   ¦           kalkulator_pupuk.css
+¦   ¦           penyakit.css
+¦   ¦           perusahaan.css
+¦   ¦           profil.css
+¦   ¦           riwayat.css
+¦   ¦           
+¦   +---img
+¦   ¦   +---articles
+¦   ¦   ¦       .gitkeep
+¦   ¦   ¦       header_pupuk.jpg
+¦   ¦   ¦       panen_bantuan.jpg
+¦   ¦   ¦       panen_bantuan_thumb.jpg
+¦   ¦   ¦       perkebunan-kelapa-sawit-20180315-004959.jpg
+¦   ¦   ¦       produktivitas.jpg
+¦   ¦   ¦       produktivitas_thumb.jpg
+¦   ¦   ¦       rad_sawit.jpg
+¦   ¦   ¦       rad_sawit_thumb.jpg
+¦   ¦   ¦       thumb_pupuk.jpg
+¦   ¦   ¦       
+¦   ¦   +---hero
+¦   ¦   ¦       hero-banner.jpg
+¦   ¦   ¦       login.jpg
+¦   ¦   ¦       
+¦   ¦   +---logo
+¦   ¦   ¦       logo.png
+¦   ¦   ¦       
+¦   ¦   +---penyakit
+¦   ¦   ¦       .gitkeep
+¦   ¦   ¦       ganoderma.png
+¦   ¦   ¦       kumbang_tanduk.png
+¦   ¦   ¦       tungau_merah.png
+¦   ¦   ¦       ulat_api.png
+¦   ¦   ¦       
+¦   ¦   +---pupuk
+¦   ¦   ¦       .gitkeep
+¦   ¦   ¦       695159cd2fef4_1766939085.png
+¦   ¦   ¦       dolomit.png
+¦   ¦   ¦       kcl.png
+¦   ¦   ¦       kieserite.png
+¦   ¦   ¦       tsp.png
+¦   ¦   ¦       urea.png
+¦   ¦   ¦       
+¦   ¦   +---users
+¦   ¦           .gitkeep
+¦   ¦           admin.png
+¦   ¦           budi.png
+¦   ¦           hendra.png
+¦   ¦           user_1767016421_695287e5aeaa2.png
+¦   ¦           
+¦   +---js
+¦       +---admin
+¦       ¦       main.js
+¦       ¦       
+¦       +---user
+¦               beranda.js
+¦               dropdown.js
+¦               informasi.js
+¦               kalkulator_panen.js
+¦               kalkulator_pupuk.js
+¦               pencarian.js
+¦               riwayat.js
+¦               
++---system
+    ¦   .htaccess
+    ¦   index.html
+    ¦   
+    +---core
+    ¦   ¦   Benchmark.php
+    ¦   ¦   CodeIgniter.php
+    ¦   ¦   Common.php
+    ¦   ¦   Config.php
+    ¦   ¦   Controller.php
+    ¦   ¦   Exceptions.php
+    ¦   ¦   Hooks.php
+    ¦   ¦   index.html
+    ¦   ¦   Input.php
+    ¦   ¦   Lang.php
+    ¦   ¦   Loader.php
+    ¦   ¦   Log.php
+    ¦   ¦   Model.php
+    ¦   ¦   Output.php
+    ¦   ¦   Router.php
+    ¦   ¦   Security.php
+    ¦   ¦   URI.php
+    ¦   ¦   Utf8.php
+    ¦   ¦   
+    ¦   +---compat
+    ¦           hash.php
+    ¦           index.html
+    ¦           mbstring.php
+    ¦           password.php
+    ¦           standard.php
+    ¦           
+    +---database
+    ¦   ¦   DB.php
+    ¦   ¦   DB_cache.php
+    ¦   ¦   DB_driver.php
+    ¦   ¦   DB_forge.php
+    ¦   ¦   DB_query_builder.php
+    ¦   ¦   DB_result.php
+    ¦   ¦   DB_utility.php
+    ¦   ¦   index.html
+    ¦   ¦   
+    ¦   +---drivers
+    ¦       ¦   index.html
+    ¦       ¦   
+    ¦       +---cubrid
+    ¦       ¦       cubrid_driver.php
+    ¦       ¦       cubrid_forge.php
+    ¦       ¦       cubrid_result.php
+    ¦       ¦       cubrid_utility.php
+    ¦       ¦       index.html
+    ¦       ¦       
+    ¦       +---ibase
+    ¦       ¦       ibase_driver.php
+    ¦       ¦       ibase_forge.php
+    ¦       ¦       ibase_result.php
+    ¦       ¦       ibase_utility.php
+    ¦       ¦       index.html
+    ¦       ¦       
+    ¦       +---mssql
+    ¦       ¦       index.html
+    ¦       ¦       mssql_driver.php
+    ¦       ¦       mssql_forge.php
+    ¦       ¦       mssql_result.php
+    ¦       ¦       mssql_utility.php
+    ¦       ¦       
+    ¦       +---mysql
+    ¦       ¦       index.html
+    ¦       ¦       mysql_driver.php
+    ¦       ¦       mysql_forge.php
+    ¦       ¦       mysql_result.php
+    ¦       ¦       mysql_utility.php
+    ¦       ¦       
+    ¦       +---mysqli
+    ¦       ¦       index.html
+    ¦       ¦       mysqli_driver.php
+    ¦       ¦       mysqli_forge.php
+    ¦       ¦       mysqli_result.php
+    ¦       ¦       mysqli_utility.php
+    ¦       ¦       
+    ¦       +---oci8
+    ¦       ¦       index.html
+    ¦       ¦       oci8_driver.php
+    ¦       ¦       oci8_forge.php
+    ¦       ¦       oci8_result.php
+    ¦       ¦       oci8_utility.php
+    ¦       ¦       
+    ¦       +---odbc
+    ¦       ¦       index.html
+    ¦       ¦       odbc_driver.php
+    ¦       ¦       odbc_forge.php
+    ¦       ¦       odbc_result.php
+    ¦       ¦       odbc_utility.php
+    ¦       ¦       
+    ¦       +---pdo
+    ¦       ¦   ¦   index.html
+    ¦       ¦   ¦   pdo_driver.php
+    ¦       ¦   ¦   pdo_forge.php
+    ¦       ¦   ¦   pdo_result.php
+    ¦       ¦   ¦   pdo_utility.php
+    ¦       ¦   ¦   
+    ¦       ¦   +---subdrivers
+    ¦       ¦           index.html
+    ¦       ¦           pdo_4d_driver.php
+    ¦       ¦           pdo_4d_forge.php
+    ¦       ¦           pdo_cubrid_driver.php
+    ¦       ¦           pdo_cubrid_forge.php
+    ¦       ¦           pdo_dblib_driver.php
+    ¦       ¦           pdo_dblib_forge.php
+    ¦       ¦           pdo_firebird_driver.php
+    ¦       ¦           pdo_firebird_forge.php
+    ¦       ¦           pdo_ibm_driver.php
+    ¦       ¦           pdo_ibm_forge.php
+    ¦       ¦           pdo_informix_driver.php
+    ¦       ¦           pdo_informix_forge.php
+    ¦       ¦           pdo_mysql_driver.php
+    ¦       ¦           pdo_mysql_forge.php
+    ¦       ¦           pdo_oci_driver.php
+    ¦       ¦           pdo_oci_forge.php
+    ¦       ¦           pdo_odbc_driver.php
+    ¦       ¦           pdo_odbc_forge.php
+    ¦       ¦           pdo_pgsql_driver.php
+    ¦       ¦           pdo_pgsql_forge.php
+    ¦       ¦           pdo_sqlite_driver.php
+    ¦       ¦           pdo_sqlite_forge.php
+    ¦       ¦           pdo_sqlsrv_driver.php
+    ¦       ¦           pdo_sqlsrv_forge.php
+    ¦       ¦           
+    ¦       +---postgre
+    ¦       ¦       index.html
+    ¦       ¦       postgre_driver.php
+    ¦       ¦       postgre_forge.php
+    ¦       ¦       postgre_result.php
+    ¦       ¦       postgre_utility.php
+    ¦       ¦       
+    ¦       +---sqlite
+    ¦       ¦       index.html
+    ¦       ¦       sqlite_driver.php
+    ¦       ¦       sqlite_forge.php
+    ¦       ¦       sqlite_result.php
+    ¦       ¦       sqlite_utility.php
+    ¦       ¦       
+    ¦       +---sqlite3
+    ¦       ¦       index.html
+    ¦       ¦       sqlite3_driver.php
+    ¦       ¦       sqlite3_forge.php
+    ¦       ¦       sqlite3_result.php
+    ¦       ¦       sqlite3_utility.php
+    ¦       ¦       
+    ¦       +---sqlsrv
+    ¦               index.html
+    ¦               sqlsrv_driver.php
+    ¦               sqlsrv_forge.php
+    ¦               sqlsrv_result.php
+    ¦               sqlsrv_utility.php
+    ¦               
+    +---fonts
+    ¦       index.html
+    ¦       texb.ttf
+    ¦       
+    +---helpers
+    ¦       array_helper.php
+    ¦       captcha_helper.php
+    ¦       cookie_helper.php
+    ¦       date_helper.php
+    ¦       directory_helper.php
+    ¦       download_helper.php
+    ¦       email_helper.php
+    ¦       file_helper.php
+    ¦       form_helper.php
+    ¦       html_helper.php
+    ¦       index.html
+    ¦       inflector_helper.php
+    ¦       language_helper.php
+    ¦       number_helper.php
+    ¦       path_helper.php
+    ¦       security_helper.php
+    ¦       smiley_helper.php
+    ¦       string_helper.php
+    ¦       text_helper.php
+    ¦       typography_helper.php
+    ¦       url_helper.php
+    ¦       xml_helper.php
+    ¦       
+    +---language
+    ¦   ¦   index.html
+    ¦   ¦   
+    ¦   +---english
+    ¦           calendar_lang.php
+    ¦           date_lang.php
+    ¦           db_lang.php
+    ¦           email_lang.php
+    ¦           form_validation_lang.php
+    ¦           ftp_lang.php
+    ¦           imglib_lang.php
+    ¦           index.html
+    ¦           migration_lang.php
+    ¦           number_lang.php
+    ¦           pagination_lang.php
+    ¦           profiler_lang.php
+    ¦           unit_test_lang.php
+    ¦           upload_lang.php
+    ¦           
+    +---libraries
+        ¦   Calendar.php
+        ¦   Cart.php
+        ¦   Driver.php
+        ¦   Email.php
+        ¦   Encrypt.php
+        ¦   Encryption.php
+        ¦   Form_validation.php
+        ¦   Ftp.php
+        ¦   Image_lib.php
+        ¦   index.html
+        ¦   Javascript.php
+        ¦   Migration.php
+        ¦   Pagination.php
+        ¦   Parser.php
+        ¦   Profiler.php
+        ¦   Table.php
+        ¦   Trackback.php
+        ¦   Typography.php
+        ¦   Unit_test.php
+        ¦   Upload.php
+        ¦   User_agent.php
+        ¦   Xmlrpc.php
+        ¦   Xmlrpcs.php
+        ¦   Zip.php
+        ¦   
+        +---Cache
+        ¦   ¦   Cache.php
+        ¦   ¦   index.html
+        ¦   ¦   
+        ¦   +---drivers
+        ¦           Cache_apc.php
+        ¦           Cache_dummy.php
+        ¦           Cache_file.php
+        ¦           Cache_memcached.php
+        ¦           Cache_redis.php
+        ¦           Cache_wincache.php
+        ¦           index.html
+        ¦           
+        +---Javascript
+        ¦       index.html
+        ¦       Jquery.php
+        ¦       
+        +---Session
+            ¦   CI_Session_driver_interface.php
+            ¦   index.html
+            ¦   OldSessionWrapper.php
+            ¦   PHP8SessionWrapper.php
+            ¦   Session.php
+            ¦   SessionHandlerInterface.php
+            ¦   SessionUpdateTimestampHandlerInterface.php
+            ¦   Session_driver.php
+            ¦   
+            +---drivers
+                    index.html
+                    Session_database_driver.php
+                    Session_files_driver.php
+                    Session_memcached_driver.php
+                    Session_redis_driver.php
+                    

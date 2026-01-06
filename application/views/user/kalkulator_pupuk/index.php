@@ -7,17 +7,14 @@
     <div class="calculator-container">
         <div class="calculator-form">
             <div class="form-header">
-                <h2>🧪 Kalkulasi Dosis Pupuk</h2>
+                <h2>Kalkulasi Dosis Pupuk</h2>
                 <p class="form-description">Silakan isi data berikut untuk menghitung dosis pupuk sesuai kondisi tanah dan tanaman Anda.<br>
                 Sistem akan otomatis menyesuaikan rekomendasi pupuk berdasarkan pH dan kandungan N, P, K tanah.</p>
             </div>
             <form id="fertilizerForm">
-                <!-- Username Display -->
+                <!-- User Info Display -->
                 <?php if ($this->session->userdata('id_user')): ?>
                 <div class="form-group user-info-display">
-                    <label>
-                        <span class="label-text">Username</span>
-                    </label>
                     <div class="user-info-value">
                         <strong><?= htmlspecialchars($this->session->userdata('username')) ?></strong>
                         <?php if ($this->session->userdata('nama_lengkap')): ?>
@@ -101,16 +98,6 @@
                     <input type="number" name="periode_per_tahun" id="periode_per_tahun" class="form-control" required min="1" step="1" value="4" placeholder="Contoh: 4">
                 </div>
                 
-                <!-- Input pH Aktual Tanah (Opsional) -->
-                <div class="form-group">
-                    <label for="ph_aktual">
-                        <span class="label-text">Input pH Aktual Tanah</span>
-                        <span class="label-hint">(opsional)</span>
-                    </label>
-                    <input type="number" name="ph_aktual" id="ph_aktual" class="form-control" min="0" max="14" step="0.1" placeholder="Contoh: 6.5">
-                    <small class="form-text text-muted">Jika tidak diisi, akan menggunakan estimasi pH dari jenis tanah yang dipilih</small>
-                </div>
-                
                 <!-- Keterangan Aplikasi -->
                 <div class="form-group">
                     <label for="keterangan_aplikasi">
@@ -122,7 +109,7 @@
                 
                 <!-- Button Hitung Dosis -->
                 <button type="submit" class="btn btn-primary btn-block">
-                    <span class="btn-text">🔍 Hitung Dosis</span>
+                    <span class="btn-text">Hitung Dosis</span>
                     <span class="btn-icon">→</span>
                 </button>
             </form>
@@ -132,7 +119,6 @@
             <h2>Hasil Perhitungan</h2>
             <div id="resultContent">
                 <div class="result-placeholder">
-                    <div class="placeholder-icon">📊</div>
                     <div class="placeholder-text">Hasil perhitungan akan muncul di sini setelah Anda mengisi form dan klik tombol "Hitung Dosis"</div>
                 </div>
             </div>
@@ -140,7 +126,7 @@
     </div>
 
     <div class="tips-box">
-        <h3>💡 Tips Aplikasi Pupuk</h3>
+        <h3>Tips Aplikasi Pupuk</h3>
         <ul>
             <li>Aplikasikan pupuk pada pagi atau sore hari untuk menghindari penguapan</li>
             <li>Pastikan tanah dalam kondisi lembab sebelum aplikasi</li>

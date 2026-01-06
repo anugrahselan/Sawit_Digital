@@ -110,24 +110,21 @@ function calculateDosis() {
     var kandunganK = parseFloat(selectedTanah.data('kandungan-k')) || null;
     var rekomendasiTanah = selectedTanah.data('rekomendasi') || '';
     
-    // Ambil pH aktual jika diisi, atau gunakan estimasi
-    var phAktual = parseFloat($('#ph_aktual').val());
-    var phDisplay = phAktual;
+    // Gunakan estimasi pH dari jenis tanah yang dipilih
     var phEstimate = null;
-    if (!phAktual || isNaN(phAktual)) {
-        // Gunakan rata-rata dari ph_min dan ph_max jika ada
-        if (phMin && phMax) {
-            phEstimate = ((phMin + phMax) / 2).toFixed(1);
-            phDisplay = phEstimate;
-        } else if (phMin) {
-            phEstimate = phMin;
-            phDisplay = phEstimate;
-        } else if (phMax) {
-            phEstimate = phMax;
-            phDisplay = phEstimate;
-        } else {
-            phDisplay = 'Tidak tersedia';
-        }
+    var phDisplay = null;
+    // Gunakan rata-rata dari ph_min dan ph_max jika ada
+    if (phMin && phMax) {
+        phEstimate = ((phMin + phMax) / 2).toFixed(1);
+        phDisplay = phEstimate;
+    } else if (phMin) {
+        phEstimate = phMin;
+        phDisplay = phEstimate;
+    } else if (phMax) {
+        phEstimate = phMax;
+        phDisplay = phEstimate;
+    } else {
+        phDisplay = 'Tidak tersedia';
     }
     
     // Ambil data pupuk
@@ -156,7 +153,6 @@ function calculateDosis() {
             displayResult({
                 nama_tanah: namaTanah,
                 ph_display: phDisplay,
-                ph_aktual: phAktual,
                 ph_estimate: phEstimate,
                 kandungan_n: kandunganN,
                 kandungan_p: kandunganP,
@@ -173,7 +169,6 @@ function calculateDosis() {
             displayResult({
                 nama_tanah: namaTanah,
                 ph_display: phDisplay,
-                ph_aktual: phAktual,
                 ph_estimate: phEstimate,
                 kandungan_n: kandunganN,
                 kandungan_p: kandunganP,
@@ -211,21 +206,24 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     var statusP = getKandunganStatus(data.kandungan_p);
     var statusK = getKandunganStatus(data.kandungan_k);
     
-    // Gabungkan rekomendasi
-    var rekomendasiGabungan = '';
-    if (data.rekomendasi_tanah) {
-        rekomendasiGabungan += data.rekomendasi_tanah;
+    // Informasi pupuk untuk ditampilkan
+    var infoPupuk = '';
+    if (data.nama_pupuk) {
+        infoPupuk = data.nama_pupuk;
+        if (data.kandungan_pupuk) {
+            infoPupuk += ' - ' + data.kandungan_pupuk;
+        }
+        if (data.fungsi_pupuk) {
+            infoPupuk += '. ' + data.fungsi_pupuk;
+        }
     }
-    if (data.fungsi_pupuk) {
-        if (rekomendasiGabungan) rekomendasiGabungan += ' ';
-        rekomendasiGabungan += data.fungsi_pupuk;
-    }
-    if (!rekomendasiGabungan) {
-        rekomendasiGabungan = 'Gunakan dosis sesuai rekomendasi untuk hasil optimal. Aplikasikan pupuk secara merata di sekitar pangkal pohon.';
+    if (!infoPupuk) {
+        infoPupuk = 'Informasi pupuk tidak tersedia.';
     }
     
+    
     var html = '<div class="result-section">';
-    html += '<h3 class="result-section-title">✅ Hasil Kalkulasi</h3>';
+    html += '<h3 class="result-section-title">Hasil Kalkulasi</h3>';
     
     // Informasi Tanah
     html += '<div class="result-info-card">';
@@ -237,9 +235,7 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">pH Tanah:</span>';
     html += '<span class="result-info-value">' + data.ph_display;
-    if (data.ph_aktual && data.ph_estimate) {
-        html += ' (estimasi: ' + data.ph_estimate + ')';
-    } else if (data.ph_estimate && !data.ph_aktual) {
+    if (data.ph_estimate) {
         html += ' (estimasi)';
     }
     if (phStatus) {
@@ -278,7 +274,7 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     
     // Hasil Perhitungan Dosis
     html += '<div class="result-dosis-card">';
-    html += '<h4 class="result-dosis-title">📊 Hasil Perhitungan Dosis</h4>';
+    html += '<h4 class="result-dosis-title">Hasil Perhitungan Dosis</h4>';
     
     html += '<div class="result-dosis-item">';
     html += '<span class="result-dosis-label">Dosis per Pohon:</span>';
@@ -296,10 +292,10 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     html += '</div>';
     html += '</div>';
     
-    // Rekomendasi
+    // Informasi Pupuk
     html += '<div class="result-rekomendasi-card">';
-    html += '<h4 class="result-rekomendasi-title">💡 Rekomendasi</h4>';
-    html += '<p class="result-rekomendasi-text">' + rekomendasiGabungan + '</p>';
+    html += '<h4 class="result-rekomendasi-title">Informasi Pupuk</h4>';
+    html += '<p class="result-rekomendasi-text">' + infoPupuk + '</p>';
     html += '</div>';
     
     html += '</div>';
@@ -310,8 +306,8 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     if (!userLoggedIn) {
         // Pesan untuk user yang belum login
         html += '<div class="result-login-prompt">';
-        html += '<h4 class="login-prompt-title">🔒 Ingin menyimpan hasil kalkulasi ini?</h4>';
-        html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">🔑 Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">📝 Daftar</a> terlebih dahulu.</p>';
+        html += '<h4 class="login-prompt-title">Ingin menyimpan hasil kalkulasi ini?</h4>';
+        html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">Daftar</a> terlebih dahulu.</p>';
         html += '<div class="login-prompt-benefits">';
         html += '<p>Dengan login, Anda bisa:</p>';
         html += '<ul>';
@@ -325,7 +321,6 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
         // Button untuk menyimpan (jika sudah login)
         html += '<div class="result-actions">';
         html += '<button type="button" class="btn btn-success btn-block" id="btnSaveDosis">';
-        html += '<span class="btn-icon-left">💾</span>';
         html += '<span class="btn-text">Simpan Kalkulasi</span>';
         html += '</button>';
         html += '</div>';
@@ -374,10 +369,9 @@ function saveDosis(data, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTah
             if (response.success) {
                 // Tampilkan pesan sukses
                 var successHtml = '<div class="result-success-message">';
-                successHtml += '<div class="success-icon">✅</div>';
                 successHtml += '<div class="success-content">';
                 successHtml += '<h4>Hasil kalkulasi berhasil disimpan ke histori Anda.</h4>';
-                successHtml += '<p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Data kalkulasi Anda telah tersimpan dan dapat dilihat di dashboard admin.</p>';
+                successHtml += '<p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Data kalkulasi Anda telah tersimpan dan dapat dilihat di halaman riwayat kalkulasi.</p>';
                 successHtml += '</div>';
                 successHtml += '</div>';
                 
@@ -411,17 +405,17 @@ function showNotification(type, title, message, showLoginButton) {
     
     switch(type) {
         case 'success':
-            icon = '✅';
+            icon = '';
             bgColor = 'rgba(46, 125, 50, 0.1)';
             borderColor = 'rgba(46, 125, 50, 0.3)';
             break;
         case 'error':
-            icon = '❌';
+            icon = '';
             bgColor = 'rgba(211, 47, 47, 0.1)';
             borderColor = 'rgba(211, 47, 47, 0.3)';
             break;
         case 'warning':
-            icon = '⚠️';
+            icon = '';
             bgColor = 'rgba(255, 193, 7, 0.1)';
             borderColor = 'rgba(255, 193, 7, 0.3)';
             break;

@@ -20,7 +20,7 @@
     <div class="article-content">
         <span class="article-category"><?= $article->kategori ?></span>
         <h3 class="article-title">
-            <a href="<?= site_url('informasi/' . $article->id_info) ?>"><?= $article->judul ?></a>
+            <a href="<?= site_url('informasi/detail/' . $article->id_info) ?>"><?= $article->judul ?></a>
         </h3>
         <p class="article-meta">
             <span>Oleh: <?= $article->penulis ?></span>
@@ -28,6 +28,6 @@
             <span><?= date('d M Y', strtotime($article->tanggal)) ?></span>
         </p>
         <p class="article-excerpt"><?= character_limiter(strip_tags($article->konten), 150) ?></p>
-        <a href="<?= site_url('informasi/' . $article->id_info) ?>" class="article-link">Baca Selengkapnya →</a>
+        <a href="<?= site_url('informasi/detail/' . $article->id_info) ?>" class="article-link">Baca Selengkapnya →</a>
     </div>
 </div>

@@ -1,4 +1,17 @@
 /* Users Admin Custom Styles */
+/* Override container padding untuk menghilangkan jarak di kanan */
+.admin-content {
+    overflow-x: hidden !important;
+}
+
+.admin-content .container,
+.admin-content .container-fluid {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
 
 .users-table {
     background: white;

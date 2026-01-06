@@ -18,9 +18,21 @@ class Beranda extends CI_Controller {
         $config['total_rows'] = $this->Informasi_tambahan_model->count_all();
         $config['per_page'] = 6;
         $config['uri_segment'] = 2;
+        
+        // Pastikan total_rows tidak null atau 0
+        if (empty($config['total_rows'])) {
+            $config['total_rows'] = 0;
+        }
+        
+        // Set cur_page explicitly to avoid null error in PHP 8.1+
+        $page_segment = $this->uri->segment(2);
+        $config['cur_page'] = ($page_segment && is_numeric($page_segment)) ? (int) $page_segment : 0;
+        
         $this->pagination->initialize($config);
 
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
+        // Pastikan $page selalu integer, bukan null
+        $page = ($page_segment !== false && $page_segment !== null && is_numeric($page_segment)) ? (int) $page_segment : 0;
+        
         $data['articles'] = $this->Informasi_tambahan_model->get_all($config['per_page'], $page);
         $data['pagination_links'] = $this->pagination->create_links();
 
@@ -83,4 +95,3 @@ class Beranda extends CI_Controller {
         $this->load->view('user/templates/footer');
     }
 }
-

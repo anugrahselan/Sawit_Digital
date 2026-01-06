@@ -11,11 +11,5 @@
             <p>Tidak ada artikel tersedia.</p>
         <?php endif; ?>
     </div>
-
-    <?php if(isset($pagination_links)): ?>
-        <div class="pagination">
-            <?= $pagination_links ?>
-        </div>
-    <?php endif; ?>
 </div>
 

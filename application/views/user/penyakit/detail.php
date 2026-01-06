@@ -41,7 +41,6 @@
                         <?php if (!empty($penyakit->penyebab)): ?>
                             <div class="disease-section">
                                 <div class="disease-section-header">
-                                    <span class="section-icon">🔍</span>
                                     <h2 class="disease-section-title">Penyebab</h2>
                                 </div>
                                 <div class="disease-section-content">
@@ -53,7 +52,6 @@
                         <?php if (!empty($penyakit->gejala)): ?>
                             <div class="disease-section">
                                 <div class="disease-section-header">
-                                    <span class="section-icon">⚠️</span>
                                     <h2 class="disease-section-title">Gejala</h2>
                                 </div>
                                 <div class="disease-section-content">
@@ -65,7 +63,6 @@
                         <?php if (!empty($penyakit->cara_pengendalian)): ?>
                             <div class="disease-section">
                                 <div class="disease-section-header">
-                                    <span class="section-icon">💊</span>
                                     <h2 class="disease-section-title">Cara Pengendalian</h2>
                                 </div>
                                 <div class="disease-section-content">

@@ -1,4 +1,73 @@
-/* Dashboard Admin Custom Styles */
+/* Dashboard Admin Custom Styles - AdminLTE Style */
+/* Override container padding untuk menghilangkan jarak di kanan */
+.admin-content {
+    overflow-x: hidden !important;
+}
+
+.admin-content .container,
+.admin-content .container-fluid {
+    padding-right: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Content Header (AdminLTE Style) */
+.content-header {
+    padding: 1rem 1.5rem;
+    background: #FAFAFA;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+.content-header h1 {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin: 0;
+    color: #495057;
+}
+
+.content-header .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background: none;
+    font-size: 0.875rem;
+}
+
+.content-header .breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.content-header .breadcrumb-item.active {
+    color: #6c757d;
+}
+
+.content-header .breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    padding: 0 0.5rem;
+    color: #6c757d;
+}
+
+.float-sm-end {
+    float: right !important;
+}
+
+@media (min-width: 576px) {
+    .float-sm-end {
+        float: right !important;
+    }
+}
+
+/* Content Section (AdminLTE Style) */
+.content {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.content .container-fluid {
+    padding: 0;
+}
 
 .dashboard-stats {
     display: grid;
@@ -7,41 +76,131 @@
     margin-bottom: 2rem;
 }
 
-.stat-card {
-    background: white;
-    border-radius: 8px;
+/* Stats Card (AdminLTE Style) */
+.stats-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.stats-card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.stats-card {
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    display: block;
+    margin-bottom: 0;
+    position: relative;
+    transition: all 0.2s ease;
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 0.25rem solid transparent;
+    overflow: hidden;
 }
 
-.stat-card:hover {
+.stats-card:hover {
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 2px 6px rgba(0,0,0,.2);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.stat-card .stat-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+.stats-card-icon {
+    float: left;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+    font-size: 1.875rem;
+    line-height: 70px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
 }
 
-.stat-card .stat-value {
-    font-size: 2rem;
+.stats-card-icon.info {
+    background: rgba(2, 119, 189, 0.1);
+    color: #0277BD;
+}
+
+.stats-card-icon.warning {
+    background: rgba(249, 168, 37, 0.1);
+    color: #F9A825;
+}
+
+.stats-card-icon.success {
+    background: rgba(46, 125, 50, 0.1);
+    color: #2E7D32;
+}
+
+.stats-card-icon.danger {
+    background: rgba(198, 40, 40, 0.1);
+    color: #C62828;
+}
+
+.stats-card-icon.primary {
+    background: rgba(27, 94, 32, 0.1);
+    color: #1B5E20;
+}
+
+.stats-card-value {
+    display: block;
     font-weight: 700;
-    color: var(--primary-color);
+    font-size: 2rem;
+    margin-top: 0.5rem;
+    color: #495057;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.stat-card .stat-label {
-    color: #666;
-    font-size: 0.9rem;
+.stats-card-label {
+    display: block;
     margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.stats-card-subtitle {
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* Card (AdminLTE Style) */
+.card {
+    background: #fff;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+}
+
+.card-header {
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: 0.75rem 1.25rem;
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
 }
 
 .chart-container {
     background: white;
-    border-radius: 8px;
+    border-radius: 0.25rem;
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
     margin-bottom: 2rem;
 }
 

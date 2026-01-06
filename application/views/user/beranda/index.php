@@ -81,11 +81,5 @@
                 </button>
             </div>
         <?php endif; ?>
-
-        <?php if (isset($pagination_links)): ?>
-            <div class="pagination">
-                <?= $pagination_links ?>
-            </div>
-        <?php endif; ?>
     </section>
 </div>

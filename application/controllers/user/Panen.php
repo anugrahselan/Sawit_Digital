@@ -178,7 +178,23 @@ class Panen extends CI_Controller
         // Log untuk debugging
         log_message('debug', 'Panen Save - id_perusahaan: ' . $id_perusahaan . ' (original: ' . $this->input->post('id_perusahaan') . ')');
 
-        // Sesuaikan dengan struktur database yang SEBENARNYA (dari screenshot phpMyAdmin)
+        // Ambil id_user dari session
+        $id_user = $this->session->userdata('id_user');
+
+        // Debug: Log id_user dari session
+        log_message('debug', 'Panen Save - id_user dari session: ' . ($id_user ?: 'NULL'));
+
+        // Cek apakah kolom id_user dan tanggal_kalkulasi ada di tabel
+        $columns = $this->db->list_fields('kalkulasi_panen');
+        $has_id_user = in_array('id_user', $columns);
+        $has_tanggal = in_array('tanggal_kalkulasi', $columns);
+
+        // Debug: Log kolom yang ada
+        log_message('debug', 'Panen Save - Kolom kalkulasi_panen: ' . implode(', ', $columns));
+        log_message('debug', 'Panen Save - has_id_user: ' . ($has_id_user ? 'true' : 'false'));
+        log_message('debug', 'Panen Save - has_tanggal: ' . ($has_tanggal ? 'true' : 'false'));
+
+        // Sesuaikan dengan struktur database
         $data = [
             'id_kabupaten' => (int) $id_kabupaten,
             'id_perusahaan' => (int) $id_perusahaan,
@@ -191,7 +207,21 @@ class Panen extends CI_Controller
             'hasil_bersih' => (float) $hasil_bersih
         ];
 
-        // JANGAN tambahkan id_user dan username karena kolom tersebut TIDAK ADA di tabel!
+        // Tambahkan id_user jika kolom ada (WAJIB jika kolom ada)
+        if ($has_id_user) {
+            if ($id_user) {
+                $data['id_user'] = (int) $id_user;
+                log_message('debug', 'Panen Save - id_user ditambahkan ke data: ' . $data['id_user']);
+            } else {
+                log_message('error', 'Panen Save - ERROR: id_user tidak ada di session tapi kolom id_user ada di tabel!');
+            }
+        }
+
+        // Tambahkan tanggal_kalkulasi jika kolom ada (akan di-set otomatis oleh database jika DEFAULT CURRENT_TIMESTAMP)
+        if ($has_tanggal) {
+            $data['tanggal_kalkulasi'] = date('Y-m-d H:i:s');
+            log_message('debug', 'Panen Save - tanggal_kalkulasi ditambahkan: ' . $data['tanggal_kalkulasi']);
+        }
 
         // Cek apakah tabel ada
         if (!$this->db->table_exists('kalkulasi_panen')) {

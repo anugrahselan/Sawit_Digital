@@ -5,7 +5,6 @@ class Informasi extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Informasi_tambahan_model');
-        $this->load->library('pagination');
     }
 
     public function index(): void {
@@ -13,15 +12,8 @@ class Informasi extends CI_Controller {
         $data['page_css'] = 'user/informasi.css';
         $data['page_js'] = 'user/informasi.js';
 
-        $config['base_url'] = base_url('informasi');
-        $config['total_rows'] = $this->Informasi_tambahan_model->count_all();
-        $config['per_page'] = 12;
-        $config['uri_segment'] = 2;
-        $this->pagination->initialize($config);
-
-        $page = ($this->uri->segment(2)) ? $this->uri->segment(2) : 0;
-        $data['articles'] = $this->Informasi_tambahan_model->get_all($config['per_page'], $page);
-        $data['pagination_links'] = $this->pagination->create_links();
+        // Ambil semua artikel tanpa pagination
+        $data['articles'] = $this->Informasi_tambahan_model->get_all();
 
         $this->load->view('user/templates/header', $data);
         $this->load->view('user/informasi/index', $data);

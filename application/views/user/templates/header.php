@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Sistem Penyuluhan Sawit' ?></title>
     <?php $cache = '?v=' . time(); ?>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/css/global.css') . $cache; ?>">
     <?php if (!empty($page_css)): ?>
         <link rel="stylesheet" href="<?= base_url('assets/css/' . $page_css) . $cache; ?>">
@@ -77,6 +79,7 @@
                                 <li><a href="<?= site_url('admin/dashboard') ?>">Kembali ke Admin</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             <?php endif; ?>
+                            <li><a href="<?= site_url('riwayat') ?>">Riwayat Kalkulasi</a></li>
                             <li><a href="<?= site_url('keluar') ?>">Keluar</a></li>
                         <?php else: ?>
                             <li><a href="<?= site_url('masuk') ?>">Masuk</a></li>
@@ -129,10 +132,10 @@
         <div class="container">
             <form class="search-form" id="searchForm">
                 <input type="text" name="q" placeholder="Cari artikel, pupuk, atau informasi..." class="search-input"
-                    id="searchInput">
+                    id="searchInput" autocomplete="off">
                 <button type="submit" class="btn btn-search">Cari</button>
             </form>
-            <div id="searchResults" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+            <div id="searchResults" style="display: none;">
                 <div id="searchResultsContent"></div>
             </div>
         </div>

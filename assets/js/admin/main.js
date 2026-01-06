@@ -1,45 +1,35 @@
 // Admin Dashboard Main JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Sidebar Toggle
     const sidebar = document.getElementById('adminSidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
     
-    // Restore sidebar state first
-    if (sidebar && localStorage.getItem('sidebarCollapsed') === 'true') {
-        sidebar.classList.add('collapsed');
-    }
-    
-    // Initialize toggle icon based on current state
+    // Sidebar toggle functionality
     if (sidebarToggle && sidebar) {
-        const icon = sidebarToggle.querySelector('i');
-        
-        function updateIcon() {
-            if (icon) {
-                if (sidebar.classList.contains('collapsed')) {
-                    icon.className = 'bi bi-list';
-                } else {
-                    icon.className = 'bi bi-x-lg';
-                }
-            }
-        }
-        
-        // Set initial icon
-        updateIcon();
-        
         sidebarToggle.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
             sidebar.classList.toggle('collapsed');
-            const isCollapsed = sidebar.classList.contains('collapsed');
-            localStorage.setItem('sidebarCollapsed', isCollapsed);
             
-            // Update icon
-            updateIcon();
+            // Save state to localStorage
+            if (typeof localStorage !== 'undefined') {
+                if (sidebar.classList.contains('collapsed')) {
+                    localStorage.setItem('sidebarCollapsed', 'true');
+                } else {
+                    localStorage.removeItem('sidebarCollapsed');
+                }
+            }
         });
+        
+        // Restore sidebar state from localStorage on page load
+        if (typeof localStorage !== 'undefined') {
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (isCollapsed) {
+                sidebar.classList.add('collapsed');
+            }
+        }
     }
     
-    // Close sidebar on mobile when clicking outside
+    // Close sidebar on mobile when clicking outside (only for mobile)
     document.addEventListener('click', function(e) {
         if (window.innerWidth <= 768 && sidebar) {
             if (!sidebar.contains(e.target) && sidebarToggle && !sidebarToggle.contains(e.target)) {
@@ -80,6 +70,44 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Admin Search - Pencarian di halaman yang sama
     initAdminSearch();
+    
+    // Initialize Bootstrap tooltips for collapsed sidebar
+    if (typeof bootstrap !== 'undefined') {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl, {
+                trigger: 'hover',
+                delay: { show: 300, hide: 100 }
+            });
+        });
+        
+        // Update tooltips when sidebar is toggled
+        if (sidebarToggle && sidebar) {
+            const updateTooltips = function() {
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                tooltipTriggerList.forEach(function(tooltipEl) {
+                    const tooltip = bootstrap.Tooltip.getInstance(tooltipEl);
+                    if (tooltip) {
+                        if (isCollapsed) {
+                            tooltip.enable();
+                        } else {
+                            tooltip.disable();
+                        }
+                    }
+                });
+            };
+            
+            // Watch for sidebar collapse/expand
+            const observer = new MutationObserver(updateTooltips);
+            observer.observe(sidebar, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            
+            // Initial check
+            updateTooltips();
+        }
+    }
 });
 
 // Admin Search Functionality

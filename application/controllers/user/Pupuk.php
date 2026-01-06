@@ -121,6 +121,10 @@ class Pupuk extends CI_Controller
             $dosis_per_periode = $total_dosis / $periode_per_tahun;
         }
 
+        // Cek apakah kolom tanggal_kalkulasi ada di tabel
+        $columns = $this->db->list_fields('kalkulasi_dosis_pupuk');
+        $has_tanggal = in_array('tanggal_kalkulasi', $columns);
+        
         // Sesuaikan dengan struktur database kalkulasi_dosis_pupuk
         // Dari screenshot, tabel memiliki: id_user, id_pupuk, id_tanah, usia_tanaman, jumlah_pohon, 
         // dosis_per_pohon, total_dosis, dosis_per_periode, rekomendasi_pupuk, periode_per_tahun, 
@@ -139,6 +143,11 @@ class Pupuk extends CI_Controller
             'periode_per_tahun' => (int) $periode_per_tahun,
             'keterangan_aplikasi' => !empty($keterangan_aplikasi) ? (string) $keterangan_aplikasi : null
         ];
+        
+        // Tambahkan tanggal_kalkulasi jika kolom ada (akan di-set otomatis oleh database jika DEFAULT CURRENT_TIMESTAMP)
+        if ($has_tanggal) {
+            $data['tanggal_kalkulasi'] = date('Y-m-d H:i:s');
+        }
 
         // Cek apakah tabel ada
         if (!$this->db->table_exists('kalkulasi_dosis_pupuk')) {

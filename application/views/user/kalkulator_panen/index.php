@@ -7,10 +7,22 @@
     <div class="calculator-container">
         <div class="calculator-form">
             <div class="form-header">
-                <h2>Input Data</h2>
-                <p class="form-description">Isi form di bawah ini untuk menghitung hasil panen dan keuntungan</p>
+                <h2>Kalkulasi Hasil Panen</h2>
+                <p class="form-description">Silakan isi data berikut untuk menghitung hasil panen dan keuntungan sawit Anda.<br>
+                Sistem akan menghitung pendapatan kotor, total biaya, dan hasil bersih berdasarkan data yang Anda masukkan.</p>
             </div>
             <form id="harvestForm">
+                <!-- User Info Display -->
+                <?php if ($this->session->userdata('id_user')): ?>
+                <div class="form-group user-info-display">
+                    <div class="user-info-value">
+                        <strong><?= htmlspecialchars($this->session->userdata('username')) ?></strong>
+                        <?php if ($this->session->userdata('nama_lengkap')): ?>
+                            <span class="user-name">(<?= htmlspecialchars($this->session->userdata('nama_lengkap')) ?>)</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="form-group">
                     <label for="id_kabupaten">
                         <span class="label-text">Kabupaten</span>
@@ -98,15 +110,20 @@
             <h2>Hasil Perhitungan</h2>
             <div id="resultContent">
                 <div class="result-placeholder">
-                    <div class="placeholder-icon">📊</div>
-                    <div class="placeholder-text">Hasil perhitungan akan muncul di sini setelah Anda mengisi form dan
-                        klik tombol "Hitung Hasil"</div>
+                    <div class="placeholder-text">Hasil perhitungan akan muncul di sini setelah Anda mengisi form dan klik tombol "Hitung Hasil"</div>
                 </div>
             </div>
-            <div class="chart-container" style="display: none;">
-                <canvas id="harvestChart" width="400" height="200"></canvas>
-            </div>
         </div>
+    </div>
+
+    <div class="tips-box">
+        <h3>Tips Panen Sawit</h3>
+        <ul>
+            <li>Lakukan panen pada waktu yang tepat untuk mendapatkan kualitas TBS terbaik</li>
+            <li>Pastikan TBS yang dipanen sudah matang dengan ciri-ciri buah mudah lepas dari tandan</li>
+            <li>Hindari panen saat hujan untuk menjaga kualitas TBS</li>
+            <li>Segera angkut TBS ke pabrik setelah panen untuk menghindari penurunan kualitas</li>
+        </ul>
     </div>
 </div>
 
