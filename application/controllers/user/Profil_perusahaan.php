@@ -63,3 +63,4 @@ class Profil_perusahaan extends CI_Controller
 
 
 
+
