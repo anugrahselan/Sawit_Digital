@@ -118,8 +118,8 @@ class Admin_pupuk extends MY_Controller
                     'nama_pupuk' => $this->input->post('nama_pupuk'),
                     'kandungan' => $this->input->post('kandungan'),
                     'fungsi' => $this->input->post('fungsi'),
-                    'waktu_aplikasi' => $this->input->post('waktu_aplikasi'),
-                    'catatan_khusus' => $this->input->post('catatan_khusus')
+                    'waktu_aplikasi' => $this->input->post('waktu_aplikasi') ?: null,
+                    'catatan_khusus' => $this->input->post('catatan_khusus') ?: null
                 ];
 
                 // Upload gambar baru jika ada - dengan pengecekan yang sangat ketat
@@ -133,7 +133,12 @@ class Admin_pupuk extends MY_Controller
                     if ($upload_result['success']) {
                         // Hapus gambar lama
                         if (!empty($pupuk->gambar_pupuk)) {
-                            $old_file = FCPATH . 'assets/img/pupuk/' . $pupuk->gambar_pupuk;
+                            // Bersihkan path dari prefix yang mungkin ada
+                            $old_gambar = trim($pupuk->gambar_pupuk);
+                            if (strpos($old_gambar, 'assets/img/pupuk/') !== false) {
+                                $old_gambar = basename($old_gambar);
+                            }
+                            $old_file = FCPATH . 'assets/img/pupuk/' . $old_gambar;
                             if (file_exists($old_file)) {
                                 unlink($old_file);
                             }

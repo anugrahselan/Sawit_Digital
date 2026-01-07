@@ -40,33 +40,33 @@
                                     </div>
                                 <?php endif; ?>
                                 
-                                <form method="post" enctype="multipart/form-data">
+                                <form method="post" action="<?= site_url('admin/pupuk/ubah/' . $pupuk->id_pupuk) ?>" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="nama_pupuk" class="form-label">Nama Pupuk</label>
-                                        <input type="text" class="form-control" name="nama_pupuk" id="nama_pupuk" value="<?= $pupuk->nama_pupuk ?>" aria-describedby="Nama pupuk">
+                                        <input type="text" class="form-control" name="nama_pupuk" id="nama_pupuk" value="<?= isset($pupuk->nama_pupuk) ? htmlspecialchars($pupuk->nama_pupuk) : '' ?>" aria-describedby="Nama pupuk">
                                         <?= form_error('nama_pupuk', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="kandungan" class="form-label">Kandungan</label>
-                                        <input type="text" class="form-control" name="kandungan" id="kandungan" value="<?= $pupuk->kandungan ?>" placeholder="Contoh: N 46%, P2O5 0%, K2O 0%" aria-describedby="Kandungan">
+                                        <input type="text" class="form-control" name="kandungan" id="kandungan" value="<?= isset($pupuk->kandungan) ? htmlspecialchars($pupuk->kandungan) : '' ?>" placeholder="Contoh: N 46%, P2O5 0%, K2O 0%" aria-describedby="Kandungan">
                                         <?= form_error('kandungan', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="fungsi" class="form-label">Fungsi</label>
-                                        <textarea name="fungsi" id="fungsi" cols="30" rows="10" class="form-control"><?= $pupuk->fungsi ?></textarea>
+                                        <textarea name="fungsi" id="fungsi" cols="30" rows="10" class="form-control"><?= isset($pupuk->fungsi) ? htmlspecialchars($pupuk->fungsi) : '' ?></textarea>
                                         <?= form_error('fungsi', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="waktu_aplikasi" class="form-label">Waktu Aplikasi</label>
-                                        <input type="text" class="form-control" name="waktu_aplikasi" id="waktu_aplikasi" value="<?= $pupuk->waktu_aplikasi ?>" placeholder="Contoh: Pagi atau sore hari" aria-describedby="Waktu aplikasi">
+                                        <input type="text" class="form-control" name="waktu_aplikasi" id="waktu_aplikasi" value="<?= isset($pupuk->waktu_aplikasi) ? htmlspecialchars($pupuk->waktu_aplikasi) : '' ?>" placeholder="Contoh: Pagi atau sore hari" aria-describedby="Waktu aplikasi">
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="catatan_khusus" class="form-label">Catatan Khusus</label>
-                                        <textarea name="catatan_khusus" id="catatan_khusus" cols="30" rows="10" class="form-control"><?= $pupuk->catatan_khusus ?></textarea>
+                                        <textarea name="catatan_khusus" id="catatan_khusus" cols="30" rows="10" class="form-control"><?= isset($pupuk->catatan_khusus) ? htmlspecialchars($pupuk->catatan_khusus) : '' ?></textarea>
                                     </div>
                                     
                                     <div class="mb-3">

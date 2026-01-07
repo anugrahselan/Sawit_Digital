@@ -22,7 +22,6 @@
                             ?>
                                 <div class="fertilizer-image">
                                     <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($fertilizer->nama_pupuk) ?>" 
-                                        style="max-width: 100%; height: auto; display: block;"
                                         onerror="this.onerror=null; this.style.display='none'; console.error('Gambar gagal dimuat: <?= $gambar_url ?>');">
                                 </div>
                             <?php endif; ?>
