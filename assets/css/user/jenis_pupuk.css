@@ -134,18 +134,22 @@ body .container>* {
 
 .fertilizer-image {
     width: 100%;
-    height: 140px;
+    height: 240px;
     overflow: hidden;
     margin-bottom: 0.5rem;
     border-radius: 8px;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .fertilizer-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     transition: var(--transition);
 }
 
@@ -462,7 +466,7 @@ body .container>* {
     .fertilizer-main-layout {
         gap: 2rem;
     }
-    
+
     .fertilizer-image-section {
         max-width: 100%;
     }
@@ -473,69 +477,68 @@ body .container>* {
         margin: 1.5rem 0;
         border-radius: 16px;
     }
-    
+
     .fertilizer-detail-content {
         padding: 1.5rem;
     }
-    
+
     .fertilizer-main-layout {
         gap: 1.5rem;
     }
-    
+
     .fertilizer-header-image {
         border-radius: 16px;
         padding: 1rem;
     }
-    
+
     .fertilizer-header-image img {
         max-height: 280px;
         border-radius: 10px;
     }
-    
+
     .fertilizer-title {
         font-size: 1.75rem;
         margin-bottom: 0.75rem;
     }
-    
+
     .fertilizer-header-info {
         margin-bottom: 2rem;
         padding-bottom: 1.25rem;
     }
-    
+
     .fertilizer-section-header {
         gap: 0.75rem;
         margin-bottom: 0.875rem;
     }
-    
+
     .section-icon {
         width: 40px;
         height: 40px;
         font-size: 1.4rem;
     }
-    
+
     .fertilizer-section-title {
         font-size: 1.25rem;
     }
-    
+
     .fertilizer-section-content {
         padding: 1.25rem 1.5rem;
         font-size: 0.95rem;
         border-radius: 12px;
     }
-    
+
     .fertilizer-info-grid {
         gap: 1.5rem;
     }
-    
+
     .fertilizer-actions {
         padding: 1.5rem;
         margin-top: 0.5rem;
     }
-    
+
     .fertilizer-actions .btn {
         width: 100%;
         justify-content: center;
         padding: 0.875rem 1.5rem;
     }
 }
-
