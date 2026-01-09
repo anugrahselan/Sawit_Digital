@@ -16,7 +16,6 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->library('pagination');
     }
 
-    // List Harga TBS
     public function index(): void
     {
         $data['page_title'] = 'Harga TBS';
@@ -27,7 +26,6 @@ class Admin_harga_tbs extends MY_Controller
             ['label' => 'Harga TBS', 'url' => site_url('admin/harga_tbs')]
         ];
 
-        // Filters
         $filters = [
             'kabupaten' => $this->input->get('kabupaten'),
             'perusahaan' => $this->input->get('perusahaan'),
@@ -35,20 +33,15 @@ class Admin_harga_tbs extends MY_Controller
             'date_to' => $this->input->get('date_to')
         ];
 
-        // Cek apakah ada filter aktif
         $has_filter = !empty($filters['kabupaten']) || !empty($filters['perusahaan']) || !empty($filters['date_from']) || !empty($filters['date_to']);
 
-        // Jika tidak ada filter, tampilkan data terbaru per perusahaan (seperti di beranda user)
         if (!$has_filter) {
-            // Menggunakan logika yang sama seperti di halaman beranda user
             $tbs_prices = $this->Harga_tbs_model->get_today_prices();
 
-            // Jika tidak ada harga hari ini, ambil harga terbaru per perusahaan
             if (empty($tbs_prices)) {
                 $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
             }
 
-            // Bandingkan dengan harga sebelumnya untuk setiap harga
             foreach ($tbs_prices as $price) {
                 $current_date = date('Y-m-d', strtotime($price->tanggal));
                 $previous = $this->Harga_tbs_model->get_previous_price(
@@ -81,9 +74,8 @@ class Admin_harga_tbs extends MY_Controller
             }
 
             $data['prices'] = $tbs_prices;
-            $data['pagination_links'] = ''; // Tidak ada pagination untuk data terbaru
+            $data['pagination_links'] = '';
         } else {
-            // Jika ada filter, tampilkan semua data yang sesuai filter (untuk melihat historis)
             $config['base_url'] = site_url('admin/harga_tbs');
             $config['total_rows'] = $this->Harga_tbs_model->count_all_filtered($filters);
             $config['per_page'] = 20;
@@ -97,7 +89,6 @@ class Admin_harga_tbs extends MY_Controller
             $data['pagination_links'] = $this->pagination->create_links();
         }
 
-        // Get filter options
         $data['kabupaten_list'] = $this->Kabupaten_model->get_all();
         $data['perusahaan_list'] = $this->Perusahaan_model->get_all();
         $data['filters'] = $filters;
@@ -109,7 +100,6 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    // Create Harga TBS
     public function tambah_harga_tbs(): void
     {
         if (!$this->can_edit()) {
@@ -139,7 +129,6 @@ class Admin_harga_tbs extends MY_Controller
                     'harga_per_kg' => $this->input->post('harga_per_kg')
                 ];
 
-                // Check if price already exists for this company on this date
                 $existing = $this->Harga_tbs_model->get_by_date_and_company(
                     $data_insert['tanggal'],
                     $data_insert['id_perusahaan'],
@@ -149,7 +138,6 @@ class Admin_harga_tbs extends MY_Controller
                 if ($existing) {
                     $data['error'] = 'Harga untuk perusahaan ini pada tanggal tersebut sudah ada';
                 } else {
-                    // Create data baru (data lama tetap tersimpan, tidak dihapus)
                     if ($this->Harga_tbs_model->create($data_insert)) {
                         $this->session->set_flashdata('success', 'Harga TBS berhasil ditambahkan. Data lama tetap tersimpan untuk perbandingan harga.');
                         redirect('admin/harga_tbs');
@@ -168,7 +156,6 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    // Update Harga TBS
     public function ubah_harga_tbs($id): void
     {
         if (!$this->can_edit()) {
@@ -205,7 +192,6 @@ class Admin_harga_tbs extends MY_Controller
                     'harga_per_kg' => $this->input->post('harga_per_kg')
                 ];
 
-                // Check if price already exists for this company on this date (excluding current)
                 $existing = $this->Harga_tbs_model->get_by_date_and_company(
                     $data_update['tanggal'],
                     $data_update['id_perusahaan'],
@@ -233,7 +219,6 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    // Delete Harga TBS
     public function hapus_harga_tbs($id): void
     {
         if (!$this->can_delete()) {
@@ -241,16 +226,13 @@ class Admin_harga_tbs extends MY_Controller
             redirect('admin/harga_tbs');
         }
 
-        // Ambil data yang akan dihapus untuk informasi
+
         $price = $this->Harga_tbs_model->get_by_id($id);
 
         if ($price) {
-            // Ambil user ID untuk backup
             $user_id = $this->session->userdata('user_id');
 
-            // Hapus data (backup otomatis dilakukan di model)
             if ($this->Harga_tbs_model->delete($id, $user_id)) {
-                // Cek apakah backup berhasil
                 $backup_exists = $this->db->table_exists('harga_tbs_backup');
 
                 if ($backup_exists) {
@@ -268,7 +250,6 @@ class Admin_harga_tbs extends MY_Controller
         redirect('admin/harga_tbs');
     }
 
-    // API: Get perusahaan berdasarkan kabupaten (untuk AJAX)
     public function get_perusahaan_by_kabupaten(): void
     {
         $id_kabupaten = $this->input->get('id_kabupaten');

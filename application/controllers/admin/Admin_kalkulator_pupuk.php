@@ -16,8 +16,7 @@ class Admin_kalkulator_pupuk extends MY_Controller {
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Kalkulasi Pupuk', 'url' => site_url('admin/kalkulator_pupuk')]
         ];
-        
-        // Get kalkulasi dosis pupuk yang diinput user dengan join jenis_pupuk, jenis_tanah, dan users
+
         $this->db->select('kalkulasi_dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah, users.username as user_username, users.nama_lengkap as user_nama');
         $this->db->from('kalkulasi_dosis_pupuk');
         $this->db->join('jenis_pupuk', 'jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk', 'left');

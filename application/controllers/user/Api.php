@@ -14,19 +14,15 @@ class Api extends CI_Controller {
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if ($id_kabupaten) {
-            // Jika filter kabupaten, ambil harga terbaru per perusahaan di kabupaten tersebut
             $tbs_prices = $this->Harga_tbs_model->get_by_kabupaten($id_kabupaten);
         } else {
-            // Ambil harga hari ini untuk semua perusahaan dan kabupaten
             $tbs_prices = $this->Harga_tbs_model->get_today_prices();
 
-            // Jika tidak ada harga hari ini, ambil harga terbaru per perusahaan
             if (empty($tbs_prices)) {
                 $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
             }
         }
 
-        // Bandingkan dengan harga kemarin untuk setiap harga
         foreach ($tbs_prices as $price) {
             $previous = $this->Harga_tbs_model->get_previous_price(
                 $price->id_kabupaten,
@@ -35,13 +31,11 @@ class Api extends CI_Controller {
             );
 
             if ($previous) {
-                // Hitung perubahan dari kemarin ke hari ini
                 $change = $price->harga_per_kg - $previous->harga_per_kg;
                 $price->perubahan = $change;
                 $price->status_perubahan = $change > 0 ? 'naik' : ($change < 0 ? 'turun' : 'tidak_ada');
                 $price->harga_kemarin = $previous->harga_per_kg;
             } else {
-                // Tidak ada data kemarin
                 $price->perubahan = null;
                 $price->status_perubahan = 'tidak_ada';
                 $price->harga_kemarin = null;

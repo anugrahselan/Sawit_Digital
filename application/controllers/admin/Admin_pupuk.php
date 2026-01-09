@@ -60,7 +60,7 @@ class Admin_pupuk extends MY_Controller
                     'catatan_khusus' => $this->input->post('catatan_khusus')
                 ];
 
-                // Upload gambar
+
                 if (isset($_FILES['gambar_pupuk']) && !empty($_FILES['gambar_pupuk']['name']) && $_FILES['gambar_pupuk']['error'] === UPLOAD_ERR_OK) {
                     $upload_result = $this->upload_gambar('gambar_pupuk', 'pupuk');
                     if ($upload_result['success']) {
@@ -122,7 +122,6 @@ class Admin_pupuk extends MY_Controller
                     'catatan_khusus' => $this->input->post('catatan_khusus') ?: null
                 ];
 
-                // Upload gambar baru jika ada - dengan pengecekan yang sangat ketat
                 $has_file = isset($_FILES['gambar_pupuk']) 
                     && !empty($_FILES['gambar_pupuk']['name']) 
                     && $_FILES['gambar_pupuk']['error'] === UPLOAD_ERR_OK
@@ -131,9 +130,7 @@ class Admin_pupuk extends MY_Controller
                 if ($has_file) {
                     $upload_result = $this->upload_gambar('gambar_pupuk', 'pupuk');
                     if ($upload_result['success']) {
-                        // Hapus gambar lama
                         if (!empty($pupuk->gambar_pupuk)) {
-                            // Bersihkan path dari prefix yang mungkin ada
                             $old_gambar = trim($pupuk->gambar_pupuk);
                             if (strpos($old_gambar, 'assets/img/pupuk/') !== false) {
                                 $old_gambar = basename($old_gambar);
@@ -148,7 +145,6 @@ class Admin_pupuk extends MY_Controller
                         $data['error'] = $upload_result['error'];
                     }
                 }
-                // Jika tidak ada file yang diupload, gambar lama tetap digunakan (tidak perlu update field gambar_pupuk)
 
                 if (!isset($data['error'])) {
                     if ($this->Jenis_pupuk_model->update($id, $data_update)) {
@@ -195,23 +191,19 @@ class Admin_pupuk extends MY_Controller
 
     private function upload_gambar($field_name, $folder): array
     {
-        // Cek apakah file benar-benar diupload dengan pengecekan yang lebih ketat
         if (!isset($_FILES[$field_name])) {
             return ['success' => false, 'error' => 'Field file tidak ditemukan'];
         }
 
         $file = $_FILES[$field_name];
         
-        // Cek apakah file benar-benar diupload (bukan kosong)
         if (empty($file['name']) || $file['error'] !== UPLOAD_ERR_OK) {
-            // Jika error adalah UPLOAD_ERR_NO_FILE, itu normal (tidak ada file yang diupload)
             if ($file['error'] === UPLOAD_ERR_NO_FILE) {
                 return ['success' => false, 'error' => 'Tidak ada file yang diupload'];
             }
             return ['success' => false, 'error' => 'Error saat upload file: ' . $file['error']];
         }
 
-        // Cek apakah file benar-benar ada di temporary directory
         if (!is_uploaded_file($file['tmp_name'])) {
             return ['success' => false, 'error' => 'File tidak valid atau tidak diupload dengan benar'];
         }
@@ -221,7 +213,6 @@ class Admin_pupuk extends MY_Controller
             mkdir($upload_path, 0755, true);
         }
 
-        // Validasi ekstensi file sebelum upload
         $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
         
@@ -229,23 +220,20 @@ class Admin_pupuk extends MY_Controller
             return ['success' => false, 'error' => 'Format file tidak didukung. Format yang diizinkan: JPG, JPEG, PNG, GIF, WEBP'];
         }
 
-        // Validasi bahwa file adalah gambar valid menggunakan getimagesize
+
         $image_info = @getimagesize($file['tmp_name']);
         if ($image_info === FALSE) {
             return ['success' => false, 'error' => 'File yang diupload bukan gambar valid. Pastikan file adalah gambar dengan format JPG, JPEG, PNG, GIF, atau WEBP.'];
         }
 
-        // Validasi ukuran file (max 2MB)
-        $max_size = 2048 * 1024; // 2MB dalam bytes
+        $max_size = 2048 * 1024; 
         if ($file['size'] > $max_size) {
             return ['success' => false, 'error' => 'Ukuran file terlalu besar. Maksimal 2MB.'];
         }
-
         // Generate nama file unik
         $new_filename = uniqid() . '_' . time() . '.' . $file_ext;
         $destination = $upload_path . $new_filename;
 
-        // Upload file secara manual
         if (move_uploaded_file($file['tmp_name'], $destination)) {
             return ['success' => true, 'file_name' => $new_filename];
         } else {

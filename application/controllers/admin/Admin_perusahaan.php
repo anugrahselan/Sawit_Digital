@@ -24,7 +24,6 @@ class Admin_perusahaan extends MY_Controller
             ['label' => 'Perusahaan', 'url' => site_url('admin/perusahaan')]
         ];
 
-        // Pagination
         $config['base_url'] = site_url('admin/perusahaan');
         $config['total_rows'] = $this->Perusahaan_model->count_all();
         $config['per_page'] = 20;

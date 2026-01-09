@@ -57,7 +57,6 @@ class Admin_penyakit extends MY_Controller
                     'cara_pengendalian' => $this->input->post('cara_pengendalian')
                 ];
 
-                // Upload gambar
                 if (!empty($_FILES['gambar_ilustrasi']['name'])) {
                     $upload_result = $this->upload_gambar('gambar_ilustrasi', 'penyakit');
                     if ($upload_result['success']) {
@@ -116,7 +115,6 @@ class Admin_penyakit extends MY_Controller
                     'cara_pengendalian' => $this->input->post('cara_pengendalian')
                 ];
 
-                // Upload gambar baru jika ada
                 if (!empty($_FILES['gambar_ilustrasi']['name'])) {
                     $upload_result = $this->upload_gambar('gambar_ilustrasi', 'penyakit');
                     if ($upload_result['success']) {

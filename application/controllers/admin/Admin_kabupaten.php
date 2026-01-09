@@ -23,7 +23,6 @@ class Admin_kabupaten extends MY_Controller
             ['label' => 'Kabupaten', 'url' => site_url('admin/kabupaten')]
         ];
 
-        // Pagination
         $config['base_url'] = site_url('admin/kabupaten');
         $config['total_rows'] = $this->db->count_all('kabupaten');
         $config['per_page'] = 20;
@@ -108,7 +107,6 @@ class Admin_kabupaten extends MY_Controller
             if ($this->form_validation->run() == TRUE) {
                 $nama_kabupaten = $this->input->post('nama_kabupaten');
 
-                // Check unique nama_kabupaten
                 if ($this->Kabupaten_model->nama_exists($nama_kabupaten, $id)) {
                     $data['error'] = 'Nama kabupaten sudah ada';
                 } else {

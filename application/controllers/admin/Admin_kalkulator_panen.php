@@ -20,27 +20,22 @@ class Admin_kalkulator_panen extends MY_Controller
             ['label' => 'Kalkulasi Panen', 'url' => site_url('admin/kalkulator_panen')]
         ];
 
-        // Get data kalkulasi panen yang diinput user dengan join kabupaten, perusahaan, dan users
-        // Cek apakah kolom id_user ada di tabel
         $columns = $this->db->list_fields('kalkulasi_panen');
         $has_id_user = in_array('id_user', $columns);
         
         if ($has_id_user) {
-            // Jika kolom id_user ada, join dengan users
             $this->db->select('kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan, users.username as user_username, users.nama_lengkap as user_nama');
             $this->db->from('kalkulasi_panen');
             $this->db->join('kabupaten', 'kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten', 'left');
             $this->db->join('perusahaan', 'perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan', 'left');
             $this->db->join('users', 'users.id_user = kalkulasi_panen.id_user', 'left');
         } else {
-            // Jika kolom id_user tidak ada, gunakan username dari tabel kalkulasi_panen
             $this->db->select('kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
             $this->db->from('kalkulasi_panen');
             $this->db->join('kabupaten', 'kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten', 'left');
             $this->db->join('perusahaan', 'perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan', 'left');
         }
 
-        // Order by id_kalkulasi DESC (data terbaru)
         $this->db->order_by('kalkulasi_panen.id_kalkulasi', 'DESC');
 
         $data['kalkulasi'] = $this->db->get()->result();

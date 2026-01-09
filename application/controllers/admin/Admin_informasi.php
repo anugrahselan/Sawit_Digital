@@ -54,8 +54,7 @@ class Admin_informasi extends MY_Controller {
                     'konten' => $this->input->post('konten'),
                     'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
                 ];
-                
-                // Upload gambar header
+
                 if (!empty($_FILES['gambar_header']['name'])) {
                     $upload_result = $this->upload_gambar('gambar_header', 'articles');
                     if ($upload_result['success']) {
@@ -64,8 +63,7 @@ class Admin_informasi extends MY_Controller {
                         $data['error'] = $upload_result['error'];
                     }
                 }
-                
-                // Upload thumbnail
+
                 if (!empty($_FILES['thumbnail']['name']) && !isset($data['error'])) {
                     $upload_result = $this->upload_gambar('thumbnail', 'articles');
                     if ($upload_result['success']) {
@@ -122,8 +120,7 @@ class Admin_informasi extends MY_Controller {
                     'konten' => $this->input->post('konten'),
                     'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
                 ];
-                
-                // Upload gambar header baru jika ada
+
                 if (!empty($_FILES['gambar_header']['name'])) {
                     $upload_result = $this->upload_gambar('gambar_header', 'articles');
                     if ($upload_result['success']) {
@@ -139,8 +136,7 @@ class Admin_informasi extends MY_Controller {
                         $data['error'] = $upload_result['error'];
                     }
                 }
-                
-                // Upload thumbnail baru jika ada
+
                 if (!empty($_FILES['thumbnail']['name']) && !isset($data['error'])) {
                     $upload_result = $this->upload_gambar('thumbnail', 'articles');
                     if ($upload_result['success']) {
@@ -179,14 +175,12 @@ class Admin_informasi extends MY_Controller {
         
         $article = $this->Informasi_tambahan_model->get_by_id($id);
         if ($article) {
-            // Hapus gambar header
             if (!empty($article->gambar_header)) {
                 $file_path = FCPATH . 'assets/img/articles/' . $article->gambar_header;
                 if (file_exists($file_path)) {
                     unlink($file_path);
                 }
             }
-            // Hapus thumbnail
             if (!empty($article->thumbnail)) {
                 $file_path = FCPATH . 'assets/img/articles/' . $article->thumbnail;
                 if (file_exists($file_path)) {
