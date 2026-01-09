@@ -29,8 +29,6 @@ class Pupuk extends CI_Controller
 
     public function index(): void
     {
-        // Kalkulator bisa diakses tanpa login (untuk preview)
-        // Tapi untuk menyimpan, user harus login (dicek di save_dosis)
         
         $data['page_title'] = 'Kalkulator Pupuk - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/kalkulator_pupuk.css';
@@ -57,7 +55,6 @@ class Pupuk extends CI_Controller
 
     public function detail($id = null): void
     {
-        // Convert string ID to integer if needed
         if ($id !== null) {
             $id = (int) $id;
         }
@@ -84,7 +81,6 @@ class Pupuk extends CI_Controller
     {
         header('Content-Type: application/json');
         
-        // Cek apakah user sudah login
         $this->require_login_ajax();
         
         $id_user = $this->session->userdata('id_user');
@@ -109,27 +105,18 @@ class Pupuk extends CI_Controller
             echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
             return;
         }
-
-        // Hitung total_dosis jika tidak dikirim dari frontend
         if (!$total_dosis) {
             $total_dosis = $dosis_per_pohon * $jumlah_pohon;
         }
 
-        // Set default nilai jika tidak ada
         $periode_per_tahun = $periode_per_tahun ?: 1;
         if (!$dosis_per_periode && $periode_per_tahun > 0) {
             $dosis_per_periode = $total_dosis / $periode_per_tahun;
         }
 
-        // Cek apakah kolom tanggal_kalkulasi ada di tabel
         $columns = $this->db->list_fields('kalkulasi_dosis_pupuk');
         $has_tanggal = in_array('tanggal_kalkulasi', $columns);
         
-        // Sesuaikan dengan struktur database kalkulasi_dosis_pupuk
-        // Dari screenshot, tabel memiliki: id_user, id_pupuk, id_tanah, usia_tanaman, jumlah_pohon, 
-        // dosis_per_pohon, total_dosis, dosis_per_periode, rekomendasi_pupuk, periode_per_tahun, 
-        // keterangan_aplikasi, tanggal_kalkulasi
-        // TIDAK ada kolom username di tabel
         $data = [
             'id_user' => (int) $id_user,
             'id_pupuk' => (int) $id_pupuk,
@@ -144,12 +131,10 @@ class Pupuk extends CI_Controller
             'keterangan_aplikasi' => !empty($keterangan_aplikasi) ? (string) $keterangan_aplikasi : null
         ];
         
-        // Tambahkan tanggal_kalkulasi jika kolom ada (akan di-set otomatis oleh database jika DEFAULT CURRENT_TIMESTAMP)
         if ($has_tanggal) {
             $data['tanggal_kalkulasi'] = date('Y-m-d H:i:s');
         }
 
-        // Cek apakah tabel ada
         if (!$this->db->table_exists('kalkulasi_dosis_pupuk')) {
             echo json_encode([
                 'success' => false, 
@@ -158,7 +143,6 @@ class Pupuk extends CI_Controller
             return;
         }
 
-        // Coba insert dengan error handling yang lebih baik
         try {
             $this->db->insert('kalkulasi_dosis_pupuk', $data);
             
@@ -167,23 +151,19 @@ class Pupuk extends CI_Controller
             if ($this->db->affected_rows() > 0) {
                 echo json_encode(['success' => true, 'message' => 'Data dosis berhasil disimpan']);
             } else {
-                // Tampilkan error yang lebih detail untuk debugging
                 $error_message = 'Gagal menyimpan data';
                 
-                // Cek error database
                 if (!empty($error['code']) && $error['code'] != 0) {
                     $error_message .= ' (Error Code: ' . $error['code'] . ')';
                 }
                 if (!empty($error['message'])) {
                     $error_message .= ': ' . $error['message'];
                 }
-                
-                // Jika tidak ada error code tapi affected_rows = 0, mungkin ada masalah lain
+
                 if (empty($error['code']) || $error['code'] == 0) {
                     $error_message .= '. Tidak ada data yang tersimpan.';
                 }
                 
-                // Log error untuk debugging
                 log_message('error', 'Kalkulasi Dosis Pupuk Save Error: ' . json_encode($error));
                 log_message('error', 'Data yang dikirim: ' . json_encode($data));
                 log_message('error', 'Affected Rows: ' . $this->db->affected_rows());

@@ -18,40 +18,30 @@ class Beranda extends CI_Controller {
         $config['total_rows'] = $this->Informasi_tambahan_model->count_all();
         $config['per_page'] = 6;
         $config['uri_segment'] = 2;
-        
-        // Pastikan total_rows tidak null atau 0
+
         if (empty($config['total_rows'])) {
             $config['total_rows'] = 0;
         }
-        
-        // Set cur_page explicitly to avoid null error in PHP 8.1+
+
         $page_segment = $this->uri->segment(2);
         $config['cur_page'] = ($page_segment && is_numeric($page_segment)) ? (int) $page_segment : 0;
         
         $this->pagination->initialize($config);
 
-        // Pastikan $page selalu integer, bukan null
         $page = ($page_segment !== false && $page_segment !== null && is_numeric($page_segment)) ? (int) $page_segment : 0;
         
         $data['articles'] = $this->Informasi_tambahan_model->get_all($config['per_page'], $page);
         $data['pagination_links'] = $this->pagination->create_links();
 
-        // Ambil harga hari ini untuk semua perusahaan dan kabupaten
         $tbs_prices = $this->Harga_tbs_model->get_today_prices();
-        
-        // Jika tidak ada harga hari ini, ambil harga terbaru per perusahaan
+
         if (empty($tbs_prices)) {
             $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
         }
         
-        // Bandingkan dengan harga sebelumnya untuk setiap harga
-        // Sistem akan mencari data kemarin, jika tidak ada akan mencari data terakhir yang tersedia
         foreach ($tbs_prices as $price) {
-            // Pastikan format tanggal konsisten
             $current_date = date('Y-m-d', strtotime($price->tanggal));
-            
-            // Cari harga sebelumnya (prioritas: kemarin, jika tidak ada ambil data terakhir yang tersedia)
-            // Ini memungkinkan sistem tetap bekerja meskipun data lama sudah dihapus
+
             $previous = $this->Harga_tbs_model->get_previous_price(
                 $price->id_kabupaten, 
                 $price->id_perusahaan, 
@@ -59,29 +49,22 @@ class Beranda extends CI_Controller {
             );
             
             if ($previous && isset($previous->harga_per_kg)) {
-                // Hitung perubahan dari harga sebelumnya ke harga hari ini
                 $current_price = floatval($price->harga_per_kg);
                 $previous_price = floatval($previous->harga_per_kg);
                 $change = $current_price - $previous_price;
                 
-                // Tentukan status berdasarkan perubahan
                 if ($change > 0) {
-                    // Harga naik
                     $price->perubahan = $change;
                     $price->status_perubahan = 'naik';
                 } elseif ($change < 0) {
-                    // Harga turun
                     $price->perubahan = $change;
                     $price->status_perubahan = 'turun';
                 } else {
-                    // Harga sama (tidak ada perubahan)
                     $price->perubahan = 0;
                     $price->status_perubahan = 'tidak_ada';
                 }
                 $price->harga_kemarin = $previous_price;
             } else {
-                // Tidak ada data sebelumnya sama sekali (data pertama atau semua data lama sudah dihapus)
-                // Tampilkan "-" untuk menunjukkan tidak ada perbandingan
                 $price->perubahan = null;
                 $price->status_perubahan = 'tidak_ada';
                 $price->harga_kemarin = null;

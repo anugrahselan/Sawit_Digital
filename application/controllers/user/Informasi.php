@@ -11,8 +11,6 @@ class Informasi extends CI_Controller {
         $data['page_title'] = 'Informasi & Edukasi - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/informasi.css';
         $data['page_js'] = 'user/informasi.js';
-
-        // Ambil semua artikel tanpa pagination
         $data['articles'] = $this->Informasi_tambahan_model->get_all();
 
         $this->load->view('user/templates/header', $data);

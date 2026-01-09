@@ -80,18 +80,18 @@ $route['informasi'] = 'user/Informasi/index';
 $route['informasi/detail/(:any)'] = 'user/Informasi/detail/$1';
 $route['informasi/(:num)'] = 'user/Informasi/index';
 $route['profil'] = 'user/Profil/index';
-// Perusahaan Routes
+
 $route['perusahaan/tentang-kami'] = 'user/Profil_perusahaan/tentang_kami';
 $route['perusahaan/visi-misi'] = 'user/Profil_perusahaan/visi_misi';
 $route['perusahaan/mitra-kerjasama'] = 'user/Profil_perusahaan/mitra_kerjasama';
 $route['perusahaan/program'] = 'user/Profil_perusahaan/program';
-// Bantuan Routes
+
 $route['bantuan/pusat-bantuan'] = 'user/Bantuan/pusat_bantuan';
 $route['bantuan/faq'] = 'user/Bantuan/faq';
 $route['bantuan/syarat-ketentuan'] = 'user/Bantuan/syarat_ketentuan';
 $route['bantuan/kebijakan-privasi'] = 'user/Bantuan/kebijakan_privasi';
 $route['bantuan/hubungi-kami'] = 'user/Bantuan/hubungi_kami';
-// Unified Auth Routes (untuk semua role)
+
 $route['masuk'] = 'Auth/login';
 $route['login'] = 'Auth/login';
 $route['keluar'] = 'Auth/logout';
@@ -99,9 +99,9 @@ $route['logout'] = 'Auth/logout';
 $route['daftar'] = 'Auth/register';
 $route['register'] = 'Auth/register';
 
-// Admin Routes
+
 $route['admin'] = 'admin/Admin_dashboard/index';
-// Admin login/logout sekarang menggunakan Auth controller terpadu
+
 $route['admin/login'] = 'Auth/login';
 $route['admin/logout'] = 'Auth/logout';
 $route['admin/dashboard'] = 'admin/Admin_dashboard/index';
