@@ -8,7 +8,6 @@ class MY_Controller extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        // Support untuk session keys baru (id_user, role) dan lama (user_id, user_role)
         $this->user_id = $this->session->userdata('id_user') ?: $this->session->userdata('user_id');
         $this->user_role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
         $this->user_name = $this->session->userdata('nama_lengkap') ?: $this->session->userdata('user_name');

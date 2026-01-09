@@ -32,10 +32,8 @@ class Riwayat extends CI_Controller
         
         $id_user = $this->session->userdata('id_user');
         
-        // Debug: Log id_user dari session
         log_message('debug', 'Riwayat - id_user dari session: ' . $id_user);
         
-        // Debug: Cek apakah ada data di database untuk user ini
         $this->db->where('id_user', $id_user);
         $count_panen = $this->db->count_all_results('kalkulasi_panen');
         log_message('debug', 'Riwayat - Jumlah kalkulasi_panen untuk id_user ' . $id_user . ': ' . $count_panen);
@@ -44,13 +42,10 @@ class Riwayat extends CI_Controller
         $count_pupuk = $this->db->count_all_results('kalkulasi_dosis_pupuk');
         log_message('debug', 'Riwayat - Jumlah kalkulasi_dosis_pupuk untuk id_user ' . $id_user . ': ' . $count_pupuk);
         
-        // Ambil data kalkulasi panen
         $data['kalkulasi_panen'] = $this->get_kalkulasi_panen($id_user);
         
-        // Ambil data kalkulasi pupuk
         $data['kalkulasi_pupuk'] = $this->get_kalkulasi_pupuk($id_user);
         
-        // Debug: Log jumlah hasil query
         log_message('debug', 'Riwayat - Jumlah hasil kalkulasi_panen: ' . count($data['kalkulasi_panen']));
         log_message('debug', 'Riwayat - Jumlah hasil kalkulasi_pupuk: ' . count($data['kalkulasi_pupuk']));
         
@@ -64,16 +59,12 @@ class Riwayat extends CI_Controller
      */
     private function get_kalkulasi_panen($id_user)
     {
-        // Cek apakah kolom id_user ada di tabel
         $columns = $this->db->list_fields('kalkulasi_panen');
         $has_id_user = in_array('id_user', $columns);
         
-        // Debug: Log kolom yang ada
         log_message('debug', 'Riwayat - Kolom kalkulasi_panen: ' . implode(', ', $columns));
         log_message('debug', 'Riwayat - has_id_user: ' . ($has_id_user ? 'true' : 'false'));
         
-        // Jika kolom id_user tidak ada, tidak bisa filter by user
-        // Return empty array karena tidak bisa mengidentifikasi kalkulasi milik user
         if (!$has_id_user) {
             log_message('debug', 'Riwayat - Kolom id_user tidak ada di tabel kalkulasi_panen');
             return [];
@@ -85,7 +76,6 @@ class Riwayat extends CI_Controller
         $this->db->join('perusahaan p', 'kp.id_perusahaan = p.id_perusahaan', 'left');
         $this->db->where('kp.id_user', $id_user);
         
-        // Cek apakah kolom tanggal_kalkulasi ada
         if (in_array('tanggal_kalkulasi', $columns)) {
             $this->db->order_by('kp.tanggal_kalkulasi', 'DESC');
         } else {
@@ -94,7 +84,6 @@ class Riwayat extends CI_Controller
         
         $query = $this->db->get();
         
-        // Debug: Log query SQL
         log_message('debug', 'Riwayat - SQL Query Panen: ' . $this->db->last_query());
         log_message('debug', 'Riwayat - Num Rows Panen: ' . $query->num_rows());
         
@@ -106,30 +95,23 @@ class Riwayat extends CI_Controller
      */
     private function get_kalkulasi_pupuk($id_user)
     {
-        // Cek apakah kolom id_user ada di tabel
         $columns = $this->db->list_fields('kalkulasi_dosis_pupuk');
         $has_id_user = in_array('id_user', $columns);
         
-        // Debug: Log kolom yang ada
         log_message('debug', 'Riwayat - Kolom kalkulasi_dosis_pupuk: ' . implode(', ', $columns));
         log_message('debug', 'Riwayat - has_id_user: ' . ($has_id_user ? 'true' : 'false'));
         
-        // Jika kolom id_user tidak ada, tidak bisa filter by user
-        // Return empty array karena tidak bisa mengidentifikasi kalkulasi milik user
         if (!$has_id_user) {
             log_message('debug', 'Riwayat - Kolom id_user tidak ada di tabel kalkulasi_dosis_pupuk');
             return [];
         }
         
-        // Select semua kolom dari kdp, termasuk primary key (id_kalkulasi atau id_dosis)
         $this->db->select('kdp.*, jp.nama_pupuk, jp.kandungan, jp.fungsi, jt.nama_tanah, jt.ph_min, jt.ph_max');
         $this->db->from('kalkulasi_dosis_pupuk kdp');
         $this->db->join('jenis_pupuk jp', 'kdp.id_pupuk = jp.id_pupuk', 'left');
         $this->db->join('jenis_tanah jt', 'kdp.id_tanah = jt.id_tanah', 'left');
         $this->db->where('kdp.id_user', $id_user);
         
-        // Cek apakah kolom tanggal_kalkulasi ada
-        // Primary key adalah id_kalkulasi (sesuai struktur database)
         if (in_array('tanggal_kalkulasi', $columns)) {
             $this->db->order_by('kdp.tanggal_kalkulasi', 'DESC');
         } else {
@@ -138,7 +120,6 @@ class Riwayat extends CI_Controller
         
         $query = $this->db->get();
         
-        // Debug: Log query SQL
         log_message('debug', 'Riwayat - SQL Query Pupuk: ' . $this->db->last_query());
         log_message('debug', 'Riwayat - Num Rows Pupuk: ' . $query->num_rows());
         
@@ -152,7 +133,6 @@ class Riwayat extends CI_Controller
     {
         $this->require_login();
         
-        // Cek apakah kolom id_user ada di tabel
         $columns = $this->db->list_fields('kalkulasi_panen');
         $has_id_user = in_array('id_user', $columns);
         
@@ -164,7 +144,6 @@ class Riwayat extends CI_Controller
         
         $id_user = $this->session->userdata('id_user');
         
-        // Verifikasi bahwa kalkulasi ini milik user yang login
         $kalkulasi = $this->db->get_where('kalkulasi_panen', [
             'id_kalkulasi' => $id_kalkulasi,
             'id_user' => $id_user
@@ -195,20 +174,17 @@ class Riwayat extends CI_Controller
         
         echo "<h2>Debug Info - Riwayat Kalkulasi</h2>";
         echo "<p><strong>ID User dari Session:</strong> " . ($id_user ?: 'NULL') . "</p>";
-        
-        // Cek kolom kalkulasi_panen
+    
         $columns_panen = $this->db->list_fields('kalkulasi_panen');
         echo "<h3>Kolom kalkulasi_panen:</h3>";
         echo "<pre>" . print_r($columns_panen, true) . "</pre>";
         echo "<p><strong>Has id_user:</strong> " . (in_array('id_user', $columns_panen) ? 'YES' : 'NO') . "</p>";
         echo "<p><strong>Has tanggal_kalkulasi:</strong> " . (in_array('tanggal_kalkulasi', $columns_panen) ? 'YES' : 'NO') . "</p>";
         
-        // Cek semua data di kalkulasi_panen
         $all_panen = $this->db->get('kalkulasi_panen')->result();
         echo "<h3>Semua Data kalkulasi_panen (" . count($all_panen) . " records):</h3>";
         echo "<pre>" . print_r($all_panen, true) . "</pre>";
         
-        // Cek data dengan id_user
         if (in_array('id_user', $columns_panen)) {
             $this->db->where('id_user', $id_user);
             $user_panen = $this->db->get('kalkulasi_panen')->result();
@@ -216,19 +192,16 @@ class Riwayat extends CI_Controller
             echo "<pre>" . print_r($user_panen, true) . "</pre>";
         }
         
-        // Cek kolom kalkulasi_dosis_pupuk
         $columns_pupuk = $this->db->list_fields('kalkulasi_dosis_pupuk');
         echo "<h3>Kolom kalkulasi_dosis_pupuk:</h3>";
         echo "<pre>" . print_r($columns_pupuk, true) . "</pre>";
         echo "<p><strong>Has id_user:</strong> " . (in_array('id_user', $columns_pupuk) ? 'YES' : 'NO') . "</p>";
         echo "<p><strong>Has tanggal_kalkulasi:</strong> " . (in_array('tanggal_kalkulasi', $columns_pupuk) ? 'YES' : 'NO') . "</p>";
         
-        // Cek semua data di kalkulasi_dosis_pupuk
         $all_pupuk = $this->db->get('kalkulasi_dosis_pupuk')->result();
         echo "<h3>Semua Data kalkulasi_dosis_pupuk (" . count($all_pupuk) . " records):</h3>";
         echo "<pre>" . print_r($all_pupuk, true) . "</pre>";
         
-        // Cek data dengan id_user
         if (in_array('id_user', $columns_pupuk)) {
             $this->db->where('id_user', $id_user);
             $user_pupuk = $this->db->get('kalkulasi_dosis_pupuk')->result();
@@ -236,7 +209,6 @@ class Riwayat extends CI_Controller
             echo "<pre>" . print_r($user_pupuk, true) . "</pre>";
         }
         
-        // Test query
         echo "<h3>Test Query Panen:</h3>";
         $this->db->select('kp.*, k.nama_kabupaten, p.nama_perusahaan');
         $this->db->from('kalkulasi_panen kp');
@@ -258,7 +230,6 @@ class Riwayat extends CI_Controller
     {
         $this->require_login();
         
-        // Cek apakah kolom id_user ada di tabel
         $columns = $this->db->list_fields('kalkulasi_dosis_pupuk');
         $has_id_user = in_array('id_user', $columns);
         
@@ -270,8 +241,6 @@ class Riwayat extends CI_Controller
         
         $id_user = $this->session->userdata('id_user');
         
-        // Verifikasi bahwa kalkulasi ini milik user yang login
-        // Primary key adalah id_kalkulasi (sesuai struktur database)
         $kalkulasi = $this->db->get_where('kalkulasi_dosis_pupuk', [
             'id_kalkulasi' => $id_kalkulasi,
             'id_user' => $id_user

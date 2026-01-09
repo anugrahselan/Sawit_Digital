@@ -17,13 +17,11 @@ class Auth extends CI_Controller
             if ($role === 'admin') {
                 redirect('admin/dashboard');
             } else {
-                // User biasa redirect ke beranda (home page)
                 redirect('beranda');
             }
         }
 
         $data['page_title'] = 'Masuk - Sistem Penyuluhan Sawit';
-        // Ambil error dari flashdata atau dari form validation
         $data['error'] = $this->session->flashdata('error') ?: '';
 
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -49,11 +47,9 @@ class Auth extends CI_Controller
                         'user_email' => $user->email
                     ]);
 
-                    // Redirect berdasarkan role
                     if ($user->role === 'admin') {
                         redirect('admin/dashboard');
                     } else {
-                        // User biasa redirect ke beranda (home page)
                         redirect('beranda');
                     }
                 } else {
@@ -69,7 +65,6 @@ class Auth extends CI_Controller
 
     public function register(): void
     {
-        // Jika sudah login, redirect sesuai role
         if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
             $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
             if ($role === 'admin') {
@@ -108,7 +103,6 @@ class Auth extends CI_Controller
 
                 $user_id = $this->Pengguna_model->create($user_data);
                 if ($user_id) {
-                    // Auto login setelah register
                     $user = $this->Pengguna_model->get_by_id($user_id);
                     if ($user) {
                         $this->session->set_userdata([
@@ -124,7 +118,6 @@ class Auth extends CI_Controller
                             'user_email' => $user->email
                         ]);
 
-                        // Redirect ke beranda user (karena role default adalah 'user')
                         redirect('beranda');
                     }
                 } else {
@@ -135,7 +128,6 @@ class Auth extends CI_Controller
             }
         }
 
-        // Load login view dengan register form (toggle)
         $this->load->view('auth/login', $data);
     }
 
