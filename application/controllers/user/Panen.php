@@ -10,7 +10,7 @@ class Panen extends CI_Controller
         $this->load->model('Perusahaan_model');
     }
 
-    private function require_login(): void
+    private function require_login()
     {
         if (!$this->session->userdata('id_user')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda harus login terlebih dahulu untuk menggunakan kalkulator panen</div>');
@@ -18,7 +18,7 @@ class Panen extends CI_Controller
         }
     }
 
-    private function require_login_ajax(): void
+    private function require_login_ajax()
     {
         if (!$this->session->userdata('id_user')) {
             header('Content-Type: application/json');
@@ -27,7 +27,7 @@ class Panen extends CI_Controller
         }
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Kalkulator Panen - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/kalkulator_panen.css';
@@ -41,7 +41,7 @@ class Panen extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function get_perusahaan_by_kabupaten(): void
+    public function get_perusahaan_by_kabupaten()
     {
         header('Content-Type: application/json');
 
@@ -72,7 +72,7 @@ class Panen extends CI_Controller
         }
     }
 
-    public function get_harga_tbs(): void
+    public function get_harga_tbs()
     {
         header('Content-Type: application/json');
 
@@ -105,7 +105,7 @@ class Panen extends CI_Controller
         }
     }
 
-    public function save(): void
+    public function save()
     {
         header('Content-Type: application/json');
 

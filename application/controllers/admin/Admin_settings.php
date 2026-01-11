@@ -8,7 +8,7 @@ class Admin_settings extends MY_Controller {
         $this->require_admin();
     }
     
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Settings / Audit Log';
         $data['page_css'] = 'settings.css';
         $data['breadcrumbs'] = [

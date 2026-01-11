@@ -9,7 +9,7 @@ class Beranda extends CI_Controller {
         $this->load->library('pagination');
     }
 
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Beranda - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/beranda.css';
         $data['page_js'] = 'user/beranda.js';

@@ -9,7 +9,7 @@ class Admin_kalkulator_pupuk extends MY_Controller {
         $this->load->database();
     }
     
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Kalkulasi Pupuk';
         $data['page_css'] = 'kalkulator_pupuk.css';
         $data['breadcrumbs'] = [

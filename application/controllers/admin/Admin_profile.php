@@ -11,7 +11,7 @@ class Admin_profile extends MY_Controller
         $this->load->library('form_validation');
     }
 
-    public function index(): void
+    public function index()
     {
         $user_id = $this->user_id;
         $user = $this->Pengguna_model->get_by_id($user_id);

@@ -15,7 +15,7 @@ class Admin_perusahaan extends MY_Controller
         $this->load->library('pagination');
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Perusahaan';
         $data['page_css'] = 'perusahaan.css';
@@ -42,7 +42,7 @@ class Admin_perusahaan extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_perusahaan(): void
+    public function tambah_perusahaan()
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -93,7 +93,7 @@ class Admin_perusahaan extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function ubah_perusahaan($id): void
+    public function ubah_perusahaan($id)
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -151,7 +151,7 @@ class Admin_perusahaan extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_perusahaan($id): void
+    public function hapus_perusahaan($id)
     {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');

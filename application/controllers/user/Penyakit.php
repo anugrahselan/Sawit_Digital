@@ -8,7 +8,7 @@ class Penyakit extends CI_Controller {
         $this->load->database();
     }
 
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Jenis Penyakit Sawit - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/penyakit.css';
         $data['penyakit'] = $this->Penyakit_model->get_all();
@@ -18,8 +18,7 @@ class Penyakit extends CI_Controller {
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null): void {
-        // Convert string ID to integer if needed
+    public function detail($id = null) {
         if ($id !== null) {
             $id = (int) $id;
         }

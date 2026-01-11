@@ -13,7 +13,7 @@ class Admin_penyakit extends MY_Controller
         $this->load->library('upload');
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Penyakit';
         $data['page_css'] = 'penyakit.css';
@@ -31,7 +31,7 @@ class Admin_penyakit extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_penyakit(): void
+    public function tambah_penyakit()
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -82,7 +82,7 @@ class Admin_penyakit extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function ubah_penyakit($id): void
+    public function ubah_penyakit($id)
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -147,7 +147,7 @@ class Admin_penyakit extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_penyakit($id): void
+    public function hapus_penyakit($id)
     {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');

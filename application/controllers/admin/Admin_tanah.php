@@ -10,7 +10,7 @@ class Admin_tanah extends MY_Controller {
         $this->load->library('form_validation');
     }
     
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Jenis Tanah';
         $data['page_css'] = 'tanah.css';
         $data['breadcrumbs'] = [
@@ -27,7 +27,7 @@ class Admin_tanah extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_tanah(): void {
+    public function tambah_tanah() {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');
@@ -69,7 +69,7 @@ class Admin_tanah extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
     
-    public function ubah_tanah($id): void {
+    public function ubah_tanah($id) {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');
@@ -118,7 +118,7 @@ class Admin_tanah extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
     
-    public function hapus_tanah($id): void {
+    public function hapus_tanah($id) {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/tanah');

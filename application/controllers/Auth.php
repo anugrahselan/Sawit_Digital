@@ -10,7 +10,7 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function login(): void
+    public function login()
     {
         if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
             $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
@@ -63,7 +63,7 @@ class Auth extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    public function register(): void
+    public function register()
     {
         if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
             $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
@@ -98,7 +98,7 @@ class Auth extends CI_Controller
                     'nama_lengkap' => trim($this->input->post('nama_lengkap')),
                     'email' => trim($this->input->post('email')) ?: null,
                     'password' => trim($this->input->post('password')),
-                    'role' => 'user' // Default role adalah user
+                    'role' => 'user'
                 ];
 
                 $user_id = $this->Pengguna_model->create($user_data);
@@ -131,7 +131,7 @@ class Auth extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    public function logout(): void
+    public function logout()
     {
         $this->session->sess_destroy();
         redirect('beranda');

@@ -14,7 +14,7 @@ class Admin_dashboard extends MY_Controller
         $this->load->model('Perusahaan_model');
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Dashboard Admin';
         $data['page_css'] = 'dashboard.css';
@@ -40,67 +40,51 @@ class Admin_dashboard extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    private function get_total_perusahaan(): int
+    private function get_total_perusahaan()
     {
-        if ($this->db->table_exists('perusahaan')) {
-            return $this->db->count_all('perusahaan');
-        }
-        return 0;
+        return $this->db->table_exists('perusahaan') ? $this->db->count_all('perusahaan') : 0;
     }
 
-    private function get_total_kabupaten(): int
+    private function get_total_kabupaten()
     {
         return $this->db->count_all('kabupaten');
     }
 
-    private function get_total_users(): int
+    private function get_total_users()
     {
         return $this->db->count_all('users');
     }
 
-    private function get_total_kalkulasi_panen(): int
+    private function get_total_kalkulasi_panen()
     {
-        if ($this->db->table_exists('kalkulasi_panen')) {
-            return $this->db->count_all('kalkulasi_panen');
-        }
-        return 0;
+        return $this->db->table_exists('kalkulasi_panen') ? $this->db->count_all('kalkulasi_panen') : 0;
     }
 
-    private function get_total_kalkulasi_pupuk(): int
+    private function get_total_kalkulasi_pupuk()
     {
-        if ($this->db->table_exists('kalkulasi_dosis_pupuk')) {
-            return $this->db->count_all('kalkulasi_dosis_pupuk');
-        }
-        return 0;
+        return $this->db->table_exists('kalkulasi_dosis_pupuk') ? $this->db->count_all('kalkulasi_dosis_pupuk') : 0;
     }
 
-    private function get_avg_harga_tbs(): float
+    private function get_avg_harga_tbs()
     {
-        $this->db->select('AVG(harga_per_kg) as avg_harga_per_kg');
-        $result = $this->db->get('harga_tbs')->row();
+        $result = $this->db->select('AVG(harga_per_kg) as avg_harga_per_kg')->get('harga_tbs')->row();
         return $result ? (float) $result->avg_harga_per_kg : 0;
     }
 
-    private function get_total_jenis_pupuk(): int
+    private function get_total_jenis_pupuk()
     {
-        if ($this->db->table_exists('jenis_pupuk')) {
-            return $this->db->count_all('jenis_pupuk');
-        }
-        return 0;
+        return $this->db->table_exists('jenis_pupuk') ? $this->db->count_all('jenis_pupuk') : 0;
     }
 
-    private function get_total_penyakit(): int
+    private function get_total_penyakit()
     {
-        if ($this->db->table_exists('jenis_penyakit')) {
-            return $this->db->count_all('jenis_penyakit');
-        }
-        return 0;
+        return $this->db->table_exists('jenis_penyakit') ? $this->db->count_all('jenis_penyakit') : 0;
     }
 
-    private function get_tbs_prices_with_changes(): array
+    private function get_tbs_prices_with_changes()
     {
         $tbs_prices = $this->Harga_tbs_model->get_today_prices();
-        
+
         if (empty($tbs_prices)) {
             $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
         }
@@ -142,7 +126,7 @@ class Admin_dashboard extends MY_Controller
         return $tbs_prices;
     }
 
-    private function get_weekly_trends(): array
+    private function get_weekly_trends()
     {
         $end_date = date('Y-m-d');
         $start_date = date('Y-m-d', strtotime('-7 days'));

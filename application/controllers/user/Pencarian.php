@@ -1,14 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Pencarian extends CI_Controller {
-    public function __construct() {
+class Pencarian extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Informasi_tambahan_model');
         $this->load->model('Jenis_pupuk_model');
     }
 
-    public function index(): void {
+    public function index()
+    {
         $keyword = $this->input->get('q');
         if (empty($keyword)) {
             redirect('beranda');

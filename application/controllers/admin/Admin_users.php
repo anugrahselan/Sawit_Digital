@@ -9,7 +9,7 @@ class Admin_users extends MY_Controller {
         $this->load->model('Pengguna_model');
     }
     
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Users & Roles';
         $data['page_css'] = 'users.css';
         $data['breadcrumbs'] = [

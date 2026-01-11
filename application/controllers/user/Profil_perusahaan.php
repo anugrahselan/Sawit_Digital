@@ -8,10 +8,7 @@ class Profil_perusahaan extends CI_Controller
         parent::__construct();
     }
 
-    /**
-     * @return void
-     */
-    public function tentang_kami(): void
+    public function tentang_kami()
     {
         $data['page_title'] = 'Tentang Kami - Sawit Digital';
         $data['page_css'] = 'user/perusahaan.css';
@@ -21,10 +18,7 @@ class Profil_perusahaan extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    /**
-     * @return void
-     */
-    public function visi_misi(): void
+    public function visi_misi()
     {
         $data['page_title'] = 'Visi & Misi - Sawit Digital';
         $data['page_css'] = 'user/perusahaan.css';
@@ -34,10 +28,7 @@ class Profil_perusahaan extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    /**
-     * @return void
-     */
-    public function mitra_kerjasama(): void
+    public function mitra_kerjasama()
     {
         $data['page_title'] = 'Mitra Kerjasama - Sawit Digital';
         $data['page_css'] = 'user/perusahaan.css';
@@ -47,10 +38,7 @@ class Profil_perusahaan extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    /**
-     * @return void
-     */
-    public function program(): void
+    public function program()
     {
         $data['page_title'] = 'Program - Sawit Digital';
         $data['page_css'] = 'user/perusahaan.css';

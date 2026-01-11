@@ -11,7 +11,7 @@ class Admin_kalkulator_panen extends MY_Controller
         $this->load->database();
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Kalkulasi Panen';
         $data['page_css'] = 'kalkulator_panen.css';

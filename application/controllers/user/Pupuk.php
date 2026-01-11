@@ -10,7 +10,7 @@ class Pupuk extends CI_Controller
         $this->load->database();
     }
     
-    private function require_login(): void
+    private function require_login()
     {
         if (!$this->session->userdata('id_user')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda harus login terlebih dahulu untuk menggunakan kalkulator pupuk</div>');
@@ -18,7 +18,7 @@ class Pupuk extends CI_Controller
         }
     }
 
-    private function require_login_ajax(): void
+    private function require_login_ajax()
     {
         if (!$this->session->userdata('id_user')) {
             header('Content-Type: application/json');
@@ -27,9 +27,8 @@ class Pupuk extends CI_Controller
         }
     }
 
-    public function index(): void
+    public function index()
     {
-        
         $data['page_title'] = 'Kalkulator Pupuk - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/kalkulator_pupuk.css';
         $data['page_js'] = 'user/kalkulator_pupuk.js';
@@ -42,7 +41,7 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function list(): void
+    public function list()
     {
         $data['page_title'] = 'Jenis Pupuk - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/jenis_pupuk.css';
@@ -53,7 +52,7 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null): void
+    public function detail($id = null)
     {
         if ($id !== null) {
             $id = (int) $id;
@@ -77,7 +76,7 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function save_dosis(): void
+    public function save_dosis()
     {
         header('Content-Type: application/json');
         

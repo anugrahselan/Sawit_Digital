@@ -1,13 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Informasi extends CI_Controller {
-    public function __construct() {
+class Informasi extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Informasi_tambahan_model');
     }
 
-    public function index(): void {
+    public function index()
+    {
         $data['page_title'] = 'Informasi & Edukasi - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/informasi.css';
         $data['page_js'] = 'user/informasi.js';
@@ -18,11 +21,14 @@ class Informasi extends CI_Controller {
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null): void {
-        if (!$id) show_404();
+    public function detail($id = null)
+    {
+        if (!$id)
+            show_404();
 
         $article = $this->Informasi_tambahan_model->get_by_id($id);
-        if (!$article) show_404();
+        if (!$article)
+            show_404();
 
         $data['page_title'] = $article->judul . ' - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/informasi.css';

@@ -13,7 +13,7 @@ class Admin_pupuk extends MY_Controller
         $this->load->library('upload');
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Jenis Pupuk & Dosis Pupuk';
         $data['page_css'] = 'pupuk.css';
@@ -31,7 +31,7 @@ class Admin_pupuk extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_pupuk(): void
+    public function tambah_pupuk()
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -86,7 +86,7 @@ class Admin_pupuk extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function ubah_pupuk($id): void
+    public function ubah_pupuk($id)
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -122,11 +122,11 @@ class Admin_pupuk extends MY_Controller
                     'catatan_khusus' => $this->input->post('catatan_khusus') ?: null
                 ];
 
-                $has_file = isset($_FILES['gambar_pupuk']) 
-                    && !empty($_FILES['gambar_pupuk']['name']) 
+                $has_file = isset($_FILES['gambar_pupuk'])
+                    && !empty($_FILES['gambar_pupuk']['name'])
                     && $_FILES['gambar_pupuk']['error'] === UPLOAD_ERR_OK
                     && is_uploaded_file($_FILES['gambar_pupuk']['tmp_name']);
-                
+
                 if ($has_file) {
                     $upload_result = $this->upload_gambar('gambar_pupuk', 'pupuk');
                     if ($upload_result['success']) {
@@ -155,7 +155,6 @@ class Admin_pupuk extends MY_Controller
                     }
                 }
             } else {
-                // Jika form validation gagal, tampilkan error validation
                 $data['validation_errors'] = validation_errors();
             }
         }
@@ -165,7 +164,7 @@ class Admin_pupuk extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_pupuk($id): void
+    public function hapus_pupuk($id)
     {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
@@ -196,7 +195,7 @@ class Admin_pupuk extends MY_Controller
         }
 
         $file = $_FILES[$field_name];
-        
+
         if (empty($file['name']) || $file['error'] !== UPLOAD_ERR_OK) {
             if ($file['error'] === UPLOAD_ERR_NO_FILE) {
                 return ['success' => false, 'error' => 'Tidak ada file yang diupload'];
@@ -215,7 +214,7 @@ class Admin_pupuk extends MY_Controller
 
         $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        
+
         if (!in_array($file_ext, $allowed_extensions)) {
             return ['success' => false, 'error' => 'Format file tidak didukung. Format yang diizinkan: JPG, JPEG, PNG, GIF, WEBP'];
         }
@@ -226,11 +225,10 @@ class Admin_pupuk extends MY_Controller
             return ['success' => false, 'error' => 'File yang diupload bukan gambar valid. Pastikan file adalah gambar dengan format JPG, JPEG, PNG, GIF, atau WEBP.'];
         }
 
-        $max_size = 2048 * 1024; 
+        $max_size = 2048 * 1024;
         if ($file['size'] > $max_size) {
             return ['success' => false, 'error' => 'Ukuran file terlalu besar. Maksimal 2MB.'];
         }
-        // Generate nama file unik
         $new_filename = uniqid() . '_' . time() . '.' . $file_ext;
         $destination = $upload_path . $new_filename;
 

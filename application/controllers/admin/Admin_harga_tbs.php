@@ -16,7 +16,7 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->library('pagination');
     }
 
-    public function index(): void
+    public function index()
     {
         $data['page_title'] = 'Harga TBS';
         $data['page_css'] = 'harga_tbs.css';
@@ -100,7 +100,7 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_harga_tbs(): void
+    public function tambah_harga_tbs()
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk membuat data');
@@ -156,7 +156,7 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function ubah_harga_tbs($id): void
+    public function ubah_harga_tbs($id)
     {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk mengubah data');
@@ -219,7 +219,7 @@ class Admin_harga_tbs extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_harga_tbs($id): void
+    public function hapus_harga_tbs($id)
     {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk menghapus data');
@@ -250,7 +250,7 @@ class Admin_harga_tbs extends MY_Controller
         redirect('admin/harga_tbs');
     }
 
-    public function get_perusahaan_by_kabupaten(): void
+    public function get_perusahaan_by_kabupaten()
     {
         $id_kabupaten = $this->input->get('id_kabupaten');
 

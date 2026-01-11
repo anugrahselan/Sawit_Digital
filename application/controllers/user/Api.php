@@ -10,7 +10,7 @@ class Api extends CI_Controller {
         $this->load->model('Penyakit_model');
     }
 
-    public function tbs_prices(): void {
+    public function tbs_prices() {
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if ($id_kabupaten) {
@@ -46,7 +46,7 @@ class Api extends CI_Controller {
         $this->load->view('user/partials/tabel_tbs', $data);
     }
 
-    public function search(): void {
+    public function search() {
         $keyword = $this->input->get('q');
         if (empty($keyword)) {
             echo json_encode(['error' => 'Keyword required']);
@@ -62,7 +62,7 @@ class Api extends CI_Controller {
         ]);
     }
 
-    public function get_dosis(): void {
+    public function get_dosis() {
         $id_pupuk = $this->input->get('id_pupuk');
         $id_tanah = $this->input->get('id_tanah');
         $usia_tanaman = $this->input->get('usia_tanaman');

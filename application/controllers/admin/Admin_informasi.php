@@ -11,7 +11,7 @@ class Admin_informasi extends MY_Controller {
         $this->load->library('upload');
     }
     
-    public function index(): void {
+    public function index() {
         $data['page_title'] = 'Informasi (Artikel)';
         $data['page_css'] = 'informasi.css';
         $data['breadcrumbs'] = [
@@ -28,7 +28,7 @@ class Admin_informasi extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
 
-    public function tambah_informasi(): void {
+    public function tambah_informasi() {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/informasi');
@@ -87,7 +87,7 @@ class Admin_informasi extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
     
-    public function ubah_informasi($id): void {
+    public function ubah_informasi($id) {
         if (!$this->can_edit()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/informasi');
@@ -167,7 +167,7 @@ class Admin_informasi extends MY_Controller {
         $this->load->view('admin/templates/footer');
     }
     
-    public function hapus_informasi($id): void {
+    public function hapus_informasi($id) {
         if (!$this->can_delete()) {
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
             redirect('admin/informasi');
