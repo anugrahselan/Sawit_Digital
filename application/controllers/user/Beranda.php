@@ -33,16 +33,16 @@ class Beranda extends CI_Controller {
         $data['articles'] = $this->Informasi_tambahan_model->get_all($config['per_page'], $page);
         $data['pagination_links'] = $this->pagination->create_links();
 
-        $tbs_prices = $this->Harga_tbs_model->get_today_prices();
+        $tbs_prices = $this->Harga_tbs_model->get_harga_hari_ini();
 
         if (empty($tbs_prices)) {
-            $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
+            $tbs_prices = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
         }
         
         foreach ($tbs_prices as $price) {
             $current_date = date('Y-m-d', strtotime($price->tanggal));
 
-            $previous = $this->Harga_tbs_model->get_previous_price(
+            $previous = $this->Harga_tbs_model->get_harga_sebelumnya(
                 $price->id_kabupaten, 
                 $price->id_perusahaan, 
                 $current_date

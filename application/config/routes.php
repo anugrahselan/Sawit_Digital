@@ -66,7 +66,6 @@ $route['panen/get_perusahaan'] = 'user/Panen/get_perusahaan_by_kabupaten';
 $route['panen/get_harga_tbs'] = 'user/Panen/get_harga_tbs';
 $route['pupuk/save_dosis'] = 'user/Pupuk/save_dosis';
 $route['riwayat'] = 'user/Riwayat/index';
-$route['riwayat/debug'] = 'user/Riwayat/debug';
 $route['riwayat/hapus_panen/(:num)'] = 'user/Riwayat/hapus_panen/$1';
 $route['riwayat/hapus_pupuk/(:num)'] = 'user/Riwayat/hapus_pupuk/$1';
 $route['jenis-pupuk'] = 'user/Pupuk/list';
@@ -92,18 +91,22 @@ $route['bantuan/syarat-ketentuan'] = 'user/Bantuan/syarat_ketentuan';
 $route['bantuan/kebijakan-privasi'] = 'user/Bantuan/kebijakan_privasi';
 $route['bantuan/hubungi-kami'] = 'user/Bantuan/hubungi_kami';
 
-$route['masuk'] = 'Auth/login';
-$route['login'] = 'Auth/login';
-$route['keluar'] = 'Auth/logout';
-$route['logout'] = 'Auth/logout';
+$route['masuk'] = 'Auth/masuk';
+$route['login'] = 'Auth/masuk';
+$route['auth/login'] = 'Auth/masuk';
+$route['auth/masuk'] = 'Auth/masuk';
+$route['keluar'] = 'Auth/keluar';
+$route['logout'] = 'Auth/keluar';
+$route['auth/logout'] = 'Auth/keluar';
+$route['auth/keluar'] = 'Auth/keluar';
 $route['daftar'] = 'Auth/register';
 $route['register'] = 'Auth/register';
 
 
 $route['admin'] = 'admin/Admin_dashboard/index';
 
-$route['admin/login'] = 'Auth/login';
-$route['admin/logout'] = 'Auth/logout';
+$route['admin/login'] = 'Auth/masuk';
+$route['admin/logout'] = 'Auth/keluar';
 $route['admin/dashboard'] = 'admin/Admin_dashboard/index';
 $route['admin/harga_tbs'] = 'admin/Admin_harga_tbs/index';
 $route['admin/harga_tbs/tambah'] = 'admin/Admin_harga_tbs/tambah_harga_tbs';

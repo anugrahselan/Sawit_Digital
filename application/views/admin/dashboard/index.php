@@ -202,106 +202,12 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Weekly Trends Chart -->
-            <?php if (!empty($weekly_trends) && count($weekly_trends) >= 3): ?>
-            <div class="row mt-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(27, 94, 32, 0.1); background: #FAFAFA;">
-                            <h5 class="mb-0" style="font-weight: 700; font-size: 1.25rem; color: #2c3e50; margin: 0;">
-                                <i class="bi bi-bar-chart"></i> Tren Harga TBS (7 Hari Terakhir)
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="weeklyTrendsChart" height="80"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endif; ?>
-            <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-<script>
-// Weekly Trends Chart
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('weeklyTrendsChart');
-    if (ctx) {
-        const weeklyData = <?= json_encode($weekly_trends ?? []) ?>;
-        
-        // Only render chart if we have at least 3 data points
-        if (weeklyData && weeklyData.length >= 3) {
-            const labels = weeklyData.map(item => {
-                const date = new Date(item.date);
-                return date.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
-            });
-            const prices = weeklyData.map(item => parseFloat(item.avg_price));
-            
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Rata-rata Harga (Rp)',
-                        data: prices,
-                        borderColor: '#1B5E20',
-                        backgroundColor: 'rgba(27, 94, 32, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: '#1B5E20',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Harga: Rp ' + context.parsed.y.toLocaleString('id-ID');
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            ticks: {
-                                callback: function(value) {
-                                    return 'Rp ' + value.toLocaleString('id-ID');
-                                }
-                            },
-                            grid: {
-                                color: 'rgba(27, 94, 32, 0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: 'rgba(27, 94, 32, 0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    }
-});
-</script>
 
 <style>
 /* Hybrid Table Styles for Dashboard */

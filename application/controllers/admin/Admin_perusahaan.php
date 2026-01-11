@@ -65,7 +65,6 @@ class Admin_perusahaan extends MY_Controller
                 $nama_perusahaan = $this->input->post('nama_perusahaan');
                 $id_kabupaten = $this->input->post('id_kabupaten');
 
-                // Check unique nama_perusahaan per kabupaten
                 if ($this->Perusahaan_model->nama_exists_in_kabupaten($nama_perusahaan, $id_kabupaten)) {
                     $data['error'] = 'Nama perusahaan sudah ada di kabupaten ini';
                 } else {
@@ -123,7 +122,6 @@ class Admin_perusahaan extends MY_Controller
                 $nama_perusahaan = $this->input->post('nama_perusahaan');
                 $id_kabupaten = $this->input->post('id_kabupaten');
 
-                // Check unique nama_perusahaan per kabupaten
                 if ($this->Perusahaan_model->nama_exists_in_kabupaten($nama_perusahaan, $id_kabupaten, $id)) {
                     $data['error'] = 'Nama perusahaan sudah ada di kabupaten ini';
                 } else {

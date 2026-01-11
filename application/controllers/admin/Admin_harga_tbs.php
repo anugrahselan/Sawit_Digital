@@ -36,15 +36,15 @@ class Admin_harga_tbs extends MY_Controller
         $has_filter = !empty($filters['kabupaten']) || !empty($filters['perusahaan']) || !empty($filters['date_from']) || !empty($filters['date_to']);
 
         if (!$has_filter) {
-            $tbs_prices = $this->Harga_tbs_model->get_today_prices();
+            $tbs_prices = $this->Harga_tbs_model->get_harga_hari_ini();
 
             if (empty($tbs_prices)) {
-                $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
+                $tbs_prices = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
             }
 
             foreach ($tbs_prices as $price) {
                 $current_date = date('Y-m-d', strtotime($price->tanggal));
-                $previous = $this->Harga_tbs_model->get_previous_price(
+                $previous = $this->Harga_tbs_model->get_harga_sebelumnya(
                     $price->id_kabupaten,
                     $price->id_perusahaan,
                     $current_date

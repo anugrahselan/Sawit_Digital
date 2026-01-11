@@ -9,14 +9,12 @@ class Tanah_model extends CI_Model
         $this->load->database();
     }
 
-    // Get all tanah types
     public function get_all (): array
     {
         $this->db->order_by('nama_tanah', 'ASC');
         return $this->db->get('jenis_tanah')->result();
     }
 
-    // Get tanah by ID
     public function get_by_id ($id): mixed
     {
         $this->db->where('id_tanah', $id);

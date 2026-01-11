@@ -15,7 +15,7 @@ class MY_Controller extends CI_Controller {
     
     protected function require_login(): void {
         if (!$this->user_id) {
-            redirect('auth/login');
+            redirect('masuk');
         }
     }
     

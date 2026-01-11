@@ -15,7 +15,7 @@ class Admin_pupuk extends MY_Controller
 
     public function index()
     {
-        $data['page_title'] = 'Jenis Pupuk & Dosis Pupuk';
+        $data['page_title'] = 'Jenis Pupuk';
         $data['page_css'] = 'pupuk.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],

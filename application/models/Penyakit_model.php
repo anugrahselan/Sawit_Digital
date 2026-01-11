@@ -9,7 +9,6 @@ class Penyakit_model extends CI_Model
         $this->load->database();
     }
 
-    // Get all diseases
     public function get_all ($limit = null, $offset = null): array
     {
         if ($limit !== null && $offset !== null) {
@@ -19,14 +18,12 @@ class Penyakit_model extends CI_Model
         return $this->db->get('jenis_penyakit')->result();
     }
 
-    // Get disease by ID
     public function get_by_id ($id): mixed
     {
         $this->db->where('id_penyakit', $id);
         return $this->db->get('jenis_penyakit')->row();
     }
 
-    // Search diseases
     public function search ($keyword): array
     {
         $this->db->like('nama_penyakit', $keyword);
@@ -36,7 +33,6 @@ class Penyakit_model extends CI_Model
         return $this->db->get('jenis_penyakit')->result();
     }
 
-    // Count total records
     public function count_all (): int
     {
         return $this->db->count_all_results('jenis_penyakit');

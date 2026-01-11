@@ -118,7 +118,6 @@ class Admin_penyakit extends MY_Controller
                 if (!empty($_FILES['gambar_ilustrasi']['name'])) {
                     $upload_result = $this->upload_gambar('gambar_ilustrasi', 'penyakit');
                     if ($upload_result['success']) {
-                        // Hapus gambar lama
                         if (!empty($penyakit->gambar_ilustrasi)) {
                             $old_file = FCPATH . 'assets/img/penyakit/' . $penyakit->gambar_ilustrasi;
                             if (file_exists($old_file)) {

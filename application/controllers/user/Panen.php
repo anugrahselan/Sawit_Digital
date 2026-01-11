@@ -105,11 +105,10 @@ class Panen extends CI_Controller
         }
     }
 
-    public function save()
+    public function simpan()
     {
         header('Content-Type: application/json');
 
-        // Cek apakah user sudah login
         $this->require_login_ajax();
 
         if ($this->input->server('REQUEST_METHOD') !== 'POST') {
@@ -140,7 +139,6 @@ class Panen extends CI_Controller
 
         $columns = $this->db->list_fields('kalkulasi_panen');
 
-
         if (empty($id_perusahaan) || $id_perusahaan === '' || $id_perusahaan === null) {
             $id_perusahaan = $this->Perusahaan_model->get_or_create_mitra($id_kabupaten);
         } else {
@@ -150,19 +148,11 @@ class Panen extends CI_Controller
             }
         }
 
-        log_message('debug', 'Panen Save - id_perusahaan: ' . $id_perusahaan . ' (original: ' . $this->input->post('id_perusahaan') . ')');
-
         $id_user = $this->session->userdata('id_user');
-
-        log_message('debug', 'Panen Save - id_user dari session: ' . ($id_user ?: 'NULL'));
 
         $columns = $this->db->list_fields('kalkulasi_panen');
         $has_id_user = in_array('id_user', $columns);
         $has_tanggal = in_array('tanggal_kalkulasi', $columns);
-
-        log_message('debug', 'Panen Save - Kolom kalkulasi_panen: ' . implode(', ', $columns));
-        log_message('debug', 'Panen Save - has_id_user: ' . ($has_id_user ? 'true' : 'false'));
-        log_message('debug', 'Panen Save - has_tanggal: ' . ($has_tanggal ? 'true' : 'false'));
 
         $data = [
             'id_kabupaten' => (int) $id_kabupaten,
@@ -179,15 +169,11 @@ class Panen extends CI_Controller
         if ($has_id_user) {
             if ($id_user) {
                 $data['id_user'] = (int) $id_user;
-                log_message('debug', 'Panen Save - id_user ditambahkan ke data: ' . $data['id_user']);
-            } else {
-                log_message('error', 'Panen Save - ERROR: id_user tidak ada di session tapi kolom id_user ada di tabel!');
             }
         }
 
         if ($has_tanggal) {
             $data['tanggal_kalkulasi'] = date('Y-m-d H:i:s');
-            log_message('debug', 'Panen Save - tanggal_kalkulasi ditambahkan: ' . $data['tanggal_kalkulasi']);
         }
 
         if (!$this->db->table_exists('kalkulasi_panen')) {
@@ -198,15 +184,12 @@ class Panen extends CI_Controller
             return;
         }
 
-        log_message('debug', 'Panen Save - Data sebelum insert: ' . json_encode($data));
-
         try {
             $this->db->insert('kalkulasi_panen', $data);
 
             $error = $this->db->error();
 
             if ($this->db->affected_rows() > 0) {
-                log_message('info', 'Panen Save - Data berhasil disimpan: ' . json_encode($data));
                 echo json_encode(['success' => true, 'message' => 'Data berhasil disimpan']);
             } else {
                 $error_message = 'Gagal menyimpan data';
@@ -223,33 +206,18 @@ class Panen extends CI_Controller
                 }
 
                 log_message('error', 'Kalkulasi Panen Save Error: ' . json_encode($error));
-                log_message('error', 'Data yang dikirim: ' . json_encode($data));
-                log_message('error', 'Affected Rows: ' . $this->db->affected_rows());
-                log_message('error', 'Last Query: ' . $this->db->last_query());
 
                 echo json_encode([
                     'success' => false,
-                    'message' => $error_message,
-                    'debug' => ENVIRONMENT !== 'production' ? [
-                        'error' => $error,
-                        'affected_rows' => $this->db->affected_rows(),
-                        'data' => $data,
-                        'last_query' => $this->db->last_query()
-                    ] : null
+                    'message' => $error_message
                 ]);
             }
         } catch (Exception $e) {
             log_message('error', 'Kalkulasi Panen Exception: ' . $e->getMessage());
-            log_message('error', 'Stack trace: ' . $e->getTraceAsString());
             echo json_encode([
                 'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
-                'debug' => ENVIRONMENT !== 'production' ? [
-                    'exception' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString()
-                ] : null
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ]);
         }
     }
 }
-

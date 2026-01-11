@@ -63,7 +63,6 @@ class Perusahaan_model extends CI_Model
         return $this->db->count_all_results('perusahaan') > 0;
     }
     
-    // Ambil perusahaan berdasarkan kabupaten
     public function get_by_kabupaten ($id_kabupaten): array
     {
         $this->db->where('id_kabupaten', $id_kabupaten);
@@ -71,10 +70,8 @@ class Perusahaan_model extends CI_Model
         return $this->db->get('perusahaan')->result();
     }
     
-    // Dapatkan atau buat record "Mitra" untuk kabupaten tertentu
     public function get_or_create_mitra ($id_kabupaten): int
     {
-        // Cek apakah sudah ada record "Mitra" untuk kabupaten ini
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('nama_perusahaan', 'Mitra');
         $mitra = $this->db->get('perusahaan')->row();
@@ -83,7 +80,6 @@ class Perusahaan_model extends CI_Model
             return $mitra->id_perusahaan;
         }
         
-        // Jika belum ada, buat record "Mitra" baru
         $data = [
             'id_kabupaten' => (int) $id_kabupaten,
             'nama_perusahaan' => 'Mitra',

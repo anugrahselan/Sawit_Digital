@@ -85,7 +85,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <form method="POST" action="<?= site_url('auth/login') ?>" id="loginFormSubmit">
+                    <form method="POST" action="<?= site_url('masuk') ?>" id="loginFormSubmit">
                         <div class="form-group">
                             <label for="login_username" class="form-label">Username Or Email</label>
                             <input type="text" id="login_username" name="username" class="form-input" required

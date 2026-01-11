@@ -1,14 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Penyakit extends CI_Controller {
-    public function __construct() {
+class Penyakit extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Penyakit_model');
         $this->load->database();
     }
 
-    public function index() {
+    public function index()
+    {
         $data['page_title'] = 'Jenis Penyakit Sawit - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/penyakit.css';
         $data['penyakit'] = $this->Penyakit_model->get_all();
@@ -18,11 +21,12 @@ class Penyakit extends CI_Controller {
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null) {
+    public function detail($id = null)
+    {
         if ($id !== null) {
             $id = (int) $id;
         }
-        
+
         if (!$id || $id <= 0) {
             show_404();
         }

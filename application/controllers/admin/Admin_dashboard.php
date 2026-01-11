@@ -9,9 +9,6 @@ class Admin_dashboard extends MY_Controller
         $this->require_admin();
 
         $this->load->model('Harga_tbs_model');
-        $this->load->model('Kabupaten_model');
-        $this->load->model('Pengguna_model');
-        $this->load->model('Perusahaan_model');
     }
 
     public function index()
@@ -19,21 +16,16 @@ class Admin_dashboard extends MY_Controller
         $data['page_title'] = 'Dashboard Admin';
         $data['page_css'] = 'dashboard.css';
 
-        $data['breadcrumbs'] = [
-            ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')]
-        ];
         $data['total_perusahaan'] = $this->get_total_perusahaan();
         $data['total_kabupaten'] = $this->get_total_kabupaten();
         $data['total_users'] = $this->get_total_users();
         $data['total_kalkulasi_panen'] = $this->get_total_kalkulasi_panen();
         $data['total_kalkulasi_pupuk'] = $this->get_total_kalkulasi_pupuk();
-        $data['total_kalkulasi'] = $data['total_kalkulasi_panen'] + $data['total_kalkulasi_pupuk'];
         $data['avg_harga_tbs'] = $this->get_avg_harga_tbs();
         $data['total_jenis_pupuk'] = $this->get_total_jenis_pupuk();
         $data['total_penyakit'] = $this->get_total_penyakit();
 
-        $data['tbs_prices'] = $this->get_tbs_prices_with_changes();
-        $data['weekly_trends'] = $this->get_weekly_trends();
+        $data['tbs_prices'] = $this->get_harga_tbs_dengan_perubahan();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/dashboard/index', $data);
@@ -67,7 +59,8 @@ class Admin_dashboard extends MY_Controller
 
     private function get_avg_harga_tbs()
     {
-        $result = $this->db->select('AVG(harga_per_kg) as avg_harga_per_kg')->get('harga_tbs')->row();
+        $query = $this->db->query('SELECT AVG(harga_per_kg) as avg_harga_per_kg FROM harga_tbs');
+        $result = $query->row();
         return $result ? (float) $result->avg_harga_per_kg : 0;
     }
 
@@ -81,63 +74,38 @@ class Admin_dashboard extends MY_Controller
         return $this->db->table_exists('jenis_penyakit') ? $this->db->count_all('jenis_penyakit') : 0;
     }
 
-    private function get_tbs_prices_with_changes()
+    private function get_harga_tbs_dengan_perubahan()
     {
-        $tbs_prices = $this->Harga_tbs_model->get_today_prices();
-
-        if (empty($tbs_prices)) {
-            $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
+        $daftar_harga = $this->Harga_tbs_model->get_harga_hari_ini();
+        if (empty($daftar_harga)) {
+            $daftar_harga = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
         }
 
-        $tbs_prices = array_slice($tbs_prices, 0, 10);
+        $daftar_harga = array_slice($daftar_harga, 0, 10);
 
-        foreach ($tbs_prices as $price) {
-            $current_date = date('Y-m-d', strtotime($price->tanggal));
-
-            $previous = $this->Harga_tbs_model->get_previous_price(
-                $price->id_kabupaten,
-                $price->id_perusahaan,
-                $current_date
+        foreach ($daftar_harga as $harga) {
+            $tanggal_sekarang = date('Y-m-d', strtotime($harga->tanggal));
+            $harga_sebelumnya = $this->Harga_tbs_model->get_harga_sebelumnya(
+                $harga->id_kabupaten,
+                $harga->id_perusahaan,
+                $tanggal_sekarang
             );
 
-            if ($previous && isset($previous->harga_per_kg)) {
-                $current_price = floatval($price->harga_per_kg);
-                $previous_price = floatval($previous->harga_per_kg);
-                $change = $current_price - $previous_price;
+            if ($harga_sebelumnya && isset($harga_sebelumnya->harga_per_kg)) {
+                $harga_sekarang = (float) $harga->harga_per_kg;
+                $harga_kemarin = (float) $harga_sebelumnya->harga_per_kg;
+                $selisih = $harga_sekarang - $harga_kemarin;
 
-                if ($change > 0) {
-                    $price->perubahan = $change;
-                    $price->status_perubahan = 'naik';
-                } elseif ($change < 0) {
-                    $price->perubahan = $change;
-                    $price->status_perubahan = 'turun';
-                } else {
-                    $price->perubahan = 0;
-                    $price->status_perubahan = 'tidak_ada';
-                }
-                $price->harga_kemarin = $previous_price;
+                $harga->perubahan = $selisih;
+                $harga->status_perubahan = $selisih > 0 ? 'naik' : ($selisih < 0 ? 'turun' : 'tidak_ada');
+                $harga->harga_kemarin = $harga_kemarin;
             } else {
-                $price->perubahan = null;
-                $price->status_perubahan = 'tidak_ada';
-                $price->harga_kemarin = null;
+                $harga->perubahan = null;
+                $harga->status_perubahan = 'tidak_ada';
+                $harga->harga_kemarin = null;
             }
         }
 
-        return $tbs_prices;
-    }
-
-    private function get_weekly_trends()
-    {
-        $end_date = date('Y-m-d');
-        $start_date = date('Y-m-d', strtotime('-7 days'));
-
-        $this->db->select('DATE(tanggal) as date, AVG(harga_per_kg) as avg_price, COUNT(*) as count');
-        $this->db->from('harga_tbs');
-        $this->db->where('tanggal >=', $start_date);
-        $this->db->where('tanggal <=', $end_date);
-        $this->db->group_by('DATE(tanggal)');
-        $this->db->order_by('date', 'ASC');
-
-        return $this->db->get()->result();
+        return $daftar_harga;
     }
 }

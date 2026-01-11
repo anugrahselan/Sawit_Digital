@@ -42,15 +42,11 @@ class Harga_tbs_model extends CI_Model
         return $this->db->get('harga_tbs')->result();
     }
 
-    public function get_previous_price ($id_kabupaten, $id_perusahaan, $current_date): mixed
+    public function get_harga_sebelumnya ($id_kabupaten, $id_perusahaan, $current_date): mixed
     {
-        // Ambil harga dari tanggal sebelumnya (kemarin) untuk perusahaan dan kabupaten yang sama
-        // Sistem akan mencari di tabel utama dulu, lalu di tabel backup jika tidak ditemukan
-        // Pastikan format tanggal konsisten
         $current_date = date('Y-m-d', strtotime($current_date));
         $yesterday = date('Y-m-d', strtotime($current_date . ' -1 day'));
         
-        // Prioritas 1: Cari data kemarin (1 hari sebelumnya) di tabel utama
         $sql = "SELECT * FROM harga_tbs 
                 WHERE id_kabupaten = ? 
                 AND id_perusahaan = ? 
@@ -61,7 +57,6 @@ class Harga_tbs_model extends CI_Model
         $query = $this->db->query($sql, array($id_kabupaten, $id_perusahaan, $yesterday));
         $result = $query->row();
         
-        // Jika tidak ada hasil dengan DATE(), coba tanpa DATE() (untuk DATE type)
         if (!$result) {
             $sql2 = "SELECT * FROM harga_tbs 
                      WHERE id_kabupaten = ? 
@@ -73,11 +68,9 @@ class Harga_tbs_model extends CI_Model
             $result = $query2->row();
         }
         
-        // Prioritas 2: Jika data kemarin tidak ada di tabel utama, cari di tabel backup
         if (!$result && $this->db->table_exists('harga_tbs_backup')) {
             $backup_result = $this->get_from_backup($id_kabupaten, $id_perusahaan, $yesterday);
             if ($backup_result) {
-                // Convert backup result ke format yang sama dengan tabel utama
                 $result = (object) [
                     'id_harga' => $backup_result->id_harga_original,
                     'id_kabupaten' => $backup_result->id_kabupaten,
@@ -88,8 +81,6 @@ class Harga_tbs_model extends CI_Model
             }
         }
         
-        // Prioritas 3: Jika data kemarin tidak ada (sudah dihapus), 
-        // ambil data terakhir yang ada sebelum tanggal saat ini dari tabel utama
         if (!$result) {
             $sql3 = "SELECT * FROM harga_tbs 
                      WHERE id_kabupaten = ? 
@@ -100,7 +91,6 @@ class Harga_tbs_model extends CI_Model
             $query3 = $this->db->query($sql3, array($id_kabupaten, $id_perusahaan, $current_date));
             $result = $query3->row();
             
-            // Jika masih tidak ada, coba tanpa DATE()
             if (!$result) {
                 $sql4 = "SELECT * FROM harga_tbs 
                          WHERE id_kabupaten = ? 
@@ -113,11 +103,9 @@ class Harga_tbs_model extends CI_Model
             }
         }
         
-        // Prioritas 4: Jika masih tidak ada, cari di tabel backup
         if (!$result && $this->db->table_exists('harga_tbs_backup')) {
             $backup_result = $this->get_last_from_backup($id_kabupaten, $id_perusahaan, $current_date);
             if ($backup_result) {
-                // Convert backup result ke format yang sama dengan tabel utama
                 $result = (object) [
                     'id_harga' => $backup_result->id_harga_original,
                     'id_kabupaten' => $backup_result->id_kabupaten,
@@ -133,8 +121,6 @@ class Harga_tbs_model extends CI_Model
     
     public function get_last_different_price ($id_kabupaten, $id_perusahaan, $current_date): mixed
     {
-        // Ambil harga terakhir yang berbeda dari tanggal saat ini
-        // Digunakan sebagai fallback jika tidak ada data sebelumnya
         $current_date = date('Y-m-d', strtotime($current_date));
         
         $sql = "SELECT * FROM harga_tbs 
@@ -148,10 +134,8 @@ class Harga_tbs_model extends CI_Model
         return $query->row();
     }
     
-    public function get_latest_per_company (): array
+    public function get_harga_terbaru_per_perusahaan (): array
     {
-        // Ambil harga terbaru per perusahaan per kabupaten
-        // Ambil semua data, lalu filter di PHP untuk mendapatkan 1 harga terbaru per kombinasi
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
         $this->db->from('harga_tbs');
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
@@ -160,7 +144,6 @@ class Harga_tbs_model extends CI_Model
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
         $all_prices = $this->db->get()->result();
         
-        // Filter untuk mendapatkan 1 harga terbaru per kombinasi perusahaan-kabupaten
         $latest_prices = [];
         $seen = [];
         
@@ -175,23 +158,19 @@ class Harga_tbs_model extends CI_Model
         return $latest_prices;
     }
     
-    public function get_today_prices (): array
+    public function get_harga_hari_ini (): array
     {
-        // Ambil harga hari ini untuk semua perusahaan dan kabupaten
-        // Ambil data terbaru per kombinasi perusahaan-kabupaten jika ada beberapa data untuk hari yang sama
         $today = date('Y-m-d');
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
         $this->db->from('harga_tbs');
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        // Gunakan DATE() untuk memastikan perbandingan hanya berdasarkan tanggal, bukan waktu
         $this->db->where("DATE(harga_tbs.tanggal) = '{$today}'", NULL, FALSE);
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
         $this->db->order_by('harga_tbs.id_kabupaten', 'ASC');
         $this->db->order_by('harga_tbs.tanggal', 'DESC');
         $all_today = $this->db->get()->result();
         
-        // Filter untuk mendapatkan 1 harga terbaru per kombinasi perusahaan-kabupaten
         $latest_prices = [];
         $seen = [];
         
@@ -287,21 +266,16 @@ class Harga_tbs_model extends CI_Model
         return $this->db->insert_id();
     }
     
-    // Hapus data kemarin (1 hari sebelumnya) untuk perusahaan dan kabupaten yang sama
-    // Otomatis backup sebelum dihapus
     public function delete_yesterday_data ($id_kabupaten, $id_perusahaan, $current_date, $deleted_by = null): int
     {
-        // Hitung tanggal kemarin
         $current_date = date('Y-m-d', strtotime($current_date));
         $yesterday = date('Y-m-d', strtotime($current_date . ' -1 day'));
         
-        // Cari data kemarin untuk perusahaan dan kabupaten yang sama
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('id_perusahaan', $id_perusahaan);
         $this->db->where("DATE(tanggal) = '{$yesterday}'", NULL, FALSE);
         $yesterday_data = $this->db->get('harga_tbs')->result();
         
-        // Hapus semua data kemarin (dengan backup otomatis)
         $deleted_count = 0;
         foreach ($yesterday_data as $data) {
             if ($this->delete($data->id_harga, $deleted_by)) {
@@ -320,24 +294,18 @@ class Harga_tbs_model extends CI_Model
     
     public function delete ($id, $deleted_by = null): bool
     {
-        // Backup data sebelum dihapus
         $this->backup_before_delete($id, $deleted_by);
         
-        // Hapus data dari tabel utama
         $this->db->where('id_harga', $id);
         return $this->db->delete('harga_tbs');
     }
     
-    // Backup data sebelum dihapus
     public function backup_before_delete ($id, $deleted_by = null): bool
     {
-        // Ambil data yang akan dihapus
         $data = $this->get_by_id($id);
         
         if ($data) {
-            // Cek apakah tabel backup ada
             if ($this->db->table_exists('harga_tbs_backup')) {
-                // Simpan ke tabel backup
                 $backup_data = [
                     'id_harga_original' => $data->id_harga,
                     'id_kabupaten' => $data->id_kabupaten,
@@ -355,10 +323,8 @@ class Harga_tbs_model extends CI_Model
         return false;
     }
     
-    // Ambil data dari backup berdasarkan tanggal
     public function get_from_backup ($id_kabupaten, $id_perusahaan, $date): mixed
     {
-        // Cek apakah tabel backup ada
         if (!$this->db->table_exists('harga_tbs_backup')) {
             return null;
         }
@@ -374,10 +340,8 @@ class Harga_tbs_model extends CI_Model
         return $this->db->get('harga_tbs_backup')->row();
     }
     
-    // Ambil data terakhir dari backup sebelum tanggal tertentu
     public function get_last_from_backup ($id_kabupaten, $id_perusahaan, $current_date): mixed
     {
-        // Cek apakah tabel backup ada
         if (!$this->db->table_exists('harga_tbs_backup')) {
             return null;
         }

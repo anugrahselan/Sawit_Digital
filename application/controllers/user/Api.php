@@ -10,21 +10,21 @@ class Api extends CI_Controller {
         $this->load->model('Penyakit_model');
     }
 
-    public function tbs_prices() {
+    public function harga_tbs() {
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if ($id_kabupaten) {
             $tbs_prices = $this->Harga_tbs_model->get_by_kabupaten($id_kabupaten);
         } else {
-            $tbs_prices = $this->Harga_tbs_model->get_today_prices();
+            $tbs_prices = $this->Harga_tbs_model->get_harga_hari_ini();
 
             if (empty($tbs_prices)) {
-                $tbs_prices = $this->Harga_tbs_model->get_latest_per_company();
+                $tbs_prices = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
             }
         }
 
         foreach ($tbs_prices as $price) {
-            $previous = $this->Harga_tbs_model->get_previous_price(
+            $previous = $this->Harga_tbs_model->get_harga_sebelumnya(
                 $price->id_kabupaten,
                 $price->id_perusahaan,
                 $price->tanggal
@@ -46,7 +46,7 @@ class Api extends CI_Controller {
         $this->load->view('user/partials/tabel_tbs', $data);
     }
 
-    public function search() {
+    public function cari() {
         $keyword = $this->input->get('q');
         if (empty($keyword)) {
             echo json_encode(['error' => 'Keyword required']);

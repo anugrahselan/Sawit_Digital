@@ -22,7 +22,7 @@ class Admin_kalkulator_panen extends MY_Controller
 
         $columns = $this->db->list_fields('kalkulasi_panen');
         $has_id_user = in_array('id_user', $columns);
-        
+
         if ($has_id_user) {
             $this->db->select('kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan, users.username as user_username, users.nama_lengkap as user_nama');
             $this->db->from('kalkulasi_panen');

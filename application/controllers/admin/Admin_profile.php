@@ -160,7 +160,6 @@ class Admin_profile extends MY_Controller
 
         $file_name = 'user_' . time() . '_' . uniqid() . '.' . $file_ext;
 
-        // Upload file
         if (move_uploaded_file($file['tmp_name'], $upload_path . $file_name)) {
             return ['success' => true, 'file_name' => $file_name];
         } else {

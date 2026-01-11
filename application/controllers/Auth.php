@@ -10,7 +10,7 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function login()
+    public function masuk()
     {
         if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
             $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
@@ -61,6 +61,11 @@ class Auth extends CI_Controller
         }
 
         $this->load->view('auth/login', $data);
+    }
+
+    public function login()
+    {
+        $this->masuk();
     }
 
     public function register()
@@ -131,9 +136,14 @@ class Auth extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    public function logout()
+    public function keluar()
     {
         $this->session->sess_destroy();
         redirect('beranda');
+    }
+
+    public function logout()
+    {
+        $this->keluar();
     }
 }

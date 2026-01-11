@@ -1,9 +1,6 @@
 <div class="container">
     <article class="article-detail">
         <?php 
-        // Debug: uncomment untuk melihat data
-        // echo '<pre>'; var_dump($article); echo '</pre>';
-        
         // Cek dan ambil gambar - prioritas: gambar_header, lalu thumbnail
         $gambar = null;
         
@@ -32,11 +29,9 @@
             <div class="article-header-image">
                 <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($article->judul) ?>" 
                     style="max-width: 100%; height: auto; display: block;"
-                    onerror="this.onerror=null; this.style.display='none'; console.error('Gambar gagal dimuat: <?= $gambar_url ?>');">
+                    onerror="this.onerror=null; this.style.display='none';">
             </div>
-            <!-- Debug: Path DB: <?= property_exists($article, 'gambar_header') ? $article->gambar_header : '' ?>, File: <?= $gambar ?>, URL: <?= $gambar_url ?> -->
         <?php else: ?>
-            <!-- Debug: Gambar tidak ditemukan. Thumbnail: <?= property_exists($article, 'thumbnail') ? ($article->thumbnail ?: 'KOSONG') : 'TIDAK ADA' ?>, Gambar Header: <?= property_exists($article, 'gambar_header') ? ($article->gambar_header ?: 'KOSONG') : 'TIDAK ADA' ?> -->
         <?php endif; ?>
         <div class="article-detail-content">
             <span class="article-category"><?= $article->kategori ?></span>

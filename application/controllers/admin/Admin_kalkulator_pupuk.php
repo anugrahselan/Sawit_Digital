@@ -1,15 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin_kalkulator_pupuk extends MY_Controller {
-    
-    public function __construct() {
+class Admin_kalkulator_pupuk extends MY_Controller
+{
+
+    public function __construct()
+    {
         parent::__construct();
         $this->require_admin();
         $this->load->database();
     }
-    
-    public function index() {
+
+    public function index()
+    {
         $data['page_title'] = 'Kalkulasi Pupuk';
         $data['page_css'] = 'kalkulator_pupuk.css';
         $data['breadcrumbs'] = [
@@ -23,9 +26,9 @@ class Admin_kalkulator_pupuk extends MY_Controller {
         $this->db->join('jenis_tanah', 'jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah', 'left');
         $this->db->join('users', 'users.id_user = kalkulasi_dosis_pupuk.id_user', 'left');
         $this->db->order_by('kalkulasi_dosis_pupuk.id_kalkulasi', 'DESC');
-        
+
         $data['dosis'] = $this->db->get()->result();
-        
+
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/kalkulator_pupuk/index', $data);
         $this->load->view('admin/templates/footer');

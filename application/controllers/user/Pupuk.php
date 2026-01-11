@@ -41,7 +41,7 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function list()
+    public function daftar_jenis()
     {
         $data['page_title'] = 'Jenis Pupuk - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/jenis_pupuk.css';
@@ -76,7 +76,7 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function save_dosis()
+    public function simpan_dosis()
     {
         header('Content-Type: application/json');
         
@@ -164,17 +164,10 @@ class Pupuk extends CI_Controller
                 }
                 
                 log_message('error', 'Kalkulasi Dosis Pupuk Save Error: ' . json_encode($error));
-                log_message('error', 'Data yang dikirim: ' . json_encode($data));
-                log_message('error', 'Affected Rows: ' . $this->db->affected_rows());
                 
                 echo json_encode([
                     'success' => false, 
-                    'message' => $error_message,
-                    'debug' => ENVIRONMENT !== 'production' ? [
-                        'error' => $error,
-                        'affected_rows' => $this->db->affected_rows(),
-                        'data' => $data
-                    ] : null
+                    'message' => $error_message
                 ]);
             }
         } catch (Exception $e) {
@@ -186,4 +179,3 @@ class Pupuk extends CI_Controller
         }
     }
 }
-
