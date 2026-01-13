@@ -56,27 +56,27 @@ $route['dashboard'] = 'user/Beranda/index';
 $route['user/home'] = 'user/Beranda/index'; // Alias untuk user/home
 $route['pencarian'] = 'user/Pencarian/index';
 $route['cari'] = 'user/Pencarian/index';
-$route['api/tbs_prices'] = 'user/Api/tbs_prices';
-$route['api/search'] = 'user/Api/search';
+$route['api/tbs_prices'] = 'user/Api/harga_tbs';
+$route['api/search'] = 'user/Api/cari';
 $route['api/get_dosis'] = 'user/Api/get_dosis';
 $route['kalkulator-pupuk'] = 'user/Pupuk/index';
 $route['kalkulator-panen'] = 'user/Panen/index';
-$route['panen/save'] = 'user/Panen/save';
+$route['panen/save'] = 'user/Panen/simpan';
 $route['panen/get_perusahaan'] = 'user/Panen/get_perusahaan_by_kabupaten';
 $route['panen/get_harga_tbs'] = 'user/Panen/get_harga_tbs';
-$route['pupuk/save_dosis'] = 'user/Pupuk/save_dosis';
+$route['pupuk/save_dosis'] = 'user/Pupuk/simpan_dosis';
 $route['riwayat'] = 'user/Riwayat/index';
 $route['riwayat/hapus_panen/(:num)'] = 'user/Riwayat/hapus_panen/$1';
 $route['riwayat/hapus_pupuk/(:num)'] = 'user/Riwayat/hapus_pupuk/$1';
-$route['jenis-pupuk'] = 'user/Pupuk/list';
-$route['pupuk/list'] = 'user/Pupuk/list';
-$route['pupuk/detail/(:num)'] = 'user/Pupuk/detail/$1';
-$route['pupuk/detail/(:any)'] = 'user/Pupuk/detail/$1';
+$route['jenis-pupuk'] = 'user/Pupuk/daftar_jenis';
+$route['pupuk/list'] = 'user/Pupuk/daftar_jenis';
+$route['pupuk/detail/(:num)'] = 'user/Pupuk/detail_pupuk/$1';
+$route['pupuk/detail/(:any)'] = 'user/Pupuk/detail_pupuk/$1';
 $route['penyakit'] = 'user/Penyakit/index';
-$route['penyakit/detail/(:num)'] = 'user/Penyakit/detail/$1';
-$route['penyakit/detail/(:any)'] = 'user/Penyakit/detail/$1';
+$route['penyakit/detail/(:num)'] = 'user/Penyakit/detail_penyakit/$1';
+$route['penyakit/detail/(:any)'] = 'user/Penyakit/detail_penyakit/$1';
 $route['informasi'] = 'user/Informasi/index';
-$route['informasi/detail/(:any)'] = 'user/Informasi/detail/$1';
+$route['informasi/detail/(:any)'] = 'user/Informasi/detail_informasi/$1';
 $route['informasi/(:num)'] = 'user/Informasi/index';
 $route['profil'] = 'user/Profil/index';
 
@@ -91,22 +91,22 @@ $route['bantuan/syarat-ketentuan'] = 'user/Bantuan/syarat_ketentuan';
 $route['bantuan/kebijakan-privasi'] = 'user/Bantuan/kebijakan_privasi';
 $route['bantuan/hubungi-kami'] = 'user/Bantuan/hubungi_kami';
 
-$route['masuk'] = 'Auth/masuk';
-$route['login'] = 'Auth/masuk';
-$route['auth/login'] = 'Auth/masuk';
-$route['auth/masuk'] = 'Auth/masuk';
-$route['keluar'] = 'Auth/keluar';
-$route['logout'] = 'Auth/keluar';
-$route['auth/logout'] = 'Auth/keluar';
-$route['auth/keluar'] = 'Auth/keluar';
+$route['masuk'] = 'Auth/login';
+$route['login'] = 'Auth/login';
+$route['auth/login'] = 'Auth/login';
+$route['auth/masuk'] = 'Auth/login';
+$route['keluar'] = 'Auth/logout';
+$route['logout'] = 'Auth/logout';
+$route['auth/logout'] = 'Auth/logout';
+$route['auth/keluar'] = 'Auth/logout';
 $route['daftar'] = 'Auth/register';
 $route['register'] = 'Auth/register';
 
 
 $route['admin'] = 'admin/Admin_dashboard/index';
 
-$route['admin/login'] = 'Auth/masuk';
-$route['admin/logout'] = 'Auth/keluar';
+$route['admin/login'] = 'Auth/login';
+$route['admin/logout'] = 'Auth/logout';
 $route['admin/dashboard'] = 'admin/Admin_dashboard/index';
 $route['admin/harga_tbs'] = 'admin/Admin_harga_tbs/index';
 $route['admin/harga_tbs/tambah'] = 'admin/Admin_harga_tbs/tambah_harga_tbs';
@@ -142,6 +142,9 @@ $route['admin/informasi/hapus/(:num)'] = 'admin/Admin_informasi/hapus_informasi/
 $route['admin/users'] = 'admin/Admin_users/index';
 $route['admin/profile'] = 'admin/Admin_profile/index';
 $route['admin/settings'] = 'admin/Admin_settings/index';
+
+// Allow direct access to assets (CSS, JS, images)
+$route['assets/(:any)'] = '';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
