@@ -20,7 +20,7 @@
                 <td>Rp <?= number_format($price->harga_per_kg, 0, ',', '.') ?></td>
                 <td class="perubahan-harga">
                     <?php 
-                    // Tampilkan perubahan berdasarkan status
+
                     if(isset($price->status_perubahan) && $price->status_perubahan != 'tidak_ada' && isset($price->perubahan)):
                         if($price->status_perubahan == 'naik'):
                     ?>
@@ -38,7 +38,7 @@
                     <?php 
                         endif;
                     else: 
-                        // Tidak ada perubahan atau tidak ada data kemarin
+
                     ?>
                         <span class="perubahan-tidak-ada">-</span>
                     <?php endif; ?>
@@ -52,4 +52,3 @@
         <?php endif; ?>
     </tbody>
 </table>
-

@@ -60,8 +60,8 @@ class Admin_dashboard extends MY_Controller
     private function get_avg_harga_tbs()
     {
         $query = $this->db->query('SELECT AVG(harga_per_kg) as avg_harga_per_kg FROM harga_tbs');
-        $result = $query->row();
-        return $result ? (float) $result->avg_harga_per_kg : 0;
+        $hasil = $query->row();
+        return $hasil ? (float) $hasil->avg_harga_per_kg : 0;
     }
 
     private function get_total_jenis_pupuk()
@@ -78,7 +78,7 @@ class Admin_dashboard extends MY_Controller
     {
         $daftar_harga = $this->Harga_tbs_model->get_harga_hari_ini();
         if (empty($daftar_harga)) {
-            $daftar_harga = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
+            $daftar_harga = $this->Harga_tbs_model->get_terbaru_per_perusahaan();
         }
 
         $daftar_harga = array_slice($daftar_harga, 0, 10);

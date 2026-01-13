@@ -48,7 +48,3 @@ class Profil_perusahaan extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 }
-
-
-
-

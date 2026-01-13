@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_penyakit extends MY_Controller
 {
+    private $upload_path = 'assets/img/penyakit/';
 
     public function __construct()
     {
@@ -23,8 +24,6 @@ class Admin_penyakit extends MY_Controller
         ];
 
         $data['penyakit'] = $this->Penyakit_model->get_all();
-        $data['can_edit'] = $this->can_edit();
-        $data['can_delete'] = $this->can_delete();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/penyakit/index', $data);
@@ -34,7 +33,7 @@ class Admin_penyakit extends MY_Controller
     public function tambah_penyakit()
     {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/penyakit');
         }
 
@@ -46,34 +45,11 @@ class Admin_penyakit extends MY_Controller
             ['label' => 'Tambah', 'url' => site_url('admin/penyakit/tambah_penyakit')]
         ];
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('nama_penyakit', 'Nama Penyakit', 'required');
 
-            if ($this->form_validation->run() == TRUE) {
-                $data_insert = [
-                    'nama_penyakit' => $this->input->post('nama_penyakit'),
-                    'penyebab' => $this->input->post('penyebab'),
-                    'gejala' => $this->input->post('gejala'),
-                    'cara_pengendalian' => $this->input->post('cara_pengendalian')
-                ];
-
-                if (!empty($_FILES['gambar_ilustrasi']['name'])) {
-                    $upload_result = $this->upload_gambar('gambar_ilustrasi', 'penyakit');
-                    if ($upload_result['success']) {
-                        $data_insert['gambar_ilustrasi'] = $upload_result['file_name'];
-                    } else {
-                        $data['error'] = $upload_result['error'];
-                    }
-                }
-
-                if (!isset($data['error'])) {
-                    if ($this->Penyakit_model->create($data_insert)) {
-                        $this->session->set_flashdata('success', 'Penyakit berhasil ditambahkan');
-                        redirect('admin/penyakit');
-                    } else {
-                        $data['error'] = 'Gagal menambahkan penyakit';
-                    }
-                }
+            if ($this->form_validation->run() !== FALSE) {
+                $this->_simpan_penyakit();
             }
         }
 
@@ -82,16 +58,56 @@ class Admin_penyakit extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
+    private function _simpan_penyakit()
+    {
+        $data = [
+            'nama_penyakit' => $this->input->post('nama_penyakit'),
+            'penyebab' => $this->input->post('penyebab'),
+            'gejala' => $this->input->post('gejala'),
+            'cara_pengendalian' => $this->input->post('cara_pengendalian')
+        ];
+
+        $upload_path = FCPATH . $this->upload_path;
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0755, true);
+        }
+
+        $this->upload->initialize([
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'max_size' => 2048,
+            'encrypt_name' => TRUE
+        ]);
+
+        if (!empty($_FILES['gambar_ilustrasi']['name'])) {
+            if (!$this->upload->do_upload('gambar_ilustrasi')) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors('', '') . '</div>');
+                redirect('admin/penyakit/tambah');
+                return;
+            }
+            $data['gambar_ilustrasi'] = $this->upload->data('file_name');
+        }
+
+        $simpan = $this->Penyakit_model->create($data);
+        if ($simpan) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyakit berhasil ditambahkan!</div>');
+            redirect('admin/penyakit');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambahkan penyakit!</div>');
+            redirect('admin/penyakit/tambah');
+        }
+    }
+
     public function ubah_penyakit($id)
     {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/penyakit');
         }
 
         $penyakit = $this->Penyakit_model->get_by_id($id);
         if (!$penyakit) {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan');
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data penyakit tidak ditemukan!</div>');
             redirect('admin/penyakit');
         }
 
@@ -104,40 +120,11 @@ class Admin_penyakit extends MY_Controller
             ['label' => 'Edit', 'url' => site_url('admin/penyakit/ubah_penyakit/' . $id)]
         ];
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('nama_penyakit', 'Nama Penyakit', 'required');
 
-            if ($this->form_validation->run() == TRUE) {
-                $data_update = [
-                    'nama_penyakit' => $this->input->post('nama_penyakit'),
-                    'penyebab' => $this->input->post('penyebab'),
-                    'gejala' => $this->input->post('gejala'),
-                    'cara_pengendalian' => $this->input->post('cara_pengendalian')
-                ];
-
-                if (!empty($_FILES['gambar_ilustrasi']['name'])) {
-                    $upload_result = $this->upload_gambar('gambar_ilustrasi', 'penyakit');
-                    if ($upload_result['success']) {
-                        if (!empty($penyakit->gambar_ilustrasi)) {
-                            $old_file = FCPATH . 'assets/img/penyakit/' . $penyakit->gambar_ilustrasi;
-                            if (file_exists($old_file)) {
-                                unlink($old_file);
-                            }
-                        }
-                        $data_update['gambar_ilustrasi'] = $upload_result['file_name'];
-                    } else {
-                        $data['error'] = $upload_result['error'];
-                    }
-                }
-
-                if (!isset($data['error'])) {
-                    if ($this->Penyakit_model->update($id, $data_update)) {
-                        $this->session->set_flashdata('success', 'Penyakit berhasil diupdate');
-                        redirect('admin/penyakit');
-                    } else {
-                        $data['error'] = 'Gagal mengupdate penyakit';
-                    }
-                }
+            if ($this->form_validation->run() !== FALSE) {
+                $this->_ubah_penyakit($id);
             }
         }
 
@@ -146,50 +133,78 @@ class Admin_penyakit extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_penyakit($id)
+    private function _ubah_penyakit($id)
     {
-        if (!$this->can_delete()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
-            redirect('admin/penyakit');
-        }
+        $data = [
+            'nama_penyakit' => $this->input->post('nama_penyakit'),
+            'penyebab' => $this->input->post('penyebab'),
+            'gejala' => $this->input->post('gejala'),
+            'cara_pengendalian' => $this->input->post('cara_pengendalian')
+        ];
 
-        $penyakit = $this->Penyakit_model->get_by_id($id);
-        if ($penyakit && !empty($penyakit->gambar_ilustrasi)) {
-            $file_path = FCPATH . 'assets/img/penyakit/' . $penyakit->gambar_ilustrasi;
-            if (file_exists($file_path)) {
-                unlink($file_path);
-            }
-        }
-
-        if ($this->Penyakit_model->delete($id)) {
-            $this->session->set_flashdata('success', 'Penyakit berhasil dihapus');
-        } else {
-            $this->session->set_flashdata('error', 'Gagal menghapus penyakit');
-        }
-
-        redirect('admin/penyakit');
-    }
-
-    private function upload_gambar($field_name, $folder): array
-    {
-        $upload_path = FCPATH . 'assets/img/' . $folder . '/';
+        $upload_path = FCPATH . $this->upload_path;
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0755, true);
         }
 
-        $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = 'gif|jpg|jpeg|png|webp';
-        $config['max_size'] = 2048;
-        $config['encrypt_name'] = TRUE;
+        $this->upload->initialize([
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'max_size' => 2048,
+            'encrypt_name' => TRUE
+        ]);
 
-        $this->upload->initialize($config);
+        $penyakit = $this->Penyakit_model->get_by_id($id);
+        if (!empty($_FILES['gambar_ilustrasi']['name'])) {
+            if (!$this->upload->do_upload('gambar_ilustrasi')) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors('', '') . '</div>');
+                redirect('admin/penyakit/ubah/' . $id);
+                return;
+            }
+            if (!empty($penyakit['gambar_ilustrasi'])) {
+                $file_path = $upload_path . $penyakit['gambar_ilustrasi'];
+                if (file_exists($file_path)) {
+                    unlink($file_path);
+                }
+            }
+            $data['gambar_ilustrasi'] = $this->upload->data('file_name');
+        }
 
-        if ($this->upload->do_upload($field_name)) {
-            $upload_data = $this->upload->data();
-            return ['success' => true, 'file_name' => $upload_data['file_name']];
+        $ubah = $this->Penyakit_model->update($id, $data);
+        if ($ubah) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Penyakit berhasil diubah!</div>');
+            redirect('admin/penyakit');
         } else {
-            return ['success' => false, 'error' => $this->upload->display_errors('', '')];
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal mengubah penyakit!</div>');
+            redirect('admin/penyakit/ubah/' . $id);
         }
     }
-}
 
+    public function hapus_penyakit($id)
+    {
+        if (!$this->can_delete()) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
+            redirect('admin/penyakit');
+        }
+
+        $penyakit = $this->Penyakit_model->get_by_id($id);
+        if ($penyakit) {
+            $upload_path = FCPATH . $this->upload_path;
+            if (!empty($penyakit['gambar_ilustrasi'])) {
+                $file_path = $upload_path . $penyakit['gambar_ilustrasi'];
+                if (file_exists($file_path)) {
+                    unlink($file_path);
+                }
+            }
+            $hapus = $this->Penyakit_model->delete($id);
+            if ($hapus) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil di hapus</div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal di hapus</div>');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data tidak ditemukan</div>');
+        }
+        redirect('admin/penyakit');
+    }
+}

@@ -21,18 +21,18 @@ class Informasi extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null)
+    public function detail_informasi($id = null)
     {
         if (!$id)
             show_404();
 
-        $article = $this->Informasi_tambahan_model->get_by_id($id);
-        if (!$article)
+        $informasi = $this->Informasi_tambahan_model->get_by_id($id);
+        if (!$informasi)
             show_404();
 
-        $data['page_title'] = $article->judul . ' - Sistem Penyuluhan Sawit';
+        $data['page_title'] = $informasi['judul'] . ' - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/informasi.css';
-        $data['article'] = $article;
+        $data['article'] = $informasi;
 
         $this->load->view('user/templates/header', $data);
         $this->load->view('user/informasi/detail', $data);

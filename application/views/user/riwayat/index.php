@@ -18,19 +18,17 @@
         </div>
     <?php endif; ?>
 
-    <!-- Tab Navigation -->
     <div class="riwayat-tabs">
         <button class="tab-btn active" data-tab="panen">Kalkulasi Panen</button>
         <button class="tab-btn" data-tab="pupuk">Kalkulasi Pupuk</button>
     </div>
 
-    <!-- Tab Content: Panen -->
     <div class="tab-content active" id="tab-panen">
         <div class="riwayat-section">
             <h2 class="section-title">Riwayat Kalkulasi Panen</h2>
 
             <?php if (!empty($kalkulasi_panen)): ?>
-                <!-- Search Bar -->
+                
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-10">
@@ -49,7 +47,7 @@
                     <table class="riwayat-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">#</th>
+                                <th style="width: 50px;">
                                 <th>Tanggal</th>
                                 <th>Kabupaten</th>
                                 <th>Perusahaan</th>
@@ -62,7 +60,7 @@
                         <tbody>
                             <?php foreach ($kalkulasi_panen as $index => $kp): ?>
                                 <?php
-                                // Hitung hasil bersih
+
                                 $berat_bersih = $kp->berat_kotor - ($kp->berat_kotor * $kp->potongan / 100);
                                 $pendapatan_kotor = $berat_bersih * $kp->harga_per_kg;
                                 $total_biaya = $kp->upah_panen + $kp->biaya_transportasi + $kp->potong_hutang;
@@ -157,13 +155,12 @@
         </div>
     </div>
 
-    <!-- Tab Content: Pupuk -->
     <div class="tab-content" id="tab-pupuk">
         <div class="riwayat-section">
             <h2 class="section-title">Riwayat Kalkulasi Pupuk</h2>
 
             <?php if (!empty($kalkulasi_pupuk)): ?>
-                <!-- Search Bar -->
+                
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-10">
@@ -182,7 +179,7 @@
                     <table class="riwayat-table">
                         <thead>
                             <tr>
-                                <th style="width: 50px;">#</th>
+                                <th style="width: 50px;">
                                 <th>Tanggal</th>
                                 <th>Jenis Tanah</th>
                                 <th>Jenis Pupuk</th>
@@ -227,7 +224,7 @@
                                 <tr class="detail-row" id="detail-pupuk-<?= $kdp->id_kalkulasi ?>">
                                     <td colspan="8">
                                         <div class="detail-content">
-                                            <!-- Dosis Cards Section -->
+                                            
                                             <div class="dosis-cards-section">
                                                 <div class="dosis-card">
                                                     <div class="dosis-card-content">
@@ -256,7 +253,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Additional Information Section -->
                                             <?php if ($kdp->rekomendasi_pupuk || $kdp->keterangan_aplikasi): ?>
                                                 <div class="additional-info-section">
                                                     <?php if ($kdp->rekomendasi_pupuk): ?>

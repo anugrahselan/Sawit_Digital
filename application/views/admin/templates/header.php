@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Admin Dashboard' ?> - Sawit Digital</title>
     
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- Custom Admin CSS -->
+    
     <link href="<?= base_url('assets/css/admin/main.css') ?>" rel="stylesheet">
     
     <?php if (isset($page_css)): ?>
@@ -24,9 +23,8 @@
     <div class="admin-wrapper">
         <?php $this->load->view('admin/templates/sidebar'); ?>
         
-        <!-- Main Content -->
         <div class="admin-main">
-            <!-- Top Header -->
+            
             <header class="admin-header">
                 <div class="header-left">
                     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -50,7 +48,7 @@
                 </div>
                 
                 <div class="header-right">
-                    <!-- Global Search -->
+                    
                     <div class="header-search">
                         <form id="adminSearchForm" class="search-form">
                             <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari di halaman ini..." autocomplete="off">
@@ -58,14 +56,13 @@
                         </form>
                     </div>
                     
-                    <!-- User Menu -->
                     <div class="dropdown user-menu">
                         <button class="btn btn-link dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown">
                             <?php
                             $foto_profil = $this->session->userdata('foto_profil');
                             if (!empty($foto_profil)) {
                                 $foto_profil = trim($foto_profil);
-                                // Jika path sudah lengkap (sudah ada assets/img/users/), ambil hanya nama file
+
                                 if (strpos($foto_profil, 'assets/img/users/') !== false) {
                                     $foto_profil = basename($foto_profil);
                                 } else {
@@ -91,9 +88,8 @@
                 </div>
             </header>
             
-            <!-- Content Area -->
             <main class="admin-content">
-                <!-- Search Results -->
+                
                 <div id="adminSearchResults" class="alert alert-info" style="display: none; margin-bottom: 1rem;">
                     <div id="adminSearchResultsContent"></div>
                 </div>

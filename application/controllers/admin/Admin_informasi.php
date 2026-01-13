@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_informasi extends MY_Controller
 {
+    private $upload_path = 'assets/img/articles/';
 
     public function __construct()
     {
@@ -15,16 +16,13 @@ class Admin_informasi extends MY_Controller
 
     public function index()
     {
-        $data['page_title'] = 'Informasi (Artikel)';
+        $data['page_title'] = 'Informasi Tambahan';
         $data['page_css'] = 'informasi.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Informasi', 'url' => site_url('admin/informasi')]
         ];
-
         $data['articles'] = $this->Informasi_tambahan_model->get_all();
-        $data['can_edit'] = $this->can_edit();
-        $data['can_delete'] = $this->can_delete();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/informasi/index', $data);
@@ -34,11 +32,11 @@ class Admin_informasi extends MY_Controller
     public function tambah_informasi()
     {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/informasi');
         }
 
-        $data['page_title'] = 'Tambah Artikel';
+        $data['page_title'] = 'Tambah informasi tambahan';
         $data['page_css'] = 'informasi.css';
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
@@ -46,43 +44,12 @@ class Admin_informasi extends MY_Controller
             ['label' => 'Tambah', 'url' => site_url('admin/informasi/tambah_informasi')]
         ];
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('judul', 'Judul', 'required');
             $this->form_validation->set_rules('konten', 'Konten', 'required');
 
-            if ($this->form_validation->run() == TRUE) {
-                $data_insert = [
-                    'judul' => $this->input->post('judul'),
-                    'kategori' => $this->input->post('kategori'),
-                    'penulis' => $this->input->post('penulis'),
-                    'konten' => $this->input->post('konten'),
-                    'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
-                ];
-
-                if (!empty($_FILES['gambar_header']['name'])) {
-                    $upload_result = $this->upload_gambar('gambar_header', 'articles');
-                    if ($upload_result['success']) {
-                        $data_insert['gambar_header'] = $upload_result['file_name'];
-                    } else {
-                        $data['error'] = $upload_result['error'];
-                    }
-                }
-
-                if (!empty($_FILES['thumbnail']['name']) && !isset($data['error'])) {
-                    $upload_result = $this->upload_gambar('thumbnail', 'articles');
-                    if ($upload_result['success']) {
-                        $data_insert['thumbnail'] = $upload_result['file_name'];
-                    }
-                }
-
-                if (!isset($data['error'])) {
-                    if ($this->Informasi_tambahan_model->create($data_insert)) {
-                        $this->session->set_flashdata('success', 'Artikel berhasil ditambahkan');
-                        redirect('admin/informasi');
-                    } else {
-                        $data['error'] = 'Gagal menambahkan artikel';
-                    }
-                }
+            if ($this->form_validation->run() !== FALSE) {
+                $this->_simpan_informasi();
             }
         }
 
@@ -91,77 +58,77 @@ class Admin_informasi extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
+    private function _simpan_informasi()
+    {
+        $data = [
+            'judul' => $this->input->post('judul'),
+            'kategori' => $this->input->post('kategori'),
+            'penulis' => $this->input->post('penulis'),
+            'konten' => $this->input->post('konten'),
+            'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
+        ];
+
+        $upload_path = FCPATH . $this->upload_path;
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0755, true);
+        }
+
+        $this->upload->initialize([
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'max_size' => 2048,
+            'encrypt_name' => TRUE
+        ]);
+
+        foreach (['gambar_header', 'thumbnail'] as $field) {
+            if (!empty($_FILES[$field]['name'])) {
+                if (!$this->upload->do_upload($field)) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors('', '') . '</div>');
+                    redirect('admin/informasi/tambah');
+                    return;
+                }
+                $data[$field] = $this->upload->data('file_name');
+            }
+        }
+
+        $simpan = $this->Informasi_tambahan_model->create($data);
+        if ($simpan) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Informasi berhasil ditambahkan!</div>');
+            redirect('admin/informasi');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal menambahkan informasi!</div>');
+            redirect('admin/informasi/tambah');
+        }
+    }
+
     public function ubah_informasi($id)
     {
         if (!$this->can_edit()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
             redirect('admin/informasi');
         }
 
-        $article = $this->Informasi_tambahan_model->get_by_id($id);
-        if (!$article) {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan');
+        $informasi = $this->Informasi_tambahan_model->get_by_id($id);
+        if (!$informasi) {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data informasi tidak ditemukan!</div>');
             redirect('admin/informasi');
         }
 
-        $data['page_title'] = 'Edit Artikel';
+        $data['page_title'] = 'Edit informasi tambahan';
         $data['page_css'] = 'informasi.css';
-        $data['article'] = $article;
+        $data['article'] = $informasi;
         $data['breadcrumbs'] = [
             ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
             ['label' => 'Informasi', 'url' => site_url('admin/informasi')],
             ['label' => 'Edit', 'url' => site_url('admin/informasi/ubah_informasi/' . $id)]
         ];
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('judul', 'Judul', 'required');
             $this->form_validation->set_rules('konten', 'Konten', 'required');
 
-            if ($this->form_validation->run() == TRUE) {
-                $data_update = [
-                    'judul' => $this->input->post('judul'),
-                    'kategori' => $this->input->post('kategori'),
-                    'penulis' => $this->input->post('penulis'),
-                    'konten' => $this->input->post('konten'),
-                    'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
-                ];
-
-                if (!empty($_FILES['gambar_header']['name'])) {
-                    $upload_result = $this->upload_gambar('gambar_header', 'articles');
-                    if ($upload_result['success']) {
-                        if (!empty($article->gambar_header)) {
-                            $old_file = FCPATH . 'assets/img/articles/' . $article->gambar_header;
-                            if (file_exists($old_file)) {
-                                unlink($old_file);
-                            }
-                        }
-                        $data_update['gambar_header'] = $upload_result['file_name'];
-                    } else {
-                        $data['error'] = $upload_result['error'];
-                    }
-                }
-
-                if (!empty($_FILES['thumbnail']['name']) && !isset($data['error'])) {
-                    $upload_result = $this->upload_gambar('thumbnail', 'articles');
-                    if ($upload_result['success']) {
-                        if (!empty($article->thumbnail)) {
-                            $old_file = FCPATH . 'assets/img/articles/' . $article->thumbnail;
-                            if (file_exists($old_file)) {
-                                unlink($old_file);
-                            }
-                        }
-                        $data_update['thumbnail'] = $upload_result['file_name'];
-                    }
-                }
-
-                if (!isset($data['error'])) {
-                    if ($this->Informasi_tambahan_model->update($id, $data_update)) {
-                        $this->session->set_flashdata('success', 'Artikel berhasil diupdate');
-                        redirect('admin/informasi');
-                    } else {
-                        $data['error'] = 'Gagal mengupdate artikel';
-                    }
-                }
+            if ($this->form_validation->run() !== FALSE) {
+                $this->_ubah_informasi($id);
             }
         }
 
@@ -170,58 +137,84 @@ class Admin_informasi extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    public function hapus_informasi($id)
+    private function _ubah_informasi($id)
     {
-        if (!$this->can_delete()) {
-            $this->session->set_flashdata('error', 'Anda tidak memiliki izin');
-            redirect('admin/informasi');
-        }
+        $data = [
+            'judul' => $this->input->post('judul'),
+            'kategori' => $this->input->post('kategori'),
+            'penulis' => $this->input->post('penulis'),
+            'konten' => $this->input->post('konten'),
+            'tanggal' => $this->input->post('tanggal') ?: date('Y-m-d')
+        ];
 
-        $article = $this->Informasi_tambahan_model->get_by_id($id);
-        if ($article) {
-            if (!empty($article->gambar_header)) {
-                $file_path = FCPATH . 'assets/img/articles/' . $article->gambar_header;
-                if (file_exists($file_path)) {
-                    unlink($file_path);
-                }
-            }
-            if (!empty($article->thumbnail)) {
-                $file_path = FCPATH . 'assets/img/articles/' . $article->thumbnail;
-                if (file_exists($file_path)) {
-                    unlink($file_path);
-                }
-            }
-        }
-
-        if ($this->Informasi_tambahan_model->delete($id)) {
-            $this->session->set_flashdata('success', 'Artikel berhasil dihapus');
-        } else {
-            $this->session->set_flashdata('error', 'Gagal menghapus artikel');
-        }
-
-        redirect('admin/informasi');
-    }
-
-    private function upload_gambar($field_name, $folder): array
-    {
-        $upload_path = FCPATH . 'assets/img/' . $folder . '/';
+        $upload_path = FCPATH . $this->upload_path;
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0755, true);
         }
 
-        $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = 'gif|jpg|jpeg|png|webp';
-        $config['max_size'] = 2048;
-        $config['encrypt_name'] = TRUE;
+        $this->upload->initialize([
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'max_size' => 2048,
+            'encrypt_name' => TRUE
+        ]);
 
-        $this->upload->initialize($config);
-
-        if ($this->upload->do_upload($field_name)) {
-            $upload_data = $this->upload->data();
-            return ['success' => true, 'file_name' => $upload_data['file_name']];
-        } else {
-            return ['success' => false, 'error' => $this->upload->display_errors('', '')];
+        $informasi = $this->Informasi_tambahan_model->get_by_id($id);
+        foreach (['gambar_header', 'thumbnail'] as $field) {
+            if (!empty($_FILES[$field]['name'])) {
+                if (!$this->upload->do_upload($field)) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors('', '') . '</div>');
+                    redirect('admin/informasi/ubah/' . $id);
+                    return;
+                }
+                if (!empty($informasi->$field)) {
+                    $file_path = $upload_path . $informasi->$field;
+                    if (file_exists($file_path)) {
+                        unlink($file_path);
+                    }
+                }
+                $data[$field] = $this->upload->data('file_name');
+            }
         }
+
+        $ubah = $this->Informasi_tambahan_model->update($id, $data);
+        if ($ubah) {
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Informasi berhasil diubah!</div>');
+            redirect('admin/informasi');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal mengubah informasi!</div>');
+            redirect('admin/informasi/ubah/' . $id);
+        }
+    }
+
+    public function hapus_informasi($id)
+    {
+        if (!$this->can_delete()) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak memiliki izin</div>');
+            redirect('admin/informasi');
+        }
+
+        $informasi = $this->Informasi_tambahan_model->get_by_id($id);
+        if ($informasi) {
+            $upload_path = FCPATH . $this->upload_path;
+            foreach (['gambar_header', 'thumbnail'] as $field) {
+                if (!empty($informasi->$field)) {
+                    $file_path = $upload_path . $informasi->$field;
+                    if (file_exists($file_path)) {
+                        unlink($file_path);
+                    }
+                }
+            }
+            $hapus = $this->Informasi_tambahan_model->delete($id);
+            if ($hapus) {
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil di hapus</div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal di hapus</div>');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">Data tidak ditemukan</div>');
+        }
+        redirect('admin/informasi');
     }
 }
 

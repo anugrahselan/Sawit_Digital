@@ -1,6 +1,6 @@
-<!-- Footer -->
+
 <footer class="footer">
-    <!-- CTA Section (Dark Gray) -->
+    
     <section class="footer-cta">
         <div class="container">
             <div class="footer-cta-content">
@@ -16,12 +16,11 @@
                     <span>Mulai Hitung Sekarang</span>
                 </a>
 
-                <!-- Brand Section Below Button -->
                 <div class="footer-brand-section">
                     <div class="footer-logo">
                         <?php
                         $footer_logo = '';
-                        // Cek berbagai format gambar logo
+
                         $logo_formats = ['logo.png', 'logo.svg', 'logo.jpg', 'logo.jpeg', 'logo.webp'];
                         foreach ($logo_formats as $format) {
                             $logo_path = FCPATH . 'assets/img/logo/' . $format;
@@ -83,11 +82,10 @@
         </div>
     </section>
 
-    <!-- Footer Content (Dark Gray) -->
     <div class="footer-content">
         <div class="container">
             <div class="footer-links">
-                <!-- Column 1: Layanan Kami -->
+                
                 <div class="footer-column">
                     <h3>Layanan Kami</h3>
                     <ul>
@@ -100,7 +98,6 @@
                     </ul>
                 </div>
 
-                <!-- Column 2: Perusahaan -->
                 <div class="footer-column">
                     <h3>Perusahaan</h3>
                     <ul>
@@ -111,7 +108,6 @@
                     </ul>
                 </div>
 
-                <!-- Column 3: Bantuan -->
                 <div class="footer-column">
                     <h3>Bantuan</h3>
                     <ul>
@@ -126,7 +122,6 @@
         </div>
     </div>
 
-    <!-- Bottom Footer Bar (Dark Gray) -->
     <div class="footer-bottom">
         <div class="container">
             <div class="footer-bottom-content">
@@ -140,19 +135,17 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
 <script>
-    // Set base URL untuk JavaScript
+
     var baseUrl = '<?= base_url() ?>';
-    // Set user login status untuk JavaScript
+
     var userId = '<?= $this->session->userdata("id_user") ?: "" ?>';
     var isLoggedIn = <?= $this->session->userdata("id_user") ? "true" : "false" ?>;
     
-    // Fungsi untuk share halaman
     function sharePage() {
         const url = window.location.href;
         const title = document.title;
         const text = 'Lihat informasi menarik di Sawit Digital: ' + title;
         
-        // Cek apakah browser mendukung Web Share API
         if (navigator.share) {
             navigator.share({
                 title: title,
@@ -163,14 +156,13 @@
                 fallbackShare(url, title);
             });
         } else {
-            // Fallback untuk browser yang tidak mendukung Web Share API
+
             fallbackShare(url, title);
         }
     }
     
-    // Fallback share function
     function fallbackShare(url, title) {
-        // Copy URL ke clipboard
+
         if (navigator.clipboard) {
             navigator.clipboard.writeText(url).then(() => {
                 alert('Link berhasil disalin ke clipboard!\n\n' + url);
@@ -182,36 +174,31 @@
         }
     }
     
-    // Prompt untuk copy manual
     function promptShare(url, title) {
         const shareText = 'Bagikan: ' + title + '\n\n' + url;
         if (prompt('Salin link berikut:', shareText)) {
-            // User bisa copy manual dari prompt
+
         }
     }
     
-    // Fungsi untuk membuka email contact
     function openEmailContact() {
         const email = 'info@sawitdigital.id';
         const subject = encodeURIComponent('Pertanyaan dari ' + document.title);
         const body = encodeURIComponent('Halo,\n\nSaya ingin bertanya tentang:\n\n\n\nTerima kasih.');
         
-        // Coba buka mailto link
         const mailtoLink = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
         
-        // Cek apakah ada email client yang tersedia
         try {
             window.location.href = mailtoLink;
             
-            // Fallback: jika tidak ada email client, tampilkan opsi setelah 1 detik
             setTimeout(() => {
                 const choice = confirm('Tidak ada aplikasi email yang terdeteksi.\n\nPilih cara menghubungi kami:\n\nOK = Buka halaman Hubungi Kami\nCancel = Salin email ke clipboard');
                 
                 if (choice) {
-                    // Redirect ke halaman hubungi kami
+
                     window.location.href = baseUrl + 'index.php/bantuan/hubungi-kami';
                 } else {
-                    // Copy email ke clipboard
+
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(email).then(() => {
                             alert('Email berhasil disalin ke clipboard!\n\nEmail: ' + email + '\n\nAnda bisa paste di aplikasi email Anda.');
@@ -224,7 +211,7 @@
                 }
             }, 1000);
         } catch (e) {
-            // Jika error, langsung redirect ke halaman hubungi kami
+
             window.location.href = baseUrl + 'index.php/bantuan/hubungi-kami';
         }
     }

@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Sistem Penyuluhan Sawit' ?></title>
     <?php $cache = '?v=' . time(); ?>
-    <!-- Bootstrap Icons -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url('assets/css/global.css') . $cache; ?>">
-    <?php if (!empty($page_css)): ?>
-        <link rel="stylesheet" href="<?= base_url('assets/css/' . $page_css) . $cache; ?>">
+    <link href="<?= base_url('assets/css/global.css') . $cache; ?>" rel="stylesheet">
+    <?php if (isset($page_css) && !empty($page_css)): ?>
+        <link href="<?= base_url('assets/css/' . $page_css) . $cache; ?>" rel="stylesheet">
     <?php endif; ?>
     <script src="<?= base_url('assets/js/user/dropdown.js') ?>" defer></script>
     <script src="<?= base_url('assets/js/user/pencarian.js') ?>" defer></script>
 </head>
 
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="container">
             <div class="navbar-brand">
                 <a href="<?= site_url('beranda') ?>" class="logo-link">
                     <?php
                     $logo = '';
-                    // Cek berbagai format gambar logo
+
                     $logo_formats = ['logo.png', 'logo.svg', 'logo.jpg', 'logo.jpeg', 'logo.webp'];
                     foreach ($logo_formats as $format) {
                         $logo_path = FCPATH . 'assets/img/logo/' . $format;
@@ -67,17 +67,20 @@
                                         $foto_url = base_url('assets/img/users/' . $foto);
                                     endif;
                                     ?>
-                                    <img src="<?= $foto_url ?>" alt="Profile" class="user-avatar" onerror="this.src='<?= base_url('assets/img/users/default.png') ?>'">
+                                    <img src="<?= $foto_url ?>" alt="Profile" class="user-avatar"
+                                        onerror="this.src='<?= base_url('assets/img/users/default.png') ?>'">
                                     <span class="user-name"><?= $this->session->userdata('user_name') ?></span>
                                 </a>
                             </li>
-                            <?php 
-                            // Jika admin, tampilkan link ke admin
+                            <?php
+
                             $user_role = $this->session->userdata('user_role');
-                            if ($user_role === 'admin'): 
-                            ?>
+                            if ($user_role === 'admin'):
+                                ?>
                                 <li><a href="<?= site_url('admin/dashboard') ?>">Kembali ke Admin</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                             <?php endif; ?>
                             <li><a href="<?= site_url('riwayat') ?>">Riwayat Kalkulasi</a></li>
                             <li><a href="<?= site_url('keluar') ?>">Keluar</a></li>
@@ -91,53 +94,51 @@
         </div>
     </nav>
 
-    <?php 
-    // Tampilkan hero banner dan search bar hanya di halaman beranda
+    <?php
+
     $current_uri = uri_string();
     $is_beranda = false;
-    
-    // Cek apakah ini halaman beranda
+
     if ($current_uri == 'beranda' || $current_uri == '' || $current_uri == 'index.php' || $current_uri == 'Home' || strpos($current_uri, 'beranda') === 0) {
         $is_beranda = true;
     }
-    
-    // Override dengan variabel $show_hero jika ada
-    if (isset($show_hero)) {
-        $is_beranda = (bool)$show_hero;
-    }
-    
-    if ($is_beranda): 
-    ?>
-    <section class="hero-banner"<?php
-    $hero = '';
-    $exts = ['webp', 'jpg', 'png'];
-    foreach ($exts as $ext) {
-        if (file_exists(FCPATH . 'assets/img/hero/hero-banner.' . $ext)) {
-            $hero = base_url('assets/img/hero/hero-banner.' . $ext);
-            break;
-        }
-    }
-    if ($hero) echo ' style="background-image: url(\'' . $hero . '\');"';
-    ?>>
-        <div class="hero-overlay"></div>
-        <div class="container">
-            <h1 class="hero-title">Sistem Penyuluhan Sawit Digital</h1>
-            <p class="hero-subtitle">Platform lengkap untuk petani sawit mendapatkan informasi, kalkulator, dan edukasi
-                terbaik</p>
-        </div>
-    </section>
 
-    <!-- Search Bar -->
-    <section class="search-section">
-        <div class="container">
-            <form class="search-form" id="searchForm">
-                <input type="text" name="q" placeholder="Cari artikel, pupuk, atau informasi..." class="search-input"
-                    id="searchInput" autocomplete="off">
-                <button type="submit" class="btn btn-search">Cari</button>
-            </form>
-            <div id="searchResults" style="display: none;">
-                <div id="searchResultsContent"></div>
+    if (isset($show_hero)) {
+        $is_beranda = (bool) $show_hero;
+    }
+
+    if ($is_beranda):
+        ?>
+        <section class="hero-banner" <?php
+        $hero = '';
+        $exts = ['webp', 'jpg', 'png'];
+        foreach ($exts as $ext) {
+            if (file_exists(FCPATH . 'assets/img/hero/hero-banner.' . $ext)) {
+                $hero = base_url('assets/img/hero/hero-banner.' . $ext);
+                break;
+            }
+        }
+        if ($hero)
+            echo ' style="background-image: url(\'' . $hero . '\');"';
+        ?>>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <h1 class="hero-title">Sistem Penyuluhan Sawit Digital</h1>
+                <p class="hero-subtitle">Platform lengkap untuk petani sawit mendapatkan informasi, kalkulator, dan edukasi
+                    terbaik</p>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <section class="search-section">
+            <div class="container">
+                <form class="search-form" id="searchForm">
+                    <input type="text" name="q" placeholder="Cari artikel, pupuk, atau informasi..." class="search-input"
+                        id="searchInput" autocomplete="off">
+                    <button type="submit" class="btn btn-search">Cari</button>
+                </form>
+                <div id="searchResults" style="display: none;">
+                    <div id="searchResultsContent"></div>
+                </div>
+            </div>
+        </section>
     <?php endif; ?>

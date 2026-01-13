@@ -1,25 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/penyakit') ?>">Penyakit</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -37,32 +35,32 @@
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="nama_penyakit" class="form-label">Nama Penyakit</label>
-                                        <input type="text" class="form-control" name="nama_penyakit" id="nama_penyakit" value="<?= $penyakit->nama_penyakit ?>" aria-describedby="Nama penyakit">
+                                        <input type="text" class="form-control" name="nama_penyakit" id="nama_penyakit" value="<?= set_value('nama_penyakit', $penyakit['nama_penyakit']) ?>" aria-describedby="Nama penyakit">
                                         <?= form_error('nama_penyakit', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="penyebab" class="form-label">Penyebab</label>
-                                        <textarea name="penyebab" id="penyebab" cols="30" rows="10" class="form-control"><?= $penyakit->penyebab ?></textarea>
+                                        <textarea name="penyebab" id="penyebab" cols="30" rows="10" class="form-control"><?= set_value('penyebab', $penyakit['penyebab']) ?></textarea>
                                         <?= form_error('penyebab', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="gejala" class="form-label">Gejala</label>
-                                        <textarea name="gejala" id="gejala" cols="30" rows="10" class="form-control"><?= $penyakit->gejala ?></textarea>
+                                        <textarea name="gejala" id="gejala" cols="30" rows="10" class="form-control"><?= set_value('gejala', $penyakit['gejala']) ?></textarea>
                                         <?= form_error('gejala', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="cara_pengendalian" class="form-label">Cara Pengendalian</label>
-                                        <textarea name="cara_pengendalian" id="cara_pengendalian" cols="30" rows="10" class="form-control"><?= $penyakit->cara_pengendalian ?></textarea>
+                                        <textarea name="cara_pengendalian" id="cara_pengendalian" cols="30" rows="10" class="form-control"><?= set_value('cara_pengendalian', $penyakit['cara_pengendalian']) ?></textarea>
                                         <?= form_error('cara_pengendalian', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="gambar_ilustrasi" class="form-label">Gambar Ilustrasi</label>
-                                        <?php if (!empty($penyakit->gambar_ilustrasi)): 
-                                            $gambar_penyakit = trim($penyakit->gambar_ilustrasi);
+                                        <?php if (!empty($penyakit['gambar_ilustrasi'])): 
+                                            $gambar_penyakit = trim($penyakit['gambar_ilustrasi']);
                                             if (strpos($gambar_penyakit, 'assets/img/penyakit/') !== false) {
                                                 $gambar_penyakit = basename($gambar_penyakit);
                                             }
@@ -83,12 +81,12 @@
                             </p>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
+                    
                 </div>
-                <!-- /.row -->
+                
             </div>
-            <!-- /.container-fluid -->
+            
         </div>
-        <!-- /.content -->
+        
     </div>
-    <!-- /.content-wrapper -->
+    

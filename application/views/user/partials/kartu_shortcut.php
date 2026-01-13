@@ -10,4 +10,3 @@
         <span class="card-link">Buka →</span>
     </div>
 </a>
-

@@ -37,12 +37,23 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php if ($this->session->flashdata('message')): ?>
-                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
-                                    <?= $this->session->flashdata('message') ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <?php if ($this->session->flashdata('message')): 
+                                $message_type = $this->session->flashdata('message_type') ?: 'success';
+                                $icon = '';
+                                if ($message_type == 'success') {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                } elseif ($message_type == 'danger') {
+                                    $icon = '<i class="bi bi-exclamation-circle me-2"></i>';
+                                } elseif ($message_type == 'warning') {
+                                    $icon = '<i class="bi bi-exclamation-triangle me-2"></i>';
+                                } else {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                    $message_type = 'success';
+                                }
+                            ?>
+                                <div class="alert alert-<?= $message_type ?> alert-dismissible fade show mb-3" role="alert">
+                                    <?= $icon ?><?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
                             
@@ -77,41 +88,41 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; foreach ($articles as $art): ?>
-                                                <tr class="riwayat-row" data-id="<?= $art->id_info ?>">
+                                                <tr class="riwayat-row" data-id="<?= $art['id_info'] ?>">
                                                     <td>
-                                                        <button class="expand-btn" data-target="detail-info-<?= $art->id_info ?>">
+                                                        <button class="expand-btn" data-target="detail-info-<?= $art['id_info'] ?>">
                                                             <i class="fa fa-chevron-down"></i>
                                                         </button>
                                                     </td>
-                                                    <td><strong><?= htmlspecialchars($art->judul) ?></strong></td>
+                                                    <td><strong><?= htmlspecialchars($art['judul']) ?></strong></td>
                                                     <td>
-                                                        <span class="badge badge-secondary"><?= htmlspecialchars($art->kategori ?: '-') ?></span>
+                                                        <span class="badge badge-secondary"><?= htmlspecialchars($art['kategori'] ?: '-') ?></span>
                                                     </td>
-                                                    <td><?= htmlspecialchars($art->penulis ?: '-') ?></td>
-                                                    <td><?= date('d M Y', strtotime($art->tanggal)) ?></td>
+                                                    <td><?= htmlspecialchars($art['penulis'] ?: '-') ?></td>
+                                                    <td><?= date('d M Y', strtotime($art['tanggal'])) ?></td>
                                                     <td>
                                                         <div class="btn-group" role="group">
-                                                            <a href="<?= base_url('informasi/detail/' . $art->id_info) ?>" class="btn btn-sm btn-info" target="_blank" title="Lihat">
+                                                            <a href="<?= base_url('informasi/detail/' . $art['id_info']) ?>" class="btn btn-sm btn-info" target="_blank" title="Lihat">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="<?= base_url(uri: 'admin/informasi/ubah/') ?><?= $art->id_info ?>" class="btn btn-sm btn-success" title="Edit">
+                                                            <a href="<?= base_url(uri: 'admin/informasi/ubah/') ?><?= $art['id_info'] ?>" class="btn btn-sm btn-success" title="Edit">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href="<?= base_url(uri: 'admin/informasi/hapus/') ?><?= $art->id_info ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+                                                            <a href="<?= base_url(uri: 'admin/informasi/hapus/') ?><?= $art['id_info'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="detail-row" id="detail-info-<?= $art->id_info ?>">
+                                                <tr class="detail-row" id="detail-info-<?= $art['id_info'] ?>">
                                                     <td colspan="6">
                                                         <div class="detail-content">
                                                             <div class="detail-grid">
-                                                                <?php if (!empty($art->gambar_header) || !empty($art->thumbnail)): ?>
+                                                                <?php if (!empty($art['gambar_header']) || !empty($art['thumbnail'])): ?>
                                                                     <div class="detail-item full-width">
                                                                         <div class="images-row">
-                                                                            <?php if (!empty($art->gambar_header)): 
-                                                                                $gambar_header = trim($art->gambar_header);
+                                                                            <?php if (!empty($art['gambar_header'])): 
+                                                                                $gambar_header = trim($art['gambar_header']);
                                                                                 // Handle different path formats
                                                                                 if (strpos($gambar_header, 'assets/img/') !== false) {
                                                                                     $gambar_header = basename($gambar_header);
@@ -127,8 +138,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             <?php endif; ?>
-                                                                            <?php if (!empty($art->thumbnail)): 
-                                                                                $thumbnail = trim($art->thumbnail);
+                                                                            <?php if (!empty($art['thumbnail'])): 
+                                                                                $thumbnail = trim($art['thumbnail']);
                                                                                 // Handle different path formats
                                                                                 if (strpos($thumbnail, 'assets/img/') !== false) {
                                                                                     $thumbnail = basename($thumbnail);
@@ -147,15 +158,15 @@
                                                                         </div>
                                                                     </div>
                                                                 <?php endif; ?>
-                                                                <?php if (!empty($art->konten)): ?>
+                                                                <?php if (!empty($art['konten'])): ?>
                                                                     <div class="detail-item full-width">
                                                                         <span class="detail-label">Konten Lengkap:</span>
                                                                         <div class="detail-value" style="margin-top: 0.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 8px; border: 1px solid rgba(27, 94, 32, 0.1); max-height: 250px; overflow-y: auto;">
-                                                                            <?= $art->konten ?>
+                                                                            <?= $art['konten'] ?>
                                                                         </div>
                                                                     </div>
                                                                 <?php endif; ?>
-                                                                <?php if (empty($art->gambar_header) && empty($art->thumbnail) && empty($art->konten)): ?>
+                                                                <?php if (empty($art['gambar_header']) && empty($art['thumbnail']) && empty($art['konten'])): ?>
                                                                     <div class="detail-item full-width">
                                                                         <span class="detail-label">Tidak ada informasi tambahan</span>
                                                                         <div class="detail-value" style="color: var(--admin-text-light); font-style: italic;">

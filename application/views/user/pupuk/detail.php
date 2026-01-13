@@ -1,18 +1,16 @@
 <div class="container">
     <article class="fertilizer-detail">
         <?php 
-        // Cek dan ambil gambar
+
         $gambar = null;
         $gambar_url = null;
-        if (property_exists($pupuk, 'gambar_pupuk') && !empty($pupuk->gambar_pupuk)) {
-            $gambar = trim($pupuk->gambar_pupuk);
+        if (isset($pupuk['gambar_pupuk']) && !empty($pupuk['gambar_pupuk'])) {
+            $gambar = trim($pupuk['gambar_pupuk']);
             
-            // Jika path sudah lengkap (sudah ada assets/img/pupuk/), ambil hanya nama file
             if (strpos($gambar, 'assets/img/pupuk/') !== false) {
                 $gambar = basename($gambar);
             }
             
-            // Buat URL lengkap
             $gambar_url = base_url('assets/img/pupuk/' . $gambar);
         }
         ?>
@@ -22,7 +20,7 @@
                 <?php if($gambar_url): ?>
                 <div class="fertilizer-image-section">
                     <div class="fertilizer-header-image">
-                        <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($pupuk->nama_pupuk) ?>" 
+                        <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($pupuk['nama_pupuk']) ?>" 
                             onerror="this.onerror=null; this.style.display='none'; console.error('Gambar gagal dimuat: <?= $gambar_url ?>');">
                     </div>
                 </div>
@@ -30,7 +28,7 @@
                 
                 <div class="fertilizer-info-section">
                     <div class="fertilizer-header-info">
-                        <h1 class="fertilizer-title"><?= htmlspecialchars($pupuk->nama_pupuk) ?></h1>
+                        <h1 class="fertilizer-title"><?= htmlspecialchars($pupuk['nama_pupuk']) ?></h1>
                         <div class="fertilizer-badge">
                             <span class="badge-icon">🌱</span>
                             <span>Jenis Pupuk Sawit</span>
@@ -38,46 +36,46 @@
                     </div>
             
                     <div class="fertilizer-info-grid">
-                        <?php if(!empty($pupuk->kandungan)): ?>
+                        <?php if(!empty($pupuk['kandungan'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
                                 <h2 class="fertilizer-section-title">Kandungan</h2>
                             </div>
                             <div class="fertilizer-section-content">
-                                <p><?= nl2br(htmlspecialchars($pupuk->kandungan)) ?></p>
+                                <p><?= nl2br(htmlspecialchars($pupuk['kandungan'])) ?></p>
                             </div>
                         </div>
                         <?php endif; ?>
                         
-                        <?php if(!empty($pupuk->fungsi)): ?>
+                        <?php if(!empty($pupuk['fungsi'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
                                 <h2 class="fertilizer-section-title">Fungsi</h2>
                             </div>
                             <div class="fertilizer-section-content">
-                                <p><?= nl2br(htmlspecialchars($pupuk->fungsi)) ?></p>
+                                <p><?= nl2br(htmlspecialchars($pupuk['fungsi'])) ?></p>
                             </div>
                         </div>
                         <?php endif; ?>
                         
-                        <?php if(!empty($pupuk->waktu_aplikasi)): ?>
+                        <?php if(!empty($pupuk['waktu_aplikasi'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
                                 <h2 class="fertilizer-section-title">Waktu Aplikasi</h2>
                             </div>
                             <div class="fertilizer-section-content">
-                                <p><?= nl2br(htmlspecialchars($pupuk->waktu_aplikasi)) ?></p>
+                                <p><?= nl2br(htmlspecialchars($pupuk['waktu_aplikasi'])) ?></p>
                             </div>
                         </div>
                         <?php endif; ?>
                         
-                        <?php if(!empty($pupuk->catatan_khusus)): ?>
+                        <?php if(!empty($pupuk['catatan_khusus'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
                                 <h2 class="fertilizer-section-title">Catatan Khusus</h2>
                             </div>
                             <div class="fertilizer-section-content">
-                                <p><?= nl2br(htmlspecialchars($pupuk->catatan_khusus)) ?></p>
+                                <p><?= nl2br(htmlspecialchars($pupuk['catatan_khusus'])) ?></p>
                             </div>
                         </div>
                         <?php endif; ?>
@@ -93,4 +91,3 @@
         </div>
     </article>
 </div>
-

@@ -37,12 +37,23 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php if ($this->session->flashdata('message')): ?>
-                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
-                                    <?= $this->session->flashdata('message') ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <?php if ($this->session->flashdata('message')): 
+                                $message_type = $this->session->flashdata('message_type') ?: 'success';
+                                $icon = '';
+                                if ($message_type == 'success') {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                } elseif ($message_type == 'danger') {
+                                    $icon = '<i class="bi bi-exclamation-circle me-2"></i>';
+                                } elseif ($message_type == 'warning') {
+                                    $icon = '<i class="bi bi-exclamation-triangle me-2"></i>';
+                                } else {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                    $message_type = 'success';
+                                }
+                            ?>
+                                <div class="alert alert-<?= $message_type ?> alert-dismissible fade show mb-3" role="alert">
+                                    <?= $icon ?><?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
                             

@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+
 <aside class="admin-sidebar" id="adminSidebar">
     <div class="sidebar-header">
         <a href="<?= site_url('admin/dashboard') ?>" class="sidebar-logo">
@@ -9,7 +9,7 @@
 
     <nav class="sidebar-nav">
         <ul class="nav-menu">
-            <!-- Dashboard -->
+            
             <li class="nav-item">
                 <a href="<?= site_url('admin/dashboard') ?>"
                     class="nav-link <?= uri_string() == 'admin/dashboard' ? 'active' : '' ?>"
@@ -22,12 +22,10 @@
                 </a>
             </li>
             
-            <!-- Divider -->
             <li class="nav-divider">
                 <span class="divider-text">Master Data</span>
             </li>
             
-            <!-- Master Data Group -->
             <li class="nav-item">
                 <a href="<?= site_url('admin/pupuk') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/pupuk') !== false ? 'active' : '' ?>"
@@ -84,12 +82,10 @@
                 </a>
             </li>
             
-            <!-- Divider -->
             <li class="nav-divider">
                 <span class="divider-text">Informasi</span>
             </li>
             
-            <!-- Informasi Group -->
             <li class="nav-item">
                 <a href="<?= site_url('admin/informasi') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/informasi') !== false ? 'active' : '' ?>"
@@ -113,12 +109,10 @@
                 </a>
             </li>
             
-            <!-- Divider -->
             <li class="nav-divider">
                 <span class="divider-text">Kalkulator</span>
             </li>
             
-            <!-- Kalkulator Group -->
             <li class="nav-item">
                 <a href="<?= site_url('admin/kalkulator_panen') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/kalkulator_panen') !== false ? 'active' : '' ?>"
@@ -143,12 +137,11 @@
             </li>
             
             <?php if ($this->session->userdata('user_role') == 'admin'): ?>
-                <!-- Divider -->
+                
                 <li class="nav-divider">
                     <span class="divider-text">System</span>
                 </li>
                 
-                <!-- System Group -->
                 <li class="nav-item">
                     <a href="<?= site_url('admin/users') ?>"
                         class="nav-link <?= strpos(uri_string(), 'admin/users') !== false ? 'active' : '' ?>"
@@ -162,7 +155,6 @@
                 </li>
             <?php endif; ?>
             
-            <!-- Logout -->
             <li class="nav-item">
                 <a href="<?= site_url('admin/logout') ?>"
                     class="nav-link"

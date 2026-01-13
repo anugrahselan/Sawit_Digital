@@ -1,25 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/informasi') ?>">Informasi</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -37,27 +35,27 @@
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
-                                        <input type="text" class="form-control" name="judul" id="judul" value="<?= $article->judul ?>" aria-describedby="Judul">
+                                        <input type="text" class="form-control" name="judul" id="judul" value="<?= set_value('judul', $article['judul']) ?>" aria-describedby="Judul">
                                         <?= form_error('judul', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="kategori" class="form-label">Kategori</label>
-                                            <input type="text" class="form-control" name="kategori" id="kategori" value="<?= $article->kategori ?>" placeholder="Contoh: Budidaya, Pemupukan, dll" aria-describedby="Kategori">
+                                            <input type="text" class="form-control" name="kategori" id="kategori" value="<?= set_value('kategori', $article['kategori']) ?>" placeholder="Contoh: Budidaya, Pemupukan, dll" aria-describedby="Kategori">
                                             <?= form_error('kategori', '<div class="text-danger small">', '</div>') ?>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="penulis" class="form-label">Penulis</label>
-                                            <input type="text" class="form-control" name="penulis" id="penulis" value="<?= $article->penulis ?>" placeholder="Nama penulis artikel" aria-describedby="Penulis">
+                                            <input type="text" class="form-control" name="penulis" id="penulis" value="<?= set_value('penulis', $article['penulis']) ?>" placeholder="Nama penulis artikel" aria-describedby="Penulis">
                                             <?= form_error('penulis', '<div class="text-danger small">', '</div>') ?>
                                         </div>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="gambar_header" class="form-label">Gambar Header</label>
-                                        <?php if (!empty($article->gambar_header)): 
-                                            $gambar_header = trim($article->gambar_header);
+                                        <?php if (!empty($article['gambar_header'])): 
+                                            $gambar_header = trim($article['gambar_header']);
                                             if (strpos($gambar_header, 'assets/img/articles/') !== false) {
                                                 $gambar_header = basename($gambar_header);
                                             }
@@ -74,8 +72,8 @@
                                     
                                     <div class="mb-3">
                                         <label for="thumbnail" class="form-label">Thumbnail</label>
-                                        <?php if (!empty($article->thumbnail)): 
-                                            $thumbnail = trim($article->thumbnail);
+                                        <?php if (!empty($article['thumbnail'])): 
+                                            $thumbnail = trim($article['thumbnail']);
                                             if (strpos($thumbnail, 'assets/img/articles/') !== false) {
                                                 $thumbnail = basename($thumbnail);
                                             }
@@ -92,14 +90,14 @@
                                     
                                     <div class="mb-3">
                                         <label for="konten" class="form-label">Konten</label>
-                                        <textarea name="konten" id="konten" cols="30" rows="15" class="form-control"><?= $article->konten ?></textarea>
+                                        <textarea name="konten" id="konten" cols="30" rows="15" class="form-control"><?= set_value('konten', $article['konten']) ?></textarea>
                                         <?= form_error('konten', '<div class="text-danger small">', '</div>') ?>
                                         <small class="text-muted">Gunakan HTML untuk formatting teks</small>
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="tanggal" class="form-label">Tanggal</label>
-                                        <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= $article->tanggal ?>" aria-describedby="Tanggal">
+                                        <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= set_value('tanggal', $article['tanggal']) ?>" aria-describedby="Tanggal">
                                         <?= form_error('tanggal', '<div class="text-danger small">', '</div>') ?>
                                     </div>
                                     
@@ -109,12 +107,12 @@
                             </p>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
+                    
                 </div>
-                <!-- /.row -->
+                
             </div>
-            <!-- /.container-fluid -->
+            
         </div>
-        <!-- /.content -->
+        
     </div>
-    <!-- /.content-wrapper -->
+    

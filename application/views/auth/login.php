@@ -17,9 +17,9 @@
 
 <body class="auth-page">
     <div class="auth-container">
-        <!-- LEFT SIDE - ILLUSTRATION SECTION (45%) -->
+        
         <div class="auth-illustration" style="background-image: url('<?= base_url('assets/img/hero/login.jpg') ?>');">
-            <!-- Header -->
+            
             <div class="illustration-header">
                 <div class="logo-container">
                     <div class="logo-icon">
@@ -33,7 +33,6 @@
                 </div>
             </div>
 
-            <!-- Center - Main Illustration -->
             <div class="illustration-center">
                 <div class="illustration-icon-wrapper">
                     <div class="illustration-icon">
@@ -49,12 +48,10 @@
                 </div>
             </div>
 
-            <!-- Footer -->
             <div class="illustration-footer">
                 <p>© 2025 Sawit Digital | Powered by Sawit Digital</p>
             </div>
 
-            <!-- Background Blur Circles -->
             <div class="blur-circles">
                 <div class="blur-circle circle-1"></div>
                 <div class="blur-circle circle-2"></div>
@@ -63,10 +60,9 @@
             </div>
         </div>
 
-        <!-- RIGHT SIDE - FORM SECTION (55%) -->
         <div class="auth-form-section">
             <div class="form-wrapper">
-                <!-- LOGIN FORM -->
+                
                 <div class="auth-form" id="loginForm"
                     style="display: <?= isset($register_error) && !empty($register_error) ? 'none' : 'block' ?>;">
                     <div class="form-header">
@@ -116,7 +112,6 @@
                     </div>
                 </div>
 
-                <!-- REGISTER FORM -->
                 <div class="auth-form" id="registerForm"
                     style="display: <?= isset($register_error) && !empty($register_error) ? 'block' : 'none' ?>;">
                     <div class="form-header">
@@ -194,7 +189,7 @@
     </div>
 
     <script>
-        // Toggle between Login and Register
+
         const showRegisterBtn = document.getElementById('showRegister');
         const showLoginBtn = document.getElementById('showLogin');
         const loginForm = document.getElementById('loginForm');
@@ -218,7 +213,6 @@
             });
         }
 
-        // Form submission loading states
         const loginFormSubmit = document.getElementById('loginFormSubmit');
         const registerFormSubmit = document.getElementById('registerFormSubmit');
         const loginBtn = document.getElementById('loginBtn');
@@ -246,7 +240,6 @@
             });
         }
 
-        // Input focus effects
         const inputs = document.querySelectorAll('.form-input');
         inputs.forEach(input => {
             input.addEventListener('focus', function () {

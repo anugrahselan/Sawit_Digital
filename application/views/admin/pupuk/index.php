@@ -37,12 +37,23 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php if ($this->session->flashdata('message')): ?>
-                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
-                                    <?= $this->session->flashdata('message') ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <?php if ($this->session->flashdata('message')): 
+                                $message_type = $this->session->flashdata('message_type') ?: 'success';
+                                $icon = '';
+                                if ($message_type == 'success') {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                } elseif ($message_type == 'danger') {
+                                    $icon = '<i class="bi bi-exclamation-circle me-2"></i>';
+                                } elseif ($message_type == 'warning') {
+                                    $icon = '<i class="bi bi-exclamation-triangle me-2"></i>';
+                                } else {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                    $message_type = 'success';
+                                }
+                            ?>
+                                <div class="alert alert-<?= $message_type ?> alert-dismissible fade show mb-3" role="alert">
+                                    <?= $icon ?><?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
                             
@@ -76,66 +87,66 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; foreach ($pupuk as $p): ?>
-                                                <tr class="riwayat-row" data-id="<?= $p->id_pupuk ?>">
+                                                <tr class="riwayat-row" data-id="<?= $p['id_pupuk'] ?>">
                                                     <td>
-                                                        <button class="expand-btn" data-target="detail-pupuk-<?= $p->id_pupuk ?>">
+                                                        <button class="expand-btn" data-target="detail-pupuk-<?= $p['id_pupuk'] ?>">
                                                             <i class="fa fa-chevron-down"></i>
                                                         </button>
                                                     </td>
                                                     <td>
-                                                        <?php if (!empty($p->gambar_pupuk)): 
-                                                            $gambar_pupuk = trim($p->gambar_pupuk);
+                                                        <?php if (!empty($p['gambar_pupuk'])): 
+                                                            $gambar_pupuk = trim($p['gambar_pupuk']);
                                                             if (strpos($gambar_pupuk, 'assets/img/pupuk/') !== false) {
                                                                 $gambar_pupuk = basename($gambar_pupuk);
                                                             }
                                                             $gambar_url = base_url(uri: 'assets/img/pupuk/' . $gambar_pupuk);
                                                         ?>
-                                                            <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($p->nama_pupuk) ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-muted\'>-</span>';">
+                                                            <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($p['nama_pupuk']) ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;" onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-muted\'>-</span>';">
                                                         <?php else: ?>
                                                             <span class="text-muted">-</span>
                                                         <?php endif; ?>
                                                     </td>
-                                                    <td><strong><?= htmlspecialchars($p->nama_pupuk) ?></strong></td>
-                                                    <td><?= htmlspecialchars($p->kandungan ?: '-') ?></td>
+                                                    <td><strong><?= htmlspecialchars($p['nama_pupuk']) ?></strong></td>
+                                                    <td><?= htmlspecialchars($p['kandungan'] ?: '-') ?></td>
                                                     <td>
                                                         <div class="btn-group" role="group">
-                                                            <a href="<?= base_url('pupuk/detail/' . $p->id_pupuk) ?>" class="btn btn-sm btn-info" target="_blank" title="Lihat">
+                                                            <a href="<?= base_url('pupuk/detail/' . $p['id_pupuk']) ?>" class="btn btn-sm btn-info" target="_blank" title="Lihat">
                                                                 <i class="fa fa-eye"></i>
                                                             </a>
-                                                            <a href="<?= base_url(uri: 'admin/pupuk/ubah/') ?><?= $p->id_pupuk ?>" class="btn btn-sm btn-success" title="Edit">
+                                                            <a href="<?= base_url(uri: 'admin/pupuk/ubah/') ?><?= $p['id_pupuk'] ?>" class="btn btn-sm btn-success" title="Edit">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href="<?= base_url(uri: 'admin/pupuk/hapus/') ?><?= $p->id_pupuk ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+                                                            <a href="<?= base_url(uri: 'admin/pupuk/hapus/') ?><?= $p['id_pupuk'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="detail-row" id="detail-pupuk-<?= $p->id_pupuk ?>">
+                                                <tr class="detail-row" id="detail-pupuk-<?= $p['id_pupuk'] ?>">
                                                     <td colspan="5">
                                                         <div class="detail-content">
                                                             <div class="detail-grid detail-grid-three">
-                                                                <?php if (!empty($p->fungsi)): ?>
+                                                                <?php if (!empty($p['fungsi'])): ?>
                                                                     <div class="detail-item">
                                                                         <span class="detail-label">Fungsi:</span>
                                                                         <div class="detail-value" style="margin-top: 0.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 8px; border: 1px solid rgba(27, 94, 32, 0.1); max-height: 200px; overflow-y: auto;">
-                                                                            <?= nl2br(htmlspecialchars($p->fungsi)) ?>
+                                                                            <?= nl2br(htmlspecialchars($p['fungsi'])) ?>
                                                                         </div>
                                                                     </div>
                                                                 <?php endif; ?>
-                                                                <?php if (!empty($p->waktu_aplikasi)): ?>
+                                                                <?php if (!empty($p['waktu_aplikasi'])): ?>
                                                                     <div class="detail-item">
                                                                         <span class="detail-label">Waktu Aplikasi:</span>
                                                                         <div class="detail-value" style="margin-top: 0.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 8px; border: 1px solid rgba(27, 94, 32, 0.1);">
-                                                                            <?= htmlspecialchars($p->waktu_aplikasi) ?>
+                                                                            <?= htmlspecialchars($p['waktu_aplikasi']) ?>
                                                                         </div>
                                                                     </div>
                                                                 <?php endif; ?>
-                                                                <?php if (!empty($p->catatan_khusus)): ?>
+                                                                <?php if (!empty($p['catatan_khusus'])): ?>
                                                                     <div class="detail-item">
                                                                         <span class="detail-label">Catatan Khusus:</span>
                                                                         <div class="detail-value" style="margin-top: 0.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.9); border-radius: 8px; border: 1px solid rgba(27, 94, 32, 0.1); max-height: 200px; overflow-y: auto;">
-                                                                            <?= nl2br(htmlspecialchars($p->catatan_khusus)) ?>
+                                                                            <?= nl2br(htmlspecialchars($p['catatan_khusus'])) ?>
                                                                         </div>
                                                                     </div>
                                                                 <?php endif; ?>

@@ -2,7 +2,7 @@
     <h1 class="page-title">Hasil Pencarian</h1>
     <p class="page-subtitle">Hasil pencarian untuk: "<strong><?= htmlspecialchars($keyword) ?></strong>"</p>
 
-    <?php if (!empty($articles) || !empty($fertilizers)): ?>
+    <?php if (!empty($articles) || !empty($fertilizers) || !empty($penyakit)): ?>
         <?php if (!empty($articles)): ?>
             <section class="search-section">
                 <h2 class="section-title">Artikel (<?= count($articles) ?>)</h2>
@@ -46,6 +46,53 @@
                                 <a href="<?= site_url('jenis-pupuk') ?>" class="btn btn-primary"
                                     style="margin-top: 1rem; width: 100%; text-align: center;">Lihat Detail</a>
                             </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <?php if (!empty($penyakit)): ?>
+            <section class="search-section">
+                <h2 class="section-title">Penyakit (<?= count($penyakit) ?>)</h2>
+                <div class="disease-grid">
+                    <?php foreach ($penyakit as $p): ?>
+                        <div class="disease-card">
+                            <a href="<?= site_url('penyakit/detail/' . $p->id_penyakit) ?>" class="disease-card-link">
+                                <div class="disease-header">
+                                    <?php if (!empty($p->gambar_ilustrasi)):
+                                        $gambar_penyakit = trim($p->gambar_ilustrasi);
+                                        if (strpos($gambar_penyakit, 'assets/img/penyakit/') !== false) {
+                                            $gambar_penyakit = basename($gambar_penyakit);
+                                        }
+                                        $gambar_url = base_url('assets/img/penyakit/' . $gambar_penyakit);
+                                    ?>
+                                        <div class="disease-image">
+                                            <img src="<?= $gambar_url ?>" alt="<?= htmlspecialchars($p->nama_penyakit) ?>"
+                                                style="max-width: 100%; height: auto; display: block;"
+                                                onerror="this.onerror=null; this.style.display='none';">
+                                        </div>
+                                    <?php endif; ?>
+                                    <h3><?= htmlspecialchars($p->nama_penyakit) ?></h3>
+                                </div>
+                                <div class="disease-body">
+                                    <?php if (!empty($p->penyebab)): ?>
+                                        <div class="disease-section">
+                                            <h4>Penyebab</h4>
+                                            <p><?= character_limiter($p->penyebab, 150) ?></p>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($p->gejala)): ?>
+                                        <div class="disease-section">
+                                            <h4>Gejala</h4>
+                                            <p><?= character_limiter($p->gejala, 150) ?></p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="disease-card-footer">
+                                    <span class="read-more">Baca Selengkapnya →</span>
+                                </div>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 </div>

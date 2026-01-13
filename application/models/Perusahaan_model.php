@@ -3,92 +3,84 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Perusahaan_model extends CI_Model
 {
-    public function __construct ()
-    {
-        parent::__construct();
-        $this->load->database();
-    }
+    private $_table = 'perusahaan';
 
-    public function get_all ($limit = null, $offset = null): array
+    public function get_all()
     {
         $this->db->select('perusahaan.*, kabupaten.nama_kabupaten');
-        $this->db->from('perusahaan');
+        $this->db->from($this->_table);
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = perusahaan.id_kabupaten', 'left');
-        $this->db->order_by('perusahaan.nama_perusahaan', 'ASC');
-        if ($limit !== null && $offset !== null) {
-            $this->db->limit($limit, $offset);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    public function get_by_id($id)
+    {
+        $this->db->where('id_perusahaan', $id);
+        return $this->db->get($this->_table)->row_array();
+    }
+
+    public function create($data)
+    {
+        $this->db->insert($this->_table, $data);
+        if ($this->db->affected_rows() != 1) {
+            return false;
         }
-        return $this->db->get()->result();
-    }
-
-    public function get_by_id ($id): mixed
-    {
-        $this->db->select('perusahaan.*, kabupaten.nama_kabupaten');
-        $this->db->from('perusahaan');
-        $this->db->join('kabupaten', 'kabupaten.id_kabupaten = perusahaan.id_kabupaten', 'left');
-        $this->db->where('perusahaan.id_perusahaan', $id);
-        return $this->db->get()->row();
-    }
-
-    public function create ($data): int
-    {
-        $this->db->insert('perusahaan', $data);
         return $this->db->insert_id();
     }
 
-    public function update ($id, $data): bool
+    public function update($id, $data)
     {
         $this->db->where('id_perusahaan', $id);
-        return $this->db->update('perusahaan', $data);
+        $this->db->update($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function delete ($id): bool
+    public function delete($id)
     {
-        $this->db->where('id_perusahaan', $id);
-        return $this->db->delete('perusahaan');
+        $this->db->delete($this->_table, array('id_perusahaan' => $id));
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function count_all (): int
+    public function count_all()
     {
-        return $this->db->count_all('perusahaan');
+        return $this->db->count_all_results($this->_table);
     }
 
-    public function nama_exists_in_kabupaten ($nama_perusahaan, $id_kabupaten, $exclude_id = null): bool
+    public function nama_ada_di_kabupaten($nama, $id_kabupaten, $kecuali_id = null)
     {
-        $this->db->where('nama_perusahaan', $nama_perusahaan);
+        $this->db->where('nama_perusahaan', $nama);
         $this->db->where('id_kabupaten', $id_kabupaten);
-        if ($exclude_id) {
-            $this->db->where('id_perusahaan !=', $exclude_id);
+        if ($kecuali_id) {
+            $this->db->where('id_perusahaan !=', $kecuali_id);
         }
-        return $this->db->count_all_results('perusahaan') > 0;
+        return $this->db->count_all_results($this->_table) > 0;
     }
     
-    public function get_by_kabupaten ($id_kabupaten): array
+    public function get_by_kabupaten($id_kabupaten)
     {
         $this->db->where('id_kabupaten', $id_kabupaten);
-        $this->db->order_by('nama_perusahaan', 'ASC');
-        return $this->db->get('perusahaan')->result();
+        return $this->db->get($this->_table)->result_array();
     }
     
-    public function get_or_create_mitra ($id_kabupaten): int
+    public function get_atau_buat_mitra($id_kabupaten)
     {
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('nama_perusahaan', 'Mitra');
-        $mitra = $this->db->get('perusahaan')->row();
+        $mitra = $this->db->get($this->_table)->row_array();
         
         if ($mitra) {
-            return $mitra->id_perusahaan;
+            return $mitra['id_perusahaan'];
         }
         
-        $data = [
+        $data = array(
             'id_kabupaten' => (int) $id_kabupaten,
             'nama_perusahaan' => 'Mitra',
             'alamat' => null,
             'kontak' => null
-        ];
+        );
         
-        $this->db->insert('perusahaan', $data);
+        $this->db->insert($this->_table, $data);
         return $this->db->insert_id();
     }
 }
-

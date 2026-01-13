@@ -3,358 +3,359 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Harga_tbs_model extends CI_Model
 {
-    public function __construct ()
-    {
-        parent::__construct();
-        $this->load->database();
-    }
+    private $_table = 'harga_tbs';
 
-    public function get_all ($limit = null, $offset = null): array
+    public function get_all($batas = null, $mulai_dari = null)
     {
-        if ($limit !== null && $offset !== null) {
-            $this->db->limit($limit, $offset);
+        if ($batas !== null && $mulai_dari !== null) {
+            $this->db->limit($batas, $mulai_dari);
         }
         $this->db->order_by('tanggal', 'DESC');
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten');
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
-        return $this->db->get('harga_tbs')->result();
+        $query = $this->db->get($this->_table);
+        return $query->result_array();
     }
 
-    public function get_by_kabupaten ($id_kabupaten): array
+    public function get_by_kabupaten($id_kabupaten)
     {
         $this->db->where('harga_tbs.id_kabupaten', $id_kabupaten);
         $this->db->order_by('tanggal', 'DESC');
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        return $this->db->get('harga_tbs')->result();
+        return $this->db->get($this->_table)->result();
     }
 
-    public function get_latest ($limit = 10): array
+    public function get_terbaru($batas = 10)
     {
         $this->db->order_by('harga_tbs.tanggal', 'DESC');
         $this->db->order_by('harga_tbs.id_kabupaten', 'ASC');
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
-        $this->db->limit($limit);
+        $this->db->limit($batas);
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        return $this->db->get('harga_tbs')->result();
+        return $this->db->get($this->_table)->result();
     }
 
-    public function get_harga_sebelumnya ($id_kabupaten, $id_perusahaan, $current_date): mixed
+    public function get_harga_sebelumnya($id_kabupaten, $id_perusahaan, $tanggal_sekarang)
     {
-        $current_date = date('Y-m-d', strtotime($current_date));
-        $yesterday = date('Y-m-d', strtotime($current_date . ' -1 day'));
-        
-        $sql = "SELECT * FROM harga_tbs 
+        $tanggal_sekarang = date('Y-m-d', strtotime($tanggal_sekarang));
+        $kemarin = date('Y-m-d', strtotime($tanggal_sekarang . ' -1 day'));
+
+        $sql = "SELECT * FROM " . $this->_table . " 
                 WHERE id_kabupaten = ? 
                 AND id_perusahaan = ? 
                 AND DATE(tanggal) = ? 
                 ORDER BY tanggal DESC 
                 LIMIT 1";
-        
-        $query = $this->db->query($sql, array($id_kabupaten, $id_perusahaan, $yesterday));
-        $result = $query->row();
-        
-        if (!$result) {
-            $sql2 = "SELECT * FROM harga_tbs 
+
+        $query = $this->db->query($sql, array($id_kabupaten, $id_perusahaan, $kemarin));
+        $hasil = $query->row();
+
+        if (!$hasil) {
+            $sql2 = "SELECT * FROM " . $this->_table . " 
                      WHERE id_kabupaten = ? 
                      AND id_perusahaan = ? 
                      AND tanggal = ? 
                      ORDER BY tanggal DESC 
                      LIMIT 1";
-            $query2 = $this->db->query($sql2, array($id_kabupaten, $id_perusahaan, $yesterday));
-            $result = $query2->row();
+            $query2 = $this->db->query($sql2, array($id_kabupaten, $id_perusahaan, $kemarin));
+            $hasil = $query2->row();
         }
-        
-        if (!$result && $this->db->table_exists('harga_tbs_backup')) {
-            $backup_result = $this->get_from_backup($id_kabupaten, $id_perusahaan, $yesterday);
-            if ($backup_result) {
-                $result = (object) [
-                    'id_harga' => $backup_result->id_harga_original,
-                    'id_kabupaten' => $backup_result->id_kabupaten,
-                    'id_perusahaan' => $backup_result->id_perusahaan,
-                    'tanggal' => $backup_result->tanggal,
-                    'harga_per_kg' => $backup_result->harga_per_kg
+
+        if (!$hasil && $this->db->table_exists('harga_tbs_backup')) {
+            $hasil_backup = $this->get_dari_backup($id_kabupaten, $id_perusahaan, $kemarin);
+            if ($hasil_backup) {
+                $hasil = (object) [
+                    'id_harga' => $hasil_backup->id_harga_original,
+                    'id_kabupaten' => $hasil_backup->id_kabupaten,
+                    'id_perusahaan' => $hasil_backup->id_perusahaan,
+                    'tanggal' => $hasil_backup->tanggal,
+                    'harga_per_kg' => $hasil_backup->harga_per_kg
                 ];
             }
         }
-        
-        if (!$result) {
-            $sql3 = "SELECT * FROM harga_tbs 
+
+        if (!$hasil) {
+            $sql3 = "SELECT * FROM " . $this->_table . " 
                      WHERE id_kabupaten = ? 
                      AND id_perusahaan = ? 
                      AND DATE(tanggal) < ? 
                      ORDER BY tanggal DESC 
                      LIMIT 1";
-            $query3 = $this->db->query($sql3, array($id_kabupaten, $id_perusahaan, $current_date));
-            $result = $query3->row();
-            
-            if (!$result) {
-                $sql4 = "SELECT * FROM harga_tbs 
+            $query3 = $this->db->query($sql3, array($id_kabupaten, $id_perusahaan, $tanggal_sekarang));
+            $hasil = $query3->row();
+
+            if (!$hasil) {
+                $sql4 = "SELECT * FROM " . $this->_table . " 
                          WHERE id_kabupaten = ? 
                          AND id_perusahaan = ? 
                          AND tanggal < ? 
                          ORDER BY tanggal DESC 
                          LIMIT 1";
-                $query4 = $this->db->query($sql4, array($id_kabupaten, $id_perusahaan, $current_date));
-                $result = $query4->row();
+                $query4 = $this->db->query($sql4, array($id_kabupaten, $id_perusahaan, $tanggal_sekarang));
+                $hasil = $query4->row();
             }
         }
-        
-        if (!$result && $this->db->table_exists('harga_tbs_backup')) {
-            $backup_result = $this->get_last_from_backup($id_kabupaten, $id_perusahaan, $current_date);
-            if ($backup_result) {
-                $result = (object) [
-                    'id_harga' => $backup_result->id_harga_original,
-                    'id_kabupaten' => $backup_result->id_kabupaten,
-                    'id_perusahaan' => $backup_result->id_perusahaan,
-                    'tanggal' => $backup_result->tanggal,
-                    'harga_per_kg' => $backup_result->harga_per_kg
+
+        if (!$hasil && $this->db->table_exists('harga_tbs_backup')) {
+            $hasil_backup = $this->get_terakhir_dari_backup($id_kabupaten, $id_perusahaan, $tanggal_sekarang);
+            if ($hasil_backup) {
+                $hasil = (object) [
+                    'id_harga' => $hasil_backup->id_harga_original,
+                    'id_kabupaten' => $hasil_backup->id_kabupaten,
+                    'id_perusahaan' => $hasil_backup->id_perusahaan,
+                    'tanggal' => $hasil_backup->tanggal,
+                    'harga_per_kg' => $hasil_backup->harga_per_kg
                 ];
             }
         }
-        
-        return $result;
+
+        return $hasil;
     }
-    
-    public function get_last_different_price ($id_kabupaten, $id_perusahaan, $current_date): mixed
+
+    public function get_harga_berbeda_terakhir($id_kabupaten, $id_perusahaan, $tanggal_sekarang)
     {
-        $current_date = date('Y-m-d', strtotime($current_date));
-        
-        $sql = "SELECT * FROM harga_tbs 
+        $tanggal_sekarang = date('Y-m-d', strtotime($tanggal_sekarang));
+
+        $sql = "SELECT * FROM " . $this->_table . " 
                 WHERE id_kabupaten = ? 
                 AND id_perusahaan = ? 
                 AND DATE(tanggal) != ? 
                 ORDER BY tanggal DESC 
                 LIMIT 1";
-        
-        $query = $this->db->query($sql, array($id_kabupaten, $id_perusahaan, $current_date));
+
+        $query = $this->db->query($sql, array($id_kabupaten, $id_perusahaan, $tanggal_sekarang));
         return $query->row();
     }
-    
-    public function get_harga_terbaru_per_perusahaan (): array
+
+    public function get_terbaru_per_perusahaan()
     {
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
-        $this->db->from('harga_tbs');
+        $this->db->from($this->_table);
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
         $this->db->order_by('harga_tbs.tanggal', 'DESC');
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
-        $all_prices = $this->db->get()->result();
-        
-        $latest_prices = [];
-        $seen = [];
-        
-        foreach ($all_prices as $price) {
-            $key = $price->id_kabupaten . '_' . $price->id_perusahaan;
-            if (!isset($seen[$key])) {
-                $seen[$key] = true;
-                $latest_prices[] = $price;
+        $semua_harga = $this->db->get()->result();
+
+        $harga_terbaru = [];
+        $sudah_lihat = [];
+
+        foreach ($semua_harga as $harga) {
+            $kunci = $harga->id_kabupaten . '_' . $harga->id_perusahaan;
+            if (!isset($sudah_lihat[$kunci])) {
+                $sudah_lihat[$kunci] = true;
+                $harga_terbaru[] = $harga;
             }
         }
-        
-        return $latest_prices;
+
+        return $harga_terbaru;
     }
-    
-    public function get_harga_hari_ini (): array
+
+    public function get_harga_hari_ini()
     {
-        $today = date('Y-m-d');
+        $hari_ini = date('Y-m-d');
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
-        $this->db->from('harga_tbs');
+        $this->db->from($this->_table);
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        $this->db->where("DATE(harga_tbs.tanggal) = '{$today}'", NULL, FALSE);
+        $this->db->where("DATE(harga_tbs.tanggal) = '{$hari_ini}'", NULL, FALSE);
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
         $this->db->order_by('harga_tbs.id_kabupaten', 'ASC');
         $this->db->order_by('harga_tbs.tanggal', 'DESC');
-        $all_today = $this->db->get()->result();
-        
-        $latest_prices = [];
-        $seen = [];
-        
-        foreach ($all_today as $price) {
-            $key = $price->id_kabupaten . '_' . $price->id_perusahaan;
-            if (!isset($seen[$key])) {
-                $seen[$key] = true;
-                $latest_prices[] = $price;
+        $semua_hari_ini = $this->db->get()->result();
+
+        $harga_terbaru = [];
+        $sudah_lihat = [];
+
+        foreach ($semua_hari_ini as $harga) {
+            $kunci = $harga->id_kabupaten . '_' . $harga->id_perusahaan;
+            if (!isset($sudah_lihat[$kunci])) {
+                $sudah_lihat[$kunci] = true;
+                $harga_terbaru[] = $harga;
             }
         }
-        
-        return $latest_prices;
+
+        return $harga_terbaru;
     }
 
-    public function get_by_id ($id): mixed
+    public function get_by_id($id)
     {
-        $this->db->where('harga_tbs.id_harga', $id);
-        $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
-        $this->db->from('harga_tbs');
-        $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
-        $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        return $this->db->get()->row();
+        $this->db->where('id_harga', $id);
+        return $this->db->get($this->_table)->row_array();
     }
 
-    public function count_all (): int
+    public function count_all()
     {
-        return $this->db->count_all_results('harga_tbs');
+        return $this->db->count_all_results($this->_table);
     }
-    
-    public function get_all_filtered ($filters = [], $limit = null, $offset = null): array
+
+    public function get_semua_terfilter($filter = [], $batas = null, $mulai_dari = null)
     {
         $this->db->select('harga_tbs.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
-        $this->db->from('harga_tbs');
+        $this->db->from($this->_table);
         $this->db->join('kabupaten', 'kabupaten.id_kabupaten = harga_tbs.id_kabupaten', 'left');
         $this->db->join('perusahaan', 'perusahaan.id_perusahaan = harga_tbs.id_perusahaan', 'left');
-        
-        if (!empty($filters['kabupaten'])) {
-            $this->db->where('harga_tbs.id_kabupaten', $filters['kabupaten']);
+
+        if (!empty($filter['kabupaten'])) {
+            $this->db->where('harga_tbs.id_kabupaten', $filter['kabupaten']);
         }
-        if (!empty($filters['perusahaan'])) {
-            $this->db->where('harga_tbs.id_perusahaan', $filters['perusahaan']);
+        if (!empty($filter['perusahaan'])) {
+            $this->db->where('harga_tbs.id_perusahaan', $filter['perusahaan']);
         }
-        if (!empty($filters['date_from'])) {
-            $this->db->where('harga_tbs.tanggal >=', $filters['date_from']);
+        if (!empty($filter['date_from'])) {
+            $this->db->where('harga_tbs.tanggal >=', $filter['date_from']);
         }
-        if (!empty($filters['date_to'])) {
-            $this->db->where('harga_tbs.tanggal <=', $filters['date_to']);
+        if (!empty($filter['date_to'])) {
+            $this->db->where('harga_tbs.tanggal <=', $filter['date_to']);
         }
-        
+
         $this->db->order_by('harga_tbs.tanggal', 'DESC');
         $this->db->order_by('harga_tbs.id_perusahaan', 'ASC');
-        
-        if ($limit !== null && $offset !== null) {
-            $this->db->limit($limit, $offset);
+
+        if ($batas !== null && $mulai_dari !== null) {
+            $this->db->limit($batas, $mulai_dari);
         }
-        
+
         return $this->db->get()->result();
     }
-    
-    public function count_all_filtered ($filters = []): int
+
+    public function hitung_semua_terfilter($filter = [])
     {
-        $this->db->from('harga_tbs');
-        
-        if (!empty($filters['kabupaten'])) {
-            $this->db->where('id_kabupaten', $filters['kabupaten']);
+        $this->db->from($this->_table);
+
+        if (!empty($filter['kabupaten'])) {
+            $this->db->where('id_kabupaten', $filter['kabupaten']);
         }
-        if (!empty($filters['perusahaan'])) {
-            $this->db->where('id_perusahaan', $filters['perusahaan']);
+        if (!empty($filter['perusahaan'])) {
+            $this->db->where('id_perusahaan', $filter['perusahaan']);
         }
-        if (!empty($filters['date_from'])) {
-            $this->db->where('tanggal >=', $filters['date_from']);
+        if (!empty($filter['date_from'])) {
+            $this->db->where('tanggal >=', $filter['date_from']);
         }
-        if (!empty($filters['date_to'])) {
-            $this->db->where('tanggal <=', $filters['date_to']);
+        if (!empty($filter['date_to'])) {
+            $this->db->where('tanggal <=', $filter['date_to']);
         }
-        
+
         return $this->db->count_all_results();
     }
-    
-    public function get_by_date_and_company ($tanggal, $id_perusahaan, $exclude_id = null): mixed
+
+    public function get_by_tanggal_dan_perusahaan($tanggal, $id_perusahaan, $kecuali_id = null)
     {
         $this->db->where('tanggal', $tanggal);
         $this->db->where('id_perusahaan', $id_perusahaan);
-        if ($exclude_id) {
-            $this->db->where('id_harga !=', $exclude_id);
+        if ($kecuali_id) {
+            $this->db->where('id_harga !=', $kecuali_id);
         }
-        return $this->db->get('harga_tbs')->row();
+        return $this->db->get($this->_table)->row();
     }
-    
-    public function create ($data): int
+
+    public function create($data)
     {
-        $this->db->insert('harga_tbs', $data);
+        $this->db->insert($this->_table, $data);
+        if ($this->db->affected_rows() != 1) {
+            return false;
+        }
         return $this->db->insert_id();
     }
-    
-    public function delete_yesterday_data ($id_kabupaten, $id_perusahaan, $current_date, $deleted_by = null): int
+
+    public function update($id, $data)
     {
-        $current_date = date('Y-m-d', strtotime($current_date));
-        $yesterday = date('Y-m-d', strtotime($current_date . ' -1 day'));
-        
+        $this->db->where('id_harga', $id);
+        $this->db->update($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    public function delete($id, $dihapus_oleh = null)
+    {
+        if ($dihapus_oleh !== null) {
+            $this->backup_sebelum_hapus($id, $dihapus_oleh);
+        }
+        $this->db->delete($this->_table, array('id_harga' => $id));
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    public function hapus_data_kemarin($id_kabupaten, $id_perusahaan, $tanggal_sekarang, $dihapus_oleh = null)
+    {
+        $tanggal_sekarang = date('Y-m-d', strtotime($tanggal_sekarang));
+        $kemarin = date('Y-m-d', strtotime($tanggal_sekarang . ' -1 day'));
+
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('id_perusahaan', $id_perusahaan);
-        $this->db->where("DATE(tanggal) = '{$yesterday}'", NULL, FALSE);
-        $yesterday_data = $this->db->get('harga_tbs')->result();
-        
-        $deleted_count = 0;
-        foreach ($yesterday_data as $data) {
-            if ($this->delete($data->id_harga, $deleted_by)) {
-                $deleted_count++;
+        $this->db->where("DATE(tanggal) = '{$kemarin}'", NULL, FALSE);
+        $data_kemarin = $this->db->get($this->_table)->result();
+
+        $jumlah_dihapus = 0;
+        foreach ($data_kemarin as $data) {
+            if ($this->delete($data->id_harga, $dihapus_oleh)) {
+                $jumlah_dihapus++;
             }
         }
-        
-        return $deleted_count;
+
+        return $jumlah_dihapus;
     }
-    
-    public function update ($id, $data): bool
+
+    public function backup_sebelum_hapus($id, $dihapus_oleh = null)
     {
         $this->db->where('id_harga', $id);
-        return $this->db->update('harga_tbs', $data);
-    }
-    
-    public function delete ($id, $deleted_by = null): bool
-    {
-        $this->backup_before_delete($id, $deleted_by);
-        
-        $this->db->where('id_harga', $id);
-        return $this->db->delete('harga_tbs');
-    }
-    
-    public function backup_before_delete ($id, $deleted_by = null): bool
-    {
-        $data = $this->get_by_id($id);
-        
+        $data = $this->db->get($this->_table)->row();
+
         if ($data) {
             if ($this->db->table_exists('harga_tbs_backup')) {
-                $backup_data = [
+                $data_backup = array(
                     'id_harga_original' => $data->id_harga,
                     'id_kabupaten' => $data->id_kabupaten,
                     'id_perusahaan' => $data->id_perusahaan,
                     'tanggal' => $data->tanggal,
                     'harga_per_kg' => $data->harga_per_kg,
                     'deleted_at' => date('Y-m-d H:i:s'),
-                    'deleted_by' => $deleted_by
-                ];
-                
-                $this->db->insert('harga_tbs_backup', $backup_data);
+                    'deleted_by' => $dihapus_oleh
+                );
+
+                $this->db->insert('harga_tbs_backup', $data_backup);
                 return true;
             }
         }
         return false;
     }
-    
-    public function get_from_backup ($id_kabupaten, $id_perusahaan, $date): mixed
+
+    public function get_dari_backup($id_kabupaten, $id_perusahaan, $tanggal)
     {
         if (!$this->db->table_exists('harga_tbs_backup')) {
             return null;
         }
-        
-        $date = date('Y-m-d', strtotime($date));
-        
+
+        $tanggal = date('Y-m-d', strtotime($tanggal));
+
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('id_perusahaan', $id_perusahaan);
-        $this->db->where('DATE(tanggal)', $date);
+        $this->db->where('DATE(tanggal)', $tanggal);
         $this->db->order_by('tanggal', 'DESC');
         $this->db->limit(1);
-        
+
         return $this->db->get('harga_tbs_backup')->row();
     }
-    
-    public function get_last_from_backup ($id_kabupaten, $id_perusahaan, $current_date): mixed
+
+    public function get_terakhir_dari_backup($id_kabupaten, $id_perusahaan, $tanggal_sekarang)
     {
         if (!$this->db->table_exists('harga_tbs_backup')) {
             return null;
         }
-        
-        $current_date = date('Y-m-d', strtotime($current_date));
-        
+
+        $tanggal_sekarang = date('Y-m-d', strtotime($tanggal_sekarang));
+
         $this->db->where('id_kabupaten', $id_kabupaten);
         $this->db->where('id_perusahaan', $id_perusahaan);
-        $this->db->where('DATE(tanggal) <', $current_date);
+        $this->db->where('DATE(tanggal) <', $tanggal_sekarang);
         $this->db->order_by('tanggal', 'DESC');
         $this->db->limit(1);
-        
+
         return $this->db->get('harga_tbs_backup')->row();
     }
 }
+
+
 

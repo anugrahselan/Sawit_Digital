@@ -37,13 +37,23 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php if ($this->session->flashdata('message')): ?>
-                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show"
-                                    role="alert">
-                                    <?= $this->session->flashdata('message') ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <?php if ($this->session->flashdata('message')): 
+                                $message_type = $this->session->flashdata('message_type') ?: 'success';
+                                $icon = '';
+                                if ($message_type == 'success') {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                } elseif ($message_type == 'danger') {
+                                    $icon = '<i class="bi bi-exclamation-circle me-2"></i>';
+                                } elseif ($message_type == 'warning') {
+                                    $icon = '<i class="bi bi-exclamation-triangle me-2"></i>';
+                                } else {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                    $message_type = 'success';
+                                }
+                            ?>
+                                <div class="alert alert-<?= $message_type ?> alert-dismissible fade show mb-3" role="alert">
+                                    <?= $icon ?><?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
 
@@ -80,22 +90,22 @@
                                         <tbody>
                                             <?php $i = 1;
                                             foreach ($perusahaan as $pt): ?>
-                                                <tr class="riwayat-row" data-id="<?= $pt->id_perusahaan ?>">
+                                                <tr class="riwayat-row" data-id="<?= $pt['id_perusahaan'] ?>">
                                                     <td style="text-align: center;"><?= $i ?></td>
-                                                    <td><strong><?= htmlspecialchars($pt->nama_perusahaan) ?></strong></td>
+                                                    <td><strong><?= htmlspecialchars($pt['nama_perusahaan']) ?></strong></td>
                                                     <td style="text-align: center;">
-                                                        <?= htmlspecialchars($pt->nama_kabupaten ?: '-') ?>
+                                                        <?= htmlspecialchars($pt['nama_kabupaten'] ?: '-') ?>
                                                     </td>
-                                                    <td><?= htmlspecialchars($pt->alamat ?: '-') ?></td>
-                                                    <td style="text-align: center;"><?= htmlspecialchars($pt->kontak ?: '-') ?>
+                                                    <td><?= htmlspecialchars($pt['alamat'] ?: '-') ?></td>
+                                                    <td style="text-align: center;"><?= htmlspecialchars($pt['kontak'] ?: '-') ?>
                                                     </td>
                                                     <td>
                                                         <div class="btn-group" role="group">
-                                                            <a href="<?= base_url(uri: 'admin/perusahaan/ubah/') ?><?= $pt->id_perusahaan ?>"
+                                                            <a href="<?= base_url(uri: 'admin/perusahaan/ubah/') ?><?= $pt['id_perusahaan'] ?>"
                                                                 class="btn btn-sm btn-success" title="Edit">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href="<?= base_url(uri: 'admin/perusahaan/hapus/') ?><?= $pt->id_perusahaan ?>"
+                                                            <a href="<?= base_url(uri: 'admin/perusahaan/hapus/') ?><?= $pt['id_perusahaan'] ?>"
                                                                 class="btn btn-sm btn-danger"
                                                                 onclick="return confirm('Yakin ingin menghapus data ini?')"
                                                                 title="Hapus">

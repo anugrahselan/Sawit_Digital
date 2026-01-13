@@ -112,4 +112,3 @@ function previewPhoto(input) {
     }
 }
 </script>
-

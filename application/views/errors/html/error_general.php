@@ -7,26 +7,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <title>Error</title>
 <style type="text/css">
 
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
+::selection { background-color:
+::-moz-selection { background-color:
 
 body {
-	background-color: #fff;
+	background-color:
 	margin: 40px;
 	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
+	color:
 }
 
 a {
-	color: #003399;
+	color:
 	background-color: transparent;
 	font-weight: normal;
 }
 
 h1 {
-	color: #444;
+	color:
 	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
+	border-bottom: 1px solid
 	font-size: 19px;
 	font-weight: normal;
 	margin: 0 0 14px 0;
@@ -36,18 +36,17 @@ h1 {
 code {
 	font-family: Consolas, Monaco, Courier New, Courier, monospace;
 	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
+	background-color:
+	border: 1px solid
+	color:
 	display: block;
 	margin: 14px 0 14px 0;
 	padding: 12px 10px 12px 10px;
 }
 
-#container {
 	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
+	border: 1px solid
+	box-shadow: 0 0 8px
 }
 
 p {

@@ -10,7 +10,7 @@ class Auth extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function masuk()
+    public function login()
     {
         if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
             $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
@@ -21,40 +21,15 @@ class Auth extends CI_Controller
             }
         }
 
-        $data['page_title'] = 'Masuk - Sistem Penyuluhan Sawit';
-        $data['error'] = $this->session->flashdata('error') ?: '';
+        $data['page_title'] = 'Login - Sistem Penyuluhan Sawit';
+        $data['error'] = $this->session->flashdata('message') ?: '';
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('username', 'Username/Email', 'required|trim');
             $this->form_validation->set_rules('password', 'Password', 'required');
 
             if ($this->form_validation->run() !== FALSE) {
-                $username_or_email = trim($this->input->post('username'));
-                $password = trim($this->input->post('password'));
-                $user = $this->Pengguna_model->login($username_or_email, $password);
-
-                if ($user) {
-                    $this->session->set_userdata([
-                        'id_user' => $user->id_user,
-                        'username' => $user->username,
-                        'role' => $user->role,
-                        'nama_lengkap' => $user->nama_lengkap,
-                        'email' => $user->email,
-                        'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
-                        'user_id' => $user->id_user,
-                        'user_role' => $user->role,
-                        'user_name' => $user->nama_lengkap,
-                        'user_email' => $user->email
-                    ]);
-
-                    if ($user->role === 'admin') {
-                        redirect('admin/dashboard');
-                    } else {
-                        redirect('beranda');
-                    }
-                } else {
-                    $data['error'] = 'Username/Email atau password salah';
-                }
+                $this->_proses_login();
             } else {
                 $data['error'] = validation_errors('', '');
             }
@@ -63,9 +38,35 @@ class Auth extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    public function login()
+    private function _proses_login()
     {
-        $this->masuk();
+        $username_or_email = trim($this->input->post('username'));
+        $password = trim($this->input->post('password'));
+        $user = $this->Pengguna_model->login($username_or_email, $password);
+
+        if ($user) {
+            $this->session->set_userdata([
+                'id_user' => $user->id_user,
+                'username' => $user->username,
+                'role' => $user->role,
+                'nama_lengkap' => $user->nama_lengkap,
+                'email' => $user->email,
+                'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                'user_id' => $user->id_user,
+                'user_role' => $user->role,
+                'user_name' => $user->nama_lengkap,
+                'user_email' => $user->email
+            ]);
+
+            if ($user->role === 'admin') {
+                redirect('admin/dashboard');
+            } else {
+                redirect('beranda');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username/Email atau password salah</div>');
+            redirect('login');
+        }
     }
 
     public function register()
@@ -82,7 +83,7 @@ class Auth extends CI_Controller
         $data['page_title'] = 'Daftar - Sistem Penyuluhan Sawit';
         $data['register_error'] = '';
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[3]|max_length[50]|is_unique[users.username]', [
                 'is_unique' => 'Username sudah digunakan'
             ]);
@@ -98,36 +99,7 @@ class Auth extends CI_Controller
             ]);
 
             if ($this->form_validation->run() !== FALSE) {
-                $user_data = [
-                    'username' => trim($this->input->post('username')),
-                    'nama_lengkap' => trim($this->input->post('nama_lengkap')),
-                    'email' => trim($this->input->post('email')) ?: null,
-                    'password' => trim($this->input->post('password')),
-                    'role' => 'user'
-                ];
-
-                $user_id = $this->Pengguna_model->create($user_data);
-                if ($user_id) {
-                    $user = $this->Pengguna_model->get_by_id($user_id);
-                    if ($user) {
-                        $this->session->set_userdata([
-                            'id_user' => $user->id_user,
-                            'username' => $user->username,
-                            'role' => $user->role,
-                            'nama_lengkap' => $user->nama_lengkap,
-                            'email' => $user->email,
-                            'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
-                            'user_id' => $user->id_user,
-                            'user_role' => $user->role,
-                            'user_name' => $user->nama_lengkap,
-                            'user_email' => $user->email
-                        ]);
-
-                        redirect('beranda');
-                    }
-                } else {
-                    $data['register_error'] = 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.';
-                }
+                $this->_proses_register();
             } else {
                 $data['register_error'] = validation_errors('', '');
             }
@@ -136,14 +108,44 @@ class Auth extends CI_Controller
         $this->load->view('auth/login', $data);
     }
 
-    public function keluar()
+    private function _proses_register()
     {
-        $this->session->sess_destroy();
-        redirect('beranda');
+        $user_data = [
+            'username' => trim($this->input->post('username')),
+            'nama_lengkap' => trim($this->input->post('nama_lengkap')),
+            'email' => trim($this->input->post('email')) ?: null,
+            'password' => trim($this->input->post('password')),
+            'role' => 'user'
+        ];
+
+        $user_id = $this->Pengguna_model->create($user_data);
+        if ($user_id) {
+            $user = $this->Pengguna_model->get_by_id($user_id);
+            if ($user) {
+                $this->session->set_userdata([
+                    'id_user' => $user->id_user,
+                    'username' => $user->username,
+                    'role' => $user->role,
+                    'nama_lengkap' => $user->nama_lengkap,
+                    'email' => $user->email,
+                    'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                    'user_id' => $user->id_user,
+                    'user_role' => $user->role,
+                    'user_name' => $user->nama_lengkap,
+                    'user_email' => $user->email
+                ]);
+
+                redirect('beranda');
+            }
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Terjadi kesalahan saat mendaftar. Silakan coba lagi.</div>');
+            redirect('register');
+        }
     }
 
     public function logout()
     {
-        $this->keluar();
+        $this->session->sess_destroy();
+        redirect('beranda');
     }
 }

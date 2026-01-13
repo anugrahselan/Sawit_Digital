@@ -1,25 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/harga_tbs') ?>">Harga TBS</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -40,7 +38,7 @@
                                         <select class="form-control" name="id_kabupaten" id="id_kabupaten">
                                             <option value="">Pilih Kabupaten</option>
                                             <?php foreach ($kabupaten_list as $kab): ?>
-                                                <option value="<?= $kab->id_kabupaten ?>" <?= set_select('id_kabupaten', $kab->id_kabupaten) ?>><?= $kab->nama_kabupaten ?></option>
+                                                <option value="<?= $kab['id_kabupaten'] ?>" <?= set_select('id_kabupaten', $kab['id_kabupaten']) ?>><?= $kab['nama_kabupaten'] ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                         <?= form_error('id_kabupaten', '<div class="text-danger small">', '</div>') ?>
@@ -72,16 +70,15 @@
                             </p>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
+                    
                 </div>
-                <!-- /.row -->
+                
             </div>
-            <!-- /.container-fluid -->
+            
         </div>
-        <!-- /.content -->
+        
     </div>
-    <!-- /.content-wrapper -->
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const kabupatenSelect = document.getElementById('id_kabupaten');

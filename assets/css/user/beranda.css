@@ -1,10 +1,24 @@
+/* CSS Variables - Pastikan variabel terdefinisi */
+:root {
+    --primary-color: #1B5E20;
+    --secondary-color: #2E7D32;
+    --accent-color: #388E3C;
+    --text-color: #2c3e50;
+    --text-light: #6c757d;
+    --bg-color: #f8f9fa;
+    --white: #FAFAFA;
+    --border-color: #e9ecef;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
 body {
     overflow-x: hidden !important;
     width: 100% !important;
     max-width: 100% !important;
-    padding-top: 0 !important;
-    /* Hapus padding-top untuk halaman beranda agar hero banner sampai ke atas */
+    /* Padding-top tetap ada untuk navbar, hero banner akan menutupinya */
 }
 
 html {
@@ -22,9 +36,8 @@ html {
     padding-left: 0 !important;
     padding-right: 0 !important;
     position: relative;
-    padding-top: 80px !important;
-    /* Tambahkan padding-top untuk kompensasi navbar fixed */
-    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-top: -80px !important;
 }
 
 .hero-banner .container {
@@ -384,6 +397,11 @@ body .container>* {
     color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
 }
 
 /* TBS Section */

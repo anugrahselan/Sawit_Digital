@@ -37,12 +37,23 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php if ($this->session->flashdata('message')): ?>
-                                <div class="alert alert-<?= $this->session->flashdata('message_type') ?: 'info' ?> alert-dismissible fade show" role="alert">
-                                    <?= $this->session->flashdata('message') ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+                            <?php if ($this->session->flashdata('message')): 
+                                $message_type = $this->session->flashdata('message_type') ?: 'success';
+                                $icon = '';
+                                if ($message_type == 'success') {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                } elseif ($message_type == 'danger') {
+                                    $icon = '<i class="bi bi-exclamation-circle me-2"></i>';
+                                } elseif ($message_type == 'warning') {
+                                    $icon = '<i class="bi bi-exclamation-triangle me-2"></i>';
+                                } else {
+                                    $icon = '<i class="bi bi-check-circle me-2"></i>';
+                                    $message_type = 'success';
+                                }
+                            ?>
+                                <div class="alert alert-<?= $message_type ?> alert-dismissible fade show mb-3" role="alert">
+                                    <?= $icon ?><?= $this->session->flashdata('message') ?>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
                             
@@ -77,12 +88,12 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; foreach ($tanah as $t): ?>
-                                                <tr class="riwayat-row" data-id="<?= $t->id_tanah ?>">
+                                                <tr class="riwayat-row" data-id="<?= $t['id_tanah'] ?>">
                                                     <td style="text-align: center;"><?= $i ?></td>
-                                                    <td><strong><?= htmlspecialchars($t->nama_tanah) ?></strong></td>
+                                                    <td><strong><?= htmlspecialchars($t['nama_tanah']) ?></strong></td>
                                                     <td style="text-align: center;">
-                                                        <?php if ($t->ph_min || $t->ph_max): ?>
-                                                            <?= $t->ph_min ?: '?' ?> - <?= $t->ph_max ?: '?' ?>
+                                                        <?php if ($t['ph_min'] || $t['ph_max']): ?>
+                                                            <?= $t['ph_min'] ?: '?' ?> - <?= $t['ph_max'] ?: '?' ?>
                                                         <?php else: ?>
                                                             <span class="text-muted">-</span>
                                                         <?php endif; ?>
@@ -90,16 +101,16 @@
                                                     <td style="text-align: center;">
                                                         <?php 
                                                         $kandungan = [];
-                                                        if ($t->kandungan_n) $kandungan[] = 'N: ' . $t->kandungan_n . '%';
-                                                        if ($t->kandungan_p) $kandungan[] = 'P: ' . $t->kandungan_p . '%';
-                                                        if ($t->kandungan_k) $kandungan[] = 'K: ' . $t->kandungan_k . '%';
+                                                        if ($t['kandungan_n']) $kandungan[] = 'N: ' . $t['kandungan_n'] . '%';
+                                                        if ($t['kandungan_p']) $kandungan[] = 'P: ' . $t['kandungan_p'] . '%';
+                                                        if ($t['kandungan_k']) $kandungan[] = 'K: ' . $t['kandungan_k'] . '%';
                                                         echo !empty($kandungan) ? implode(', ', $kandungan) : '<span class="text-muted">-</span>';
                                                         ?>
                                                     </td>
                                                     <td>
-                                                        <?php if ($t->rekomendasi): ?>
-                                                            <span title="<?= htmlspecialchars($t->rekomendasi) ?>" style="cursor: help;">
-                                                                <?= strlen($t->rekomendasi) > 50 ? substr($t->rekomendasi, 0, 50) . '...' : $t->rekomendasi ?>
+                                                        <?php if ($t['rekomendasi']): ?>
+                                                            <span title="<?= htmlspecialchars($t['rekomendasi']) ?>" style="cursor: help;">
+                                                                <?= strlen($t['rekomendasi']) > 50 ? substr($t['rekomendasi'], 0, 50) . '...' : $t['rekomendasi'] ?>
                                                             </span>
                                                         <?php else: ?>
                                                             <span class="text-muted">-</span>
@@ -108,12 +119,12 @@
                                                     <td>
                                                         <div class="btn-group" role="group">
                                                             <?php if ($can_edit): ?>
-                                                                <a href="<?= base_url(uri: 'admin/tanah/ubah/') ?><?= $t->id_tanah ?>" class="btn btn-sm btn-success" title="Edit">
+                                                                <a href="<?= base_url(uri: 'admin/tanah/ubah/') ?><?= $t['id_tanah'] ?>" class="btn btn-sm btn-success" title="Edit">
                                                                     <i class="fa fa-edit"></i>
                                                                 </a>
                                                             <?php endif; ?>
                                                             <?php if ($can_delete): ?>
-                                                                <a href="<?= base_url(uri: 'admin/tanah/hapus/') ?><?= $t->id_tanah ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
+                                                                <a href="<?= base_url(uri: 'admin/tanah/hapus/') ?><?= $t['id_tanah'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')" title="Hapus">
                                                                     <i class="fa fa-trash"></i>
                                                                 </a>
                                                             <?php endif; ?>

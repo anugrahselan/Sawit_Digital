@@ -3,49 +3,48 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Tanah_model extends CI_Model
 {
-    public function __construct ()
+    private $_table = 'jenis_tanah';
+
+    public function get_all()
     {
-        parent::__construct();
-        $this->load->database();
+        $query = $this->db->get($this->_table);
+        return $query->result_array();
     }
 
-    public function get_all (): array
-    {
-        $this->db->order_by('nama_tanah', 'ASC');
-        return $this->db->get('jenis_tanah')->result();
-    }
-
-    public function get_by_id ($id): mixed
+    public function get_by_id($id)
     {
         $this->db->where('id_tanah', $id);
-        return $this->db->get('jenis_tanah')->row();
+        return $this->db->get($this->_table)->row_array();
     }
 
-    public function create ($data): int
+    public function create($data)
     {
-        $this->db->insert('jenis_tanah', $data);
+        $this->db->insert($this->_table, $data);
+        if ($this->db->affected_rows() != 1) {
+            return false;
+        }
         return $this->db->insert_id();
     }
 
-    public function update ($id, $data): bool
+    public function update($id, $data)
     {
         $this->db->where('id_tanah', $id);
-        return $this->db->update('jenis_tanah', $data);
+        $this->db->update($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function delete ($id): bool
+    public function delete($id)
     {
-        $this->db->where('id_tanah', $id);
-        return $this->db->delete('jenis_tanah');
+        $this->db->delete($this->_table, array('id_tanah' => $id));
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function nama_exists ($nama_tanah, $exclude_id = null): bool
+    public function nama_ada($nama, $kecuali_id = null)
     {
-        $this->db->where('nama_tanah', $nama_tanah);
-        if ($exclude_id) {
-            $this->db->where('id_tanah !=', $exclude_id);
+        $this->db->where('nama_tanah', $nama);
+        if ($kecuali_id) {
+            $this->db->where('id_tanah !=', $kecuali_id);
         }
-        return $this->db->count_all_results('jenis_tanah') > 0;
+        return $this->db->count_all_results($this->_table) > 0;
     }
 }
-

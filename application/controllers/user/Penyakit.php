@@ -7,7 +7,6 @@ class Penyakit extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Penyakit_model');
-        $this->load->database();
     }
 
     public function index()
@@ -21,7 +20,7 @@ class Penyakit extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
-    public function detail($id = null)
+    public function detail_penyakit($id = null)
     {
         if ($id !== null) {
             $id = (int) $id;
@@ -36,7 +35,7 @@ class Penyakit extends CI_Controller
             show_404();
         }
 
-        $data['page_title'] = $penyakit->nama_penyakit . ' - Sistem Penyuluhan Sawit';
+        $data['page_title'] = $penyakit['nama_penyakit'] . ' - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/penyakit.css';
         $data['penyakit'] = $penyakit;
 

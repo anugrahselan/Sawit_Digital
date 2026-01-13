@@ -3,57 +3,52 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Penyakit_model extends CI_Model
 {
-    public function __construct ()
+    private $_table = 'jenis_penyakit';
+
+    public function get_all()
     {
-        parent::__construct();
-        $this->load->database();
+        $query = $this->db->get($this->_table);
+        return $query->result_array();
     }
 
-    public function get_all ($limit = null, $offset = null): array
-    {
-        if ($limit !== null && $offset !== null) {
-            $this->db->limit($limit, $offset);
-        }
-        $this->db->order_by('nama_penyakit', 'ASC');
-        return $this->db->get('jenis_penyakit')->result();
-    }
-
-    public function get_by_id ($id): mixed
+    public function get_by_id($id)
     {
         $this->db->where('id_penyakit', $id);
-        return $this->db->get('jenis_penyakit')->row();
+        return $this->db->get($this->_table)->row_array();
     }
 
-    public function search ($keyword): array
+    public function create($data)
     {
-        $this->db->like('nama_penyakit', $keyword);
-        $this->db->or_like('penyebab', $keyword);
-        $this->db->or_like('gejala', $keyword);
-        $this->db->order_by('nama_penyakit', 'ASC');
-        return $this->db->get('jenis_penyakit')->result();
-    }
-
-    public function count_all (): int
-    {
-        return $this->db->count_all_results('jenis_penyakit');
-    }
-
-    public function create ($data): int
-    {
-        $this->db->insert('jenis_penyakit', $data);
+        $this->db->insert($this->_table, $data);
+        if ($this->db->affected_rows() != 1) {
+            return false;
+        }
         return $this->db->insert_id();
     }
 
-    public function update ($id, $data): bool
+    public function update($id, $data)
     {
         $this->db->where('id_penyakit', $id);
-        return $this->db->update('jenis_penyakit', $data);
+        $this->db->update($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function delete ($id): bool
+    public function delete($id)
     {
-        $this->db->where('id_penyakit', $id);
-        return $this->db->delete('jenis_penyakit');
+        $this->db->delete($this->_table, array('id_penyakit' => $id));
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    public function cari($kata_kunci)
+    {
+        $this->db->like('nama_penyakit', $kata_kunci);
+        $this->db->or_like('penyebab', $kata_kunci);
+        $this->db->or_like('gejala', $kata_kunci);
+        return $this->db->get($this->_table)->result_array();
+    }
+
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->_table);
     }
 }
-

@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_kalkulator_panen extends MY_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -20,29 +19,29 @@ class Admin_kalkulator_panen extends MY_Controller
             ['label' => 'Kalkulasi Panen', 'url' => site_url('admin/kalkulator_panen')]
         ];
 
-        $columns = $this->db->list_fields('kalkulasi_panen');
-        $has_id_user = in_array('id_user', $columns);
+        $kolom_tabel = $this->db->list_fields('kalkulasi_panen');
+        $ada_id_user = in_array('id_user', $kolom_tabel);
 
-        if ($has_id_user) {
-            $this->db->select('kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan, users.username as user_username, users.nama_lengkap as user_nama');
-            $this->db->from('kalkulasi_panen');
-            $this->db->join('kabupaten', 'kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten', 'left');
-            $this->db->join('perusahaan', 'perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan', 'left');
-            $this->db->join('users', 'users.id_user = kalkulasi_panen.id_user', 'left');
+        if ($ada_id_user) {
+            $sql = "SELECT kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan, 
+                           users.username as user_username, users.nama_lengkap as user_nama
+                    FROM kalkulasi_panen
+                    LEFT JOIN kabupaten ON kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten
+                    LEFT JOIN perusahaan ON perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan
+                    LEFT JOIN users ON users.id_user = kalkulasi_panen.id_user
+                    ORDER BY kalkulasi_panen.id_kalkulasi DESC";
         } else {
-            $this->db->select('kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan');
-            $this->db->from('kalkulasi_panen');
-            $this->db->join('kabupaten', 'kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten', 'left');
-            $this->db->join('perusahaan', 'perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan', 'left');
+            $sql = "SELECT kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan
+                    FROM kalkulasi_panen
+                    LEFT JOIN kabupaten ON kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten
+                    LEFT JOIN perusahaan ON perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan
+                    ORDER BY kalkulasi_panen.id_kalkulasi DESC";
         }
 
-        $this->db->order_by('kalkulasi_panen.id_kalkulasi', 'DESC');
-
-        $data['kalkulasi'] = $this->db->get()->result();
+        $data['kalkulasi'] = $this->db->query($sql)->result();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/kalkulator_panen/index', $data);
         $this->load->view('admin/templates/footer');
     }
 }
-

@@ -20,19 +20,29 @@ class Admin_kalkulator_pupuk extends MY_Controller
             ['label' => 'Kalkulasi Pupuk', 'url' => site_url('admin/kalkulator_pupuk')]
         ];
 
-        $this->db->select('kalkulasi_dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah, users.username as user_username, users.nama_lengkap as user_nama');
-        $this->db->from('kalkulasi_dosis_pupuk');
-        $this->db->join('jenis_pupuk', 'jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk', 'left');
-        $this->db->join('jenis_tanah', 'jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah', 'left');
-        $this->db->join('users', 'users.id_user = kalkulasi_dosis_pupuk.id_user', 'left');
-        $this->db->order_by('kalkulasi_dosis_pupuk.id_kalkulasi', 'DESC');
+        $kolom_tabel = $this->db->list_fields('kalkulasi_dosis_pupuk');
+        $ada_id_user = in_array('id_user', $kolom_tabel);
 
-        $data['dosis'] = $this->db->get()->result();
+        if ($ada_id_user) {
+            $sql = "SELECT kalkulasi_dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah, 
+                           users.username as user_username, users.nama_lengkap as user_nama
+                    FROM kalkulasi_dosis_pupuk
+                    LEFT JOIN jenis_pupuk ON jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk
+                    LEFT JOIN jenis_tanah ON jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah
+                    LEFT JOIN users ON users.id_user = kalkulasi_dosis_pupuk.id_user
+                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi DESC";
+        } else {
+            $sql = "SELECT kalkulasi_dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah
+                    FROM kalkulasi_dosis_pupuk
+                    LEFT JOIN jenis_pupuk ON jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk
+                    LEFT JOIN jenis_tanah ON jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah
+                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi DESC";
+        }
+
+        $data['dosis'] = $this->db->query($sql)->result();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/kalkulator_pupuk/index', $data);
         $this->load->view('admin/templates/footer');
     }
 }
-
-

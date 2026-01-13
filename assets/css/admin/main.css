@@ -846,14 +846,40 @@ body {
 
 /* Alerts */
 .alert {
-    border-radius: 8px;
+    border-radius: 3px;
     border: none;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.5rem;
+    padding: 0.2rem 0.45rem !important;
+    margin-bottom: 0.35rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1.15 !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: auto;
 }
 
 .alert i {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0;
+}
+
+.alert .btn-close {
+    padding: 0.1rem 0.2rem !important;
+    font-size: 0.6rem !important;
+    margin-left: 0.3rem !important;
+    opacity: 0.6;
+    line-height: 1;
+    width: auto;
+    height: auto;
+}
+
+.alert .btn-close:hover {
+    opacity: 1;
+}
+
+.alert-dismissible {
+    padding-right: 0.5rem !important;
 }
 
 /* Stats Cards */

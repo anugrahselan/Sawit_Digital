@@ -1,8 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Api extends CI_Controller {
-    public function __construct() {
+class Api extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('Harga_tbs_model');
         $this->load->model('Informasi_tambahan_model');
@@ -10,59 +12,62 @@ class Api extends CI_Controller {
         $this->load->model('Penyakit_model');
     }
 
-    public function harga_tbs() {
+    public function harga_tbs()
+    {
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if ($id_kabupaten) {
-            $tbs_prices = $this->Harga_tbs_model->get_by_kabupaten($id_kabupaten);
+            $daftar_harga_tbs = $this->Harga_tbs_model->get_by_kabupaten($id_kabupaten);
         } else {
-            $tbs_prices = $this->Harga_tbs_model->get_harga_hari_ini();
+            $daftar_harga_tbs = $this->Harga_tbs_model->get_harga_hari_ini();
 
-            if (empty($tbs_prices)) {
-                $tbs_prices = $this->Harga_tbs_model->get_harga_terbaru_per_perusahaan();
+            if (empty($daftar_harga_tbs)) {
+                $daftar_harga_tbs = $this->Harga_tbs_model->get_terbaru_per_perusahaan();
             }
         }
 
-        foreach ($tbs_prices as $price) {
-            $previous = $this->Harga_tbs_model->get_harga_sebelumnya(
-                $price->id_kabupaten,
-                $price->id_perusahaan,
-                $price->tanggal
+        foreach ($daftar_harga_tbs as $harga) {
+            $harga_sebelumnya = $this->Harga_tbs_model->get_harga_sebelumnya(
+                $harga->id_kabupaten,
+                $harga->id_perusahaan,
+                $harga->tanggal
             );
 
-            if ($previous) {
-                $change = $price->harga_per_kg - $previous->harga_per_kg;
-                $price->perubahan = $change;
-                $price->status_perubahan = $change > 0 ? 'naik' : ($change < 0 ? 'turun' : 'tidak_ada');
-                $price->harga_kemarin = $previous->harga_per_kg;
+            if ($harga_sebelumnya) {
+                $selisih = $harga->harga_per_kg - $harga_sebelumnya->harga_per_kg;
+                $harga->perubahan = $selisih;
+                $harga->status_perubahan = $selisih > 0 ? 'naik' : ($selisih < 0 ? 'turun' : 'tidak_ada');
+                $harga->harga_kemarin = $harga_sebelumnya->harga_per_kg;
             } else {
-                $price->perubahan = null;
-                $price->status_perubahan = 'tidak_ada';
-                $price->harga_kemarin = null;
+                $harga->perubahan = null;
+                $harga->status_perubahan = 'tidak_ada';
+                $harga->harga_kemarin = null;
             }
         }
 
-        $data['tbs_prices'] = $tbs_prices;
+        $data['tbs_prices'] = $daftar_harga_tbs;
         $this->load->view('user/partials/tabel_tbs', $data);
     }
 
-    public function cari() {
-        $keyword = $this->input->get('q');
-        if (empty($keyword)) {
-            echo json_encode(['error' => 'Keyword required']);
+    public function cari()
+    {
+        $kata_kunci = $this->input->get('q');
+        if (empty($kata_kunci)) {
+            echo json_encode(['error' => 'Kata kunci wajib diisi']);
             return;
         }
 
         header('Content-Type: application/json');
 
         echo json_encode([
-            'articles' => $this->Informasi_tambahan_model->search($keyword),
-            'fertilizers' => $this->Jenis_pupuk_model->search($keyword),
-            'penyakit' => $this->Penyakit_model->search($keyword)
+            'informasi' => $this->Informasi_tambahan_model->cari($kata_kunci),
+            'pupuk' => $this->Jenis_pupuk_model->cari($kata_kunci),
+            'penyakit' => $this->Penyakit_model->cari($kata_kunci)
         ]);
     }
 
-    public function get_dosis() {
+    public function get_dosis()
+    {
         $id_pupuk = $this->input->get('id_pupuk');
         $id_tanah = $this->input->get('id_tanah');
         $usia_tanaman = $this->input->get('usia_tanaman');

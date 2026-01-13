@@ -12,7 +12,7 @@
                 Sistem akan menghitung pendapatan kotor, total biaya, dan hasil bersih berdasarkan data yang Anda masukkan.</p>
             </div>
             <form id="harvestForm">
-                <!-- User Info Display -->
+                
                 <?php if ($this->session->userdata('id_user')): ?>
                 <div class="form-group user-info-display">
                     <div class="user-info-value">
@@ -128,7 +128,6 @@
 </div>
 
 <script>
-    // Set login status untuk JavaScript
+
     var isLoggedIn = <?= isset($is_logged_in) && $is_logged_in ? 'true' : 'false' ?>;
 </script>
-

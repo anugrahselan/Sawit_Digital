@@ -1,25 +1,23 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/pupuk') ?>">Pupuk</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -75,12 +73,12 @@
                             </p>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
+                    
                 </div>
-                <!-- /.row -->
+                
             </div>
-            <!-- /.container-fluid -->
+            
         </div>
-        <!-- /.content -->
+        
     </div>
-    <!-- /.content-wrapper -->
+    

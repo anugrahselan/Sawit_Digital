@@ -3,112 +3,42 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_profile extends MY_Controller
 {
+    private $upload_path = 'assets/img/users/';
+
     public function __construct()
     {
         parent::__construct();
         $this->require_admin();
         $this->load->model('Pengguna_model');
         $this->load->library('form_validation');
+        $this->load->library('upload');
     }
 
     public function index()
     {
-        $user_id = $this->user_id;
-        $user = $this->Pengguna_model->get_by_id($user_id);
+        $id_pengguna = $this->user_id;
+        $pengguna = $this->Pengguna_model->get_by_id($id_pengguna);
 
-        if (!$user) {
-            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">User tidak ditemukan</div>');
+        if (!$pengguna) {
+            $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">User tidak ditemukan!</div>');
             redirect('admin/dashboard');
         }
 
-        $data = [
-            'page_title' => 'Edit Profil - Admin',
-            'page_css' => 'profile.css',
-            'breadcrumbs' => [
-                ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
-                ['label' => 'Profil', 'url' => site_url('admin/profile')]
-            ],
-            'user' => $user
+        $data['page_title'] = 'Edit Profil - Admin';
+        $data['page_css'] = 'profile.css';
+        $data['breadcrumbs'] = [
+            ['label' => 'Dashboard', 'url' => site_url('admin/dashboard')],
+            ['label' => 'Profil', 'url' => site_url('admin/profile')]
         ];
+        $data['user'] = $pengguna;
 
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+        if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required|trim');
             $this->form_validation->set_rules('email', 'Email', 'valid_email|trim');
             $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[3]');
 
             if ($this->form_validation->run() !== FALSE) {
-                $update_data = [
-                    'nama_lengkap' => trim($this->input->post('nama_lengkap')),
-                    'email' => trim($this->input->post('email')) ?: null,
-                    'username' => trim($this->input->post('username'))
-                ];
-
-                $existing_user = $this->Pengguna_model->get_by_username($update_data['username']);
-                if ($existing_user && $existing_user->id_user != $user_id) {
-                    $data['error'] = 'Username sudah digunakan oleh user lain';
-                } else {
-                    if (!empty($update_data['email'])) {
-                        $existing_email = $this->Pengguna_model->get_by_email($update_data['email']);
-                        if ($existing_email && $existing_email->id_user != $user_id) {
-                            $data['error'] = 'Email sudah digunakan oleh user lain';
-                        }
-                    }
-
-                    if (!isset($data['error'])) {
-                        $has_file = isset($_FILES['foto_profil']) 
-                            && !empty($_FILES['foto_profil']['name']) 
-                            && $_FILES['foto_profil']['error'] === UPLOAD_ERR_OK
-                            && is_uploaded_file($_FILES['foto_profil']['tmp_name']);
-
-                        if ($has_file) {
-                            $upload_result = $this->upload_foto_profil();
-                            if ($upload_result['success']) {
-                                if (!empty($user->foto_profil)) {
-                                    $old_foto = $user->foto_profil;
-                                    if (strpos($old_foto, 'assets/img/users/') !== false) {
-                                        $old_foto = basename($old_foto);
-                                    }
-                                    $old_file = FCPATH . 'assets/img/users/' . $old_foto;
-                                    if (file_exists($old_file) && $old_foto != 'default.png') {
-                                        @unlink($old_file);
-                                    }
-                                }
-                                $update_data['foto_profil'] = $upload_result['file_name'];
-                            } else {
-                                $data['error'] = $upload_result['error'];
-                            }
-                        }
-
-                        $password = trim($this->input->post('password'));
-                        if (!empty($password)) {
-                            if (strlen($password) < 6) {
-                                $data['error'] = 'Password minimal 6 karakter';
-                            } else {
-                                $update_data['password'] = $password;
-                            }
-                        }
-
-                        if (!isset($data['error'])) {
-                            if ($this->Pengguna_model->update($user_id, $update_data)) {
-                                $updated_user = $this->Pengguna_model->get_by_id($user_id);
-                                $this->session->set_userdata([
-                                    'nama_lengkap' => $updated_user->nama_lengkap,
-                                    'user_name' => $updated_user->nama_lengkap,
-                                    'email' => $updated_user->email,
-                                    'username' => $updated_user->username,
-                                    'foto_profil' => isset($updated_user->foto_profil) ? $updated_user->foto_profil : '',
-                                    'user_email' => $updated_user->email
-                                ]);
-
-                                redirect('admin/dashboard');
-                            } else {
-                                $data['error'] = 'Gagal memperbarui profil. Silakan coba lagi.';
-                            }
-                        }
-                    }
-                }
-            } else {
-                $data['error'] = validation_errors('', '');
+                $this->_ubah_profil($id_pengguna);
             }
         }
 
@@ -117,54 +47,87 @@ class Admin_profile extends MY_Controller
         $this->load->view('admin/templates/footer');
     }
 
-    private function upload_foto_profil(): array
+    private function _ubah_profil($id_pengguna)
     {
-        if (!isset($_FILES['foto_profil'])) {
-            return ['success' => false, 'error' => 'Field file tidak ditemukan'];
+        $pengguna = $this->Pengguna_model->get_by_id($id_pengguna);
+        $data_update = [
+            'nama_lengkap' => trim($this->input->post('nama_lengkap')),
+            'email' => trim($this->input->post('email')) ?: null,
+            'username' => trim($this->input->post('username'))
+        ];
+
+        $pengguna_ada = $this->Pengguna_model->get_by_username($data_update['username']);
+        if ($pengguna_ada && $pengguna_ada->id_user != $id_pengguna) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username sudah digunakan oleh user lain</div>');
+            redirect('admin/profile');
+            return;
         }
 
-        $file = $_FILES['foto_profil'];
-
-        if (empty($file['name']) || $file['error'] !== UPLOAD_ERR_OK) {
-            if ($file['error'] === UPLOAD_ERR_NO_FILE) {
-                return ['success' => false, 'error' => 'Tidak ada file yang diupload'];
+        if (!empty($data_update['email'])) {
+            $email_ada = $this->Pengguna_model->get_by_email($data_update['email']);
+            if ($email_ada && $email_ada->id_user != $id_pengguna) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Email sudah digunakan oleh user lain</div>');
+                redirect('admin/profile');
+                return;
             }
-            return ['success' => false, 'error' => 'Error saat upload file: ' . $file['error']];
         }
 
-        if (!is_uploaded_file($file['tmp_name'])) {
-            return ['success' => false, 'error' => 'File tidak valid atau tidak diupload dengan benar'];
-        }
-
-        $upload_path = FCPATH . 'assets/img/users/';
+        $upload_path = FCPATH . $this->upload_path;
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0755, true);
         }
 
-        $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $this->upload->initialize([
+            'upload_path' => $upload_path,
+            'allowed_types' => 'gif|jpg|jpeg|png|webp',
+            'max_size' => 2048,
+            'encrypt_name' => TRUE
+        ]);
 
-        if (!in_array($file_ext, $allowed_extensions)) {
-            return ['success' => false, 'error' => 'Format file tidak didukung. Format yang diizinkan: JPG, JPEG, PNG, GIF, WEBP'];
+        if (!empty($_FILES['foto_profil']['name'])) {
+            if (!$this->upload->do_upload('foto_profil')) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors('', '') . '</div>');
+                redirect('admin/profile');
+                return;
+            }
+            if (!empty($pengguna->foto_profil)) {
+                $foto_lama = $pengguna->foto_profil;
+                if (strpos($foto_lama, 'assets/img/users/') !== false) {
+                    $foto_lama = basename($foto_lama);
+                }
+                $file_path = $upload_path . $foto_lama;
+                if (file_exists($file_path) && $foto_lama != 'default.png') {
+                    unlink($file_path);
+                }
+            }
+            $data_update['foto_profil'] = $this->upload->data('file_name');
         }
 
-        $image_info = @getimagesize($file['tmp_name']);
-        if ($image_info === FALSE) {
-            return ['success' => false, 'error' => 'File yang diupload bukan gambar valid'];
+        $password = trim($this->input->post('password'));
+        if (!empty($password)) {
+            if (strlen($password) < 6) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password minimal 6 karakter</div>');
+                redirect('admin/profile');
+                return;
+            }
+            $data_update['password'] = $password;
         }
 
-        $max_size = 2048 * 1024; // 2MB
-        if ($file['size'] > $max_size) {
-            return ['success' => false, 'error' => 'Ukuran file terlalu besar. Maksimal 2MB'];
-        }
-
-        $file_name = 'user_' . time() . '_' . uniqid() . '.' . $file_ext;
-
-        if (move_uploaded_file($file['tmp_name'], $upload_path . $file_name)) {
-            return ['success' => true, 'file_name' => $file_name];
+        $ubah = $this->Pengguna_model->update($id_pengguna, $data_update);
+        if ($ubah) {
+            $pengguna_update = $this->Pengguna_model->get_by_id($id_pengguna);
+            $this->session->set_userdata([
+                'nama_lengkap' => $pengguna_update->nama_lengkap,
+                'user_name' => $pengguna_update->nama_lengkap,
+                'email' => $pengguna_update->email,
+                'username' => $pengguna_update->username,
+                'foto_profil' => isset($pengguna_update->foto_profil) ? $pengguna_update->foto_profil : ''
+            ]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Profil berhasil diubah!</div>');
+            redirect('admin/dashboard');
         } else {
-            return ['success' => false, 'error' => 'Gagal mengupload file'];
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal memperbarui profil. Silakan coba lagi.</div>');
+            redirect('admin/profile');
         }
     }
 }
-

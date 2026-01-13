@@ -11,7 +11,6 @@
         </div>
     <?php endif; ?>
 
-    <!-- Tabel Harga TBS -->
     <section class="tbs-section">
         <h2 class="section-title">Harga TBS Terkini</h2>
         <div id="tbs-table-container">

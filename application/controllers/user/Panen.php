@@ -10,19 +10,11 @@ class Panen extends CI_Controller
         $this->load->model('Perusahaan_model');
     }
 
-    private function require_login()
-    {
-        if (!$this->session->userdata('id_user')) {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda harus login terlebih dahulu untuk menggunakan kalkulator panen</div>');
-            redirect('login');
-        }
-    }
-
-    private function require_login_ajax()
+    private function cek_login()
     {
         if (!$this->session->userdata('id_user')) {
             header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Anda harus login terlebih dahulu']);
+            echo json_encode(['success' => false, 'message' => 'Silakan login terlebih dahulu']);
             exit;
         }
     }
@@ -32,7 +24,8 @@ class Panen extends CI_Controller
         $data['page_title'] = 'Kalkulator Panen - Sistem Penyuluhan Sawit';
         $data['page_css'] = 'user/kalkulator_panen.css';
         $data['page_js'] = 'user/kalkulator_panen.js';
-        $data['kabupaten'] = $this->db->get('kabupaten')->result();
+        $sql = "SELECT * FROM kabupaten ORDER BY nama_kabupaten ASC";
+        $data['kabupaten'] = $this->db->query($sql)->result();
         $data['perusahaan'] = $this->Perusahaan_model->get_all();
         $data['is_logged_in'] = $this->session->userdata('id_user') ? true : false;
 
@@ -48,26 +41,22 @@ class Panen extends CI_Controller
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if (!$id_kabupaten) {
-            echo json_encode(['success' => false, 'message' => 'ID Kabupaten tidak valid']);
+            echo json_encode(['success' => false, 'message' => 'Pilih kabupaten terlebih dahulu']);
             return;
         }
 
-        $this->load->model('Perusahaan_model');
-
         try {
             $perusahaan = $this->Perusahaan_model->get_by_kabupaten($id_kabupaten);
-
             echo json_encode([
                 'success' => true,
                 'data' => $perusahaan,
-                'count' => count($perusahaan),
-                'id_kabupaten' => $id_kabupaten
+                'count' => count($perusahaan)
             ]);
         } catch (Exception $e) {
             log_message('error', 'Error get_perusahaan_by_kabupaten: ' . $e->getMessage());
             echo json_encode([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Gagal mengambil data perusahaan'
             ]);
         }
     }
@@ -80,16 +69,13 @@ class Panen extends CI_Controller
         $id_kabupaten = $this->input->get('id_kabupaten');
 
         if (!$id_perusahaan || !$id_kabupaten) {
-            echo json_encode(['success' => false, 'message' => 'ID Perusahaan dan Kabupaten harus diisi']);
+            echo json_encode(['success' => false, 'message' => 'Pilih perusahaan dan kabupaten terlebih dahulu']);
             return;
         }
 
         $this->load->model('Harga_tbs_model');
-        $this->db->where('harga_tbs.id_perusahaan', $id_perusahaan);
-        $this->db->where('harga_tbs.id_kabupaten', $id_kabupaten);
-        $this->db->order_by('harga_tbs.tanggal', 'DESC');
-        $this->db->limit(1);
-        $harga_tbs = $this->db->get('harga_tbs')->row();
+        $sql = "SELECT * FROM harga_tbs WHERE id_perusahaan = ? AND id_kabupaten = ? ORDER BY tanggal DESC LIMIT 1";
+        $harga_tbs = $this->db->query($sql, [$id_perusahaan, $id_kabupaten])->row();
 
         if ($harga_tbs) {
             echo json_encode([
@@ -100,7 +86,7 @@ class Panen extends CI_Controller
         } else {
             echo json_encode([
                 'success' => false,
-                'message' => 'Tidak ada data harga TBS untuk perusahaan dan kabupaten ini'
+                'message' => 'Harga TBS belum tersedia untuk perusahaan ini'
             ]);
         }
     }
@@ -109,10 +95,10 @@ class Panen extends CI_Controller
     {
         header('Content-Type: application/json');
 
-        $this->require_login_ajax();
+        $this->cek_login();
 
-        if ($this->input->server('REQUEST_METHOD') !== 'POST') {
-            echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        if ($this->input->method() !== 'post') {
+            echo json_encode(['success' => false, 'message' => 'Metode tidak diizinkan']);
             return;
         }
 
@@ -127,7 +113,7 @@ class Panen extends CI_Controller
         $hasil_bersih = $this->input->post('hasil_bersih');
 
         if (!$id_kabupaten || !$harga_per_kg || !$berat_kotor) {
-            echo json_encode(['success' => false, 'message' => 'Data tidak lengkap']);
+            echo json_encode(['success' => false, 'message' => 'Isi semua data yang wajib']);
             return;
         }
 
@@ -137,9 +123,7 @@ class Panen extends CI_Controller
             $hasil_bersih = $total_pendapatan - $potongan_rp - $upah_panen - $biaya_transportasi - $potong_hutang;
         }
 
-        $columns = $this->db->list_fields('kalkulasi_panen');
-
-        if (empty($id_perusahaan) || $id_perusahaan === '' || $id_perusahaan === null) {
+        if (empty($id_perusahaan)) {
             $id_perusahaan = $this->Perusahaan_model->get_or_create_mitra($id_kabupaten);
         } else {
             $id_perusahaan = (int) $id_perusahaan;
@@ -150,9 +134,9 @@ class Panen extends CI_Controller
 
         $id_user = $this->session->userdata('id_user');
 
-        $columns = $this->db->list_fields('kalkulasi_panen');
-        $has_id_user = in_array('id_user', $columns);
-        $has_tanggal = in_array('tanggal_kalkulasi', $columns);
+        $kolom_tabel = $this->db->list_fields('kalkulasi_panen');
+        $ada_id_user = in_array('id_user', $kolom_tabel);
+        $ada_tanggal = in_array('tanggal_kalkulasi', $kolom_tabel);
 
         $data = [
             'id_kabupaten' => (int) $id_kabupaten,
@@ -166,57 +150,43 @@ class Panen extends CI_Controller
             'hasil_bersih' => (float) $hasil_bersih
         ];
 
-        if ($has_id_user) {
-            if ($id_user) {
-                $data['id_user'] = (int) $id_user;
-            }
+        if ($ada_id_user && $id_user) {
+            $data['id_user'] = (int) $id_user;
         }
 
-        if ($has_tanggal) {
+        if ($ada_tanggal) {
             $data['tanggal_kalkulasi'] = date('Y-m-d H:i:s');
         }
 
         if (!$this->db->table_exists('kalkulasi_panen')) {
             echo json_encode([
                 'success' => false,
-                'message' => 'Tabel kalkulasi_panen tidak ditemukan. Silakan hubungi administrator.'
+                'message' => 'Sistem sedang bermasalah. Silakan hubungi administrator.'
             ]);
             return;
         }
 
         try {
-            $this->db->insert('kalkulasi_panen', $data);
-
-            $error = $this->db->error();
+            $kolom = array_keys($data);
+            $nilai = array_values($data);
+            $placeholder = implode(',', array_fill(0, count($nilai), '?'));
+            $sql = "INSERT INTO kalkulasi_panen (" . implode(',', $kolom) . ") VALUES (" . $placeholder . ")";
+            $this->db->query($sql, $nilai);
 
             if ($this->db->affected_rows() > 0) {
                 echo json_encode(['success' => true, 'message' => 'Data berhasil disimpan']);
             } else {
-                $error_message = 'Gagal menyimpan data';
-
-                if (!empty($error['code']) && $error['code'] != 0) {
-                    $error_message .= ' (Error Code: ' . $error['code'] . ')';
-                }
-                if (!empty($error['message'])) {
-                    $error_message .= ': ' . $error['message'];
-                }
-
-                if (empty($error['code']) || $error['code'] == 0) {
-                    $error_message .= '. Tidak ada data yang tersimpan.';
-                }
-
-                log_message('error', 'Kalkulasi Panen Save Error: ' . json_encode($error));
-
+                log_message('error', 'Kalkulasi Panen: Gagal menyimpan data');
                 echo json_encode([
                     'success' => false,
-                    'message' => $error_message
+                    'message' => 'Gagal menyimpan data. Silakan coba lagi.'
                 ]);
             }
         } catch (Exception $e) {
             log_message('error', 'Kalkulasi Panen Exception: ' . $e->getMessage());
             echo json_encode([
                 'success' => false,
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                'message' => 'Terjadi kesalahan saat menyimpan data'
             ]);
         }
     }

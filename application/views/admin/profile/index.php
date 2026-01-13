@@ -1,12 +1,12 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+    
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <?php if (isset($breadcrumbs)): ?>
@@ -22,13 +22,11 @@
                             <li class="breadcrumb-item active"><?= $page_title ?></li>
                         <?php endif; ?>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+    
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -46,7 +44,7 @@
                             <?php endif; ?>
 
                             <form method="POST" enctype="multipart/form-data" id="profileForm">
-                                <!-- Foto Profil -->
+                                
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Foto Profil</label>
                                     <div class="d-flex align-items-center gap-4">
@@ -75,7 +73,6 @@
 
                                 <hr>
 
-                                <!-- Informasi Akun -->
                                 <div class="mb-3">
                                     <h6 class="fw-bold mb-3"><i class="bi bi-info-circle"></i> Informasi Akun</h6>
                                     
@@ -112,7 +109,6 @@
 
                                 <hr>
 
-                                <!-- Ubah Password -->
                                 <div class="mb-3">
                                     <h6 class="fw-bold mb-3"><i class="bi bi-key"></i> Ubah Password</h6>
                                     <p class="text-muted small">Kosongkan jika tidak ingin mengubah password</p>
@@ -140,11 +136,10 @@
                 </div>
             </div>
         </div>
-        <!-- /.container-fluid -->
+        
     </div>
-    <!-- /.content -->
+    
 </div>
-<!-- /.content-wrapper -->
 
 <script>
 function previewPhoto(input) {
@@ -157,7 +152,3 @@ function previewPhoto(input) {
     }
 }
 </script>
-
-
-
-

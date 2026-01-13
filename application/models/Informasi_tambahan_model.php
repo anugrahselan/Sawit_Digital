@@ -3,63 +3,57 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Informasi_tambahan_model extends CI_Model
 {
-    public function __construct ()
+    private $_table = 'informasi_tambahan';
+
+    public function get_all()
     {
-        parent::__construct();
-        $this->load->database();
+        $query = $this->db->get($this->_table);
+        return $query->result_array();
     }
 
-    public function get_all ($limit = null, $offset = null): array
-    {
-        if ($limit !== null && $offset !== null) {
-            $this->db->limit($limit, $offset);
-        }
-        $this->db->order_by('tanggal', 'DESC');
-        return $this->db->get('informasi_tambahan')->result();
-    }
-
-    public function get_by_id ($id): mixed
+    public function get_by_id($id)
     {
         $this->db->where('id_info', $id);
-        return $this->db->get('informasi_tambahan')->row();
+        return $this->db->get($this->_table)->row_array();
     }
 
-    public function get_latest ($limit = 5): array
+    public function create($data)
     {
-        $this->db->order_by('tanggal', 'DESC');
-        $this->db->limit($limit);
-        return $this->db->get('informasi_tambahan')->result();
-    }
-
-    public function search ($keyword): array
-    {
-        $this->db->like('judul', $keyword);
-        $this->db->or_like('konten', $keyword);
-        $this->db->order_by('tanggal', 'DESC');
-        return $this->db->get('informasi_tambahan')->result();
-    }
-
-    public function count_all (): int
-    {
-        return $this->db->count_all_results('informasi_tambahan');
-    }
-
-    public function create ($data): int
-    {
-        $this->db->insert('informasi_tambahan', $data);
+        $this->db->insert($this->_table, $data);
+        if ($this->db->affected_rows() != 1) {
+            return false;
+        }
         return $this->db->insert_id();
     }
 
-    public function update ($id, $data): bool
+    public function update($id, $data)
     {
         $this->db->where('id_info', $id);
-        return $this->db->update('informasi_tambahan', $data);
+        $this->db->update($this->_table, $data);
+        return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function delete ($id): bool
+    public function delete($id)
     {
-        $this->db->where('id_info', $id);
-        return $this->db->delete('informasi_tambahan');
+        $this->db->delete($this->_table, array('id_info' => $id));
+        return ($this->db->affected_rows() != 1) ? false : true;
+    }
+
+    public function get_terbaru($batas = 5)
+    {
+        $this->db->limit($batas);
+        return $this->db->get($this->_table)->result_array();
+    }
+
+    public function cari($kata_kunci)
+    {
+        $this->db->like('judul', $kata_kunci);
+        $this->db->or_like('konten', $kata_kunci);
+        return $this->db->get($this->_table)->result_array();
+    }
+
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->_table);
     }
 }
-
