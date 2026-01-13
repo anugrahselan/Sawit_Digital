@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->image.png
+<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header. (Page Header) -->
     <div class="content-header">

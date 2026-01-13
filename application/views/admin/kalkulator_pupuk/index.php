@@ -142,16 +142,6 @@
 
 <style>
 
-:root {
-    --admin-primary: 
-    --admin-secondary: 
-    --admin-accent: 
-    --admin-bg: 
-    --admin-text: 
-    --admin-border: 
-    --admin-text-light: 
-}
-
 .card-header {
     display: flex;
     align-items: center;
@@ -170,7 +160,7 @@
 .card-title {
     font-weight: 700 !important;
     font-size: 1.5rem;
-    color: var(--admin-text);
+    color: #2c3e50;
     margin: 0;
 }
 
@@ -199,7 +189,7 @@
 }
 
 .input-group .form-control:focus {
-    border-color: var(--admin-primary);
+    border-color: #1B5E20;
     box-shadow: 0 0 0 0.2rem rgba(27, 94, 32, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
     outline: none;
 }
@@ -209,8 +199,7 @@
     display: flex;
 }
 
-.input-group-append .btn,
-
+.input-group-append .btn {
     margin: 0;
     padding: 0.75rem 1.5rem !important;
     border-radius: 10px !important;
@@ -224,14 +213,12 @@
     box-shadow: 0 2px 4px rgba(27, 94, 32, 0.2);
 }
 
-.input-group-append .btn:hover,
-
+.input-group-append .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(27, 94, 32, 0.3);
 }
 
 .riwayat-table-wrapper {
-    background: linear-gradient(135deg, 
     border-radius: 16px;
     border: 2px solid rgba(27, 94, 32, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -255,7 +242,7 @@
     padding: 1rem;
     text-align: center;
     font-weight: 700;
-    color: var(--admin-primary);
+    color: #1B5E20;
     font-size: 0.95rem;
     border-bottom: 2px solid rgba(27, 94, 32, 0.2);
     white-space: nowrap;
@@ -274,7 +261,7 @@
 .riwayat-table tbody td {
     padding: 1rem;
     font-size: 0.95rem;
-    color: var(--admin-text);
+    color: #2c3e50;
     vertical-align: middle;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -303,20 +290,20 @@
 .empty-state h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--admin-primary);
+    color: #1B5E20;
     margin-bottom: 0.75rem;
 }
 
 .empty-state p {
     font-size: 1rem;
-    color: var(--admin-text-light);
+    color: #6c757d;
     margin-bottom: 1.5rem;
 }
 
 .expand-btn {
     background: transparent;
     border: none;
-    color: var(--admin-primary);
+    color: #1B5E20;
     font-size: 1.1rem;
     cursor: pointer;
     padding: 0.5rem;
@@ -378,14 +365,14 @@
 .detail-label {
     font-weight: 600;
     font-size: 0.875rem;
-    color: var(--admin-primary);
+    color: #1B5E20;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .detail-value {
     font-size: 1rem;
-    color: var(--admin-text);
+    color: #2c3e50;
     padding: 0.75rem;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 8px;

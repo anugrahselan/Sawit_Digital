@@ -113,15 +113,6 @@
 
 <style>
 
-:root {
-    --admin-primary: 
-    --admin-secondary: 
-    --admin-accent: 
-    --admin-bg: 
-    --admin-text: 
-    --admin-border: 
-    --admin-text-light: 
-}
 
 .card-header {
     display: flex;
@@ -151,7 +142,7 @@
 .card-title {
     font-weight: 700 !important;
     font-size: 1.5rem;
-    color: var(--admin-text);
+    color: #2c3e50;
     margin: 0;
 }
 
@@ -180,7 +171,7 @@
 }
 
 .input-group .form-control:focus {
-    border-color: var(--admin-primary);
+    border-color: #1B5E20;
     box-shadow: 0 0 0 0.2rem rgba(27, 94, 32, 0.15), 0 2px 4px rgba(0, 0, 0, 0.05);
     outline: none;
 }
@@ -212,7 +203,6 @@
 }
 
 .riwayat-table-wrapper {
-    background: linear-gradient(135deg, 
     border-radius: 16px;
     border: 2px solid rgba(27, 94, 32, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -236,7 +226,7 @@
     padding: 1rem;
     text-align: center;
     font-weight: 700;
-    color: var(--admin-primary);
+    color: #1B5E20;
     font-size: 0.95rem;
     border-bottom: 2px solid rgba(27, 94, 32, 0.2);
     white-space: nowrap;
@@ -259,7 +249,7 @@
 .riwayat-table tbody td {
     padding: 1rem;
     font-size: 0.95rem;
-    color: var(--admin-text);
+    color: #2c3e50;
     vertical-align: middle;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -308,13 +298,13 @@
 .empty-state h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--admin-primary);
+    color: #1B5E20;
     margin-bottom: 0.75rem;
 }
 
 .empty-state p {
     font-size: 1rem;
-    color: var(--admin-text-light);
+    color: #6c757d;
     margin-bottom: 1.5rem;
 }
 </style>

@@ -214,16 +214,6 @@
 </div>
 
 <style>
-    :root {
-        --admin-primary: 
-        --admin-secondary: 
-        --admin-accent: 
-        --admin-bg: 
-        --admin-text: 
-        --admin-border: 
-        --admin-text-light: 
-    }
-
     .row.g-4 {
         margin-left: -0.75rem;
         margin-right: -0.75rem;
@@ -243,7 +233,6 @@
     }
 
     .stats-card {
-        background: linear-gradient(135deg, 
         border: 2px solid rgba(27, 94, 32, 0.1);
         border-radius: 16px;
         padding: 1.75rem;
@@ -266,7 +255,7 @@
         left: 0;
         width: 4px;
         height: 100%;
-        background: var(--admin-primary);
+        background: #1B5E20;
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -274,8 +263,7 @@
     .stats-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 8px 24px rgba(27, 94, 32, 0.15);
-        border-color: var(--admin-primary);
-        background: linear-gradient(135deg, 
+        border-color: #1B5E20;
     }
 
     .stats-card:hover::before {
@@ -304,31 +292,31 @@
 
     .stats-card-icon.primary {
         background: linear-gradient(135deg, rgba(27, 94, 32, 0.15), rgba(46, 125, 50, 0.1));
-        color: var(--admin-primary);
+        color: #1B5E20;
     }
 
     .stats-card-icon.success {
         background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), rgba(56, 142, 60, 0.1));
-        color: var(--admin-secondary);
+        color: #2E7D32;
     }
 
     .stats-card-icon.warning {
         background: linear-gradient(135deg, rgba(249, 168, 37, 0.15), rgba(255, 183, 77, 0.1));
-        color: 
+        color: #F9A825;
     }
 
     .stats-card-icon.info {
         background: linear-gradient(135deg, rgba(2, 119, 189, 0.15), rgba(3, 169, 244, 0.1));
-        color: 
+        color: #0277BD;
     }
 
     .stats-card-icon.danger {
         background: linear-gradient(135deg, rgba(211, 47, 47, 0.15), rgba(244, 67, 54, 0.1));
-        color: 
+        color: #C62828;
     }
 
     .stats-card-label {
-        color: var(--admin-text-light);
+        color: #6c757d;
         font-size: 0.875rem;
         font-weight: 600;
         line-height: 1.4;
@@ -338,7 +326,7 @@
     .stats-card-value {
         font-size: 1.875rem;
         font-weight: 800;
-        color: var(--admin-text);
+        color: #2c3e50;
         line-height: 1.2;
         word-break: break-word;
         margin: 0;
@@ -347,7 +335,7 @@
     .stats-card-subtitle {
         margin-top: 0.5rem;
         font-size: 0.8rem;
-        color: var(--admin-text-light);
+        color: #6c757d;
         font-weight: 500;
     }
 
@@ -373,7 +361,6 @@
     }
 
     .riwayat-table-wrapper {
-        background: linear-gradient(135deg, 
         border-radius: 16px;
         border: 2px solid rgba(27, 94, 32, 0.1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -397,7 +384,7 @@
         padding: 1rem;
         text-align: center;
         font-weight: 700;
-        color: var(--admin-primary);
+        color: #1B5E20;
         font-size: 0.95rem;
         border-bottom: 2px solid rgba(27, 94, 32, 0.2);
         white-space: nowrap;
@@ -416,7 +403,7 @@
     .riwayat-table tbody td {
         padding: 1rem;
         font-size: 0.95rem;
-        color: var(--admin-text);
+        color: #2c3e50;
         vertical-align: middle;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -454,13 +441,13 @@
     .empty-state h3 {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--admin-primary);
+        color: #1B5E20;
         margin-bottom: 0.75rem;
     }
 
     .empty-state p {
         font-size: 1rem;
-        color: var(--admin-text-light);
+        color: #6c757d;
         margin-bottom: 1.5rem;
     }
 
@@ -474,17 +461,17 @@
     }
 
     .riwayat-table tbody td .badge-success {
-        background-color: 
+        background-color: #2E7D32;
         color: white;
     }
 
     .riwayat-table tbody td .badge-danger {
-        background-color: 
+        background-color: #C62828;
         color: white;
     }
 
     .riwayat-table tbody td .badge-secondary {
-        background-color: 
+        background-color: #6c757d;
         color: white;
     }
 
@@ -508,7 +495,7 @@
     .card-header h5 {
         font-weight: 700;
         font-size: 1.25rem;
-        color: var(--admin-text);
+        color: #2c3e50;
         margin: 0;
         display: flex;
         align-items: center;
@@ -516,7 +503,7 @@
     }
 
     .card-header h5 i {
-        color: var(--admin-primary);
+        color: #1B5E20;
     }
 
     .card-body {
