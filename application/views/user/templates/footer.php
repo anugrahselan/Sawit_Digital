@@ -1,6 +1,6 @@
 
 <footer class="footer">
-    
+
     <section class="footer-cta">
         <div class="container">
             <div class="footer-cta-content">
@@ -85,7 +85,7 @@
     <div class="footer-content">
         <div class="container">
             <div class="footer-links">
-                
+
                 <div class="footer-column">
                     <h3>Layanan Kami</h3>
                     <ul>
@@ -140,12 +140,12 @@
 
     var userId = '<?= $this->session->userdata("id_user") ?: "" ?>';
     var isLoggedIn = <?= $this->session->userdata("id_user") ? "true" : "false" ?>;
-    
+
     function sharePage() {
         const url = window.location.href;
         const title = document.title;
         const text = 'Lihat informasi menarik di Sawit Digital: ' + title;
-        
+
         if (navigator.share) {
             navigator.share({
                 title: title,
@@ -160,7 +160,7 @@
             fallbackShare(url, title);
         }
     }
-    
+
     function fallbackShare(url, title) {
 
         if (navigator.clipboard) {
@@ -173,27 +173,27 @@
             promptShare(url, title);
         }
     }
-    
+
     function promptShare(url, title) {
         const shareText = 'Bagikan: ' + title + '\n\n' + url;
         if (prompt('Salin link berikut:', shareText)) {
 
         }
     }
-    
+
     function openEmailContact() {
         const email = 'info@sawitdigital.id';
         const subject = encodeURIComponent('Pertanyaan dari ' + document.title);
         const body = encodeURIComponent('Halo,\n\nSaya ingin bertanya tentang:\n\n\n\nTerima kasih.');
-        
+
         const mailtoLink = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
-        
+
         try {
             window.location.href = mailtoLink;
-            
+
             setTimeout(() => {
                 const choice = confirm('Tidak ada aplikasi email yang terdeteksi.\n\nPilih cara menghubungi kami:\n\nOK = Buka halaman Hubungi Kami\nCancel = Salin email ke clipboard');
-                
+
                 if (choice) {
 
                     window.location.href = baseUrl + 'index.php/bantuan/hubungi-kami';

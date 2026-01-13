@@ -17,9 +17,9 @@
 
 <body class="auth-page">
     <div class="auth-container">
-        
+
         <div class="auth-illustration" style="background-image: url('<?= base_url('assets/img/hero/login.jpg') ?>');">
-            
+
             <div class="illustration-header">
                 <div class="logo-container">
                     <div class="logo-icon">
@@ -62,7 +62,7 @@
 
         <div class="auth-form-section">
             <div class="form-wrapper">
-                
+
                 <div class="auth-form" id="loginForm"
                     style="display: <?= isset($register_error) && !empty($register_error) ? 'none' : 'block' ?>;">
                     <div class="form-header">

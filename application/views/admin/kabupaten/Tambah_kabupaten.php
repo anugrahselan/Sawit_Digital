@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -31,26 +31,25 @@
                                         <?= $error ?>
                                     </div>
                                 <?php endif; ?>
-                                
+
                                 <form method="post">
                                     <div class="mb-3">
                                         <label for="nama_kabupaten" class="form-label">Nama Kabupaten</label>
                                         <input type="text" class="form-control" name="nama_kabupaten" id="nama_kabupaten" value="<?= set_value('nama_kabupaten') ?>" aria-describedby="Nama kabupaten">
                                         <?= form_error('nama_kabupaten', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <button type="submit" class="btn btn-primary">Tambah</button>
                                     <a href="<?= base_url(uri: 'admin/kabupaten') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
+
     </div>
-    

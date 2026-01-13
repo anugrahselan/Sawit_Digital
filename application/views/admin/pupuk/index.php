@@ -1,24 +1,22 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -56,8 +54,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             <?php endif; ?>
-                            
-                            <!-- Search Bar -->
+
                             <div class="mb-3">
                                 <div class="row">
                                     <div class="col-md-10">
@@ -72,7 +69,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <?php if (!empty($pupuk)): ?>
                                 <div class="riwayat-table-wrapper">
                                     <table class="riwayat-table">
@@ -175,18 +172,17 @@
 </div>
 
 <style>
-/* Hybrid Table Styles for Admin */
+
 :root {
-    --admin-primary: #1B5E20;
-    --admin-secondary: #2E7D32;
-    --admin-accent: #388E3C;
-    --admin-bg: #FAFAFA;
-    --admin-text: #2c3e50;
-    --admin-border: #e9ecef;
-    --admin-text-light: #6c757d;
+    --admin-primary: 
+    --admin-secondary: 
+    --admin-accent: 
+    --admin-bg: 
+    --admin-text: 
+    --admin-border: 
+    --admin-text-light: 
 }
 
-/* Card Header Styles */
 .card-header {
     display: flex;
     align-items: center;
@@ -255,7 +251,7 @@
 }
 
 .input-group-append .btn,
-#searchBtn {
+
     margin: 0;
     padding: 0.75rem 1.5rem !important;
     border-radius: 10px !important;
@@ -270,13 +266,13 @@
 }
 
 .input-group-append .btn:hover,
-#searchBtn:hover {
+
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(27, 94, 32, 0.3);
 }
 
 .riwayat-table-wrapper {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: linear-gradient(135deg, 
     border-radius: 16px;
     border: 2px solid rgba(27, 94, 32, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -502,10 +498,10 @@
 </style>
 
 <script>
-// Use vanilla JavaScript for expand/collapse (works immediately)
+
 (function() {
     'use strict';
-    
+
     function handleExpandClick(e) {
         var expandBtn = e.target.closest('.expand-btn');
         if (!expandBtn) {
@@ -513,28 +509,28 @@
                 expandBtn = e.target.closest('button.expand-btn') || e.target.parentElement.closest('.expand-btn');
             }
         }
-        
+
         if (!expandBtn) return;
-        
+
         e.preventDefault();
         e.stopPropagation();
-        
+
         var targetId = expandBtn.getAttribute('data-target');
-        
+
         if (!targetId) {
             console.error('No target found for expand button');
             return;
         }
-        
+
         var detailRow = document.getElementById(targetId);
-        
+
         if (!detailRow) {
             console.error('Detail row not found:', targetId);
             return;
         }
-        
+
         var isExpanded = detailRow.classList.contains('expanded');
-        
+
         if (isExpanded) {
             detailRow.classList.remove('expanded');
             expandBtn.classList.remove('expanded');
@@ -543,24 +539,24 @@
             expandedRows.forEach(function(row) {
                 row.classList.remove('expanded');
             });
-            
+
             var expandedBtns = document.querySelectorAll('.expand-btn.expanded');
             expandedBtns.forEach(function(b) {
                 b.classList.remove('expanded');
             });
-            
+
             detailRow.classList.add('expanded');
             expandBtn.classList.add('expanded');
         }
     }
-    
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             var tbody = document.querySelector('.riwayat-table tbody');
             if (tbody) {
                 tbody.addEventListener('click', handleExpandClick);
             }
-            
+
             var expandButtons = document.querySelectorAll('.expand-btn');
             expandButtons.forEach(function(btn) {
                 btn.addEventListener('click', handleExpandClick);
@@ -571,7 +567,7 @@
         if (tbody) {
             tbody.addEventListener('click', handleExpandClick);
         }
-        
+
         var expandButtons = document.querySelectorAll('.expand-btn');
         expandButtons.forEach(function(btn) {
             btn.addEventListener('click', handleExpandClick);
@@ -579,7 +575,6 @@
     }
 })();
 
-// Search functionality (wait for jQuery)
 function initSearch() {
     if (typeof jQuery !== 'undefined') {
         jQuery(document).ready(function($) {
@@ -587,14 +582,14 @@ function initSearch() {
                 var keyword = $('#searchInput').val().toLowerCase();
                 searchInPage(keyword);
             });
-            
+
             $('#searchInput').on('keyup', function(e) {
                 if (e.key === 'Enter') {
                     var keyword = $(this).val().toLowerCase();
                     searchInPage(keyword);
                 }
             });
-            
+
             function searchInPage(keyword) {
                 var found = false;
                 $('tbody tr.riwayat-row').each(function() {
@@ -608,7 +603,7 @@ function initSearch() {
                         $('#detail-pupuk-' + id).hide().removeClass('expanded');
                     }
                 });
-                
+
                 if (!found && keyword !== '') {
                     if ($('#no-results').length === 0) {
                         $('tbody').append('<tr id="no-results"><td colspan="5" class="text-center py-4"><p class="text-muted mb-0">Tidak ada hasil ditemukan</p></td></tr>');
@@ -625,20 +620,19 @@ function initSearch() {
 
 initSearch();
 
-// Column Filter Functionality
 (function() {
     'use strict';
-    
+
     function initColumnFilters() {
         var filterInputs = document.querySelectorAll('.column-filter');
-        
+
         filterInputs.forEach(function(input) {
             input.addEventListener('keyup', function() {
                 var columnIndex = parseInt(this.getAttribute('data-column'));
                 var filterValue = this.value.toLowerCase().trim();
                 var table = this.closest('.riwayat-table');
                 var rows = table.querySelectorAll('tbody tr.riwayat-row');
-                
+
                 rows.forEach(function(row) {
                     var cell = row.cells[columnIndex];
                     if (cell) {
@@ -663,7 +657,7 @@ initSearch();
                     }
                 });
             });
-            
+
             input.addEventListener('input', function() {
                 if (this.value.trim() === '') {
                     var table = this.closest('.riwayat-table');
@@ -675,7 +669,7 @@ initSearch();
             });
         });
     }
-    
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initColumnFilters);
     } else {

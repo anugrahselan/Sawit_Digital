@@ -12,7 +12,7 @@
                 Sistem akan otomatis menyesuaikan rekomendasi pupuk berdasarkan pH dan kandungan N, P, K tanah.</p>
             </div>
             <form id="fertilizerForm">
-                
+
                 <?php if ($this->session->userdata('id_user')): ?>
                 <div class="form-group user-info-display">
                     <div class="user-info-value">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <?php endif; ?>
-                
+
                 <div class="form-group">
                     <label for="id_tanah">
                         <span class="label-text">Pilih Jenis Tanah</span>
@@ -47,7 +47,7 @@
                         <div id="tanah-details"></div>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="id_pupuk">
                         <span class="label-text">Pilih Jenis Pupuk</span>
@@ -67,7 +67,7 @@
                         <div id="pupuk-details"></div>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="usia_tanaman">
                         <span class="label-text">Usia Tanaman</span>
@@ -76,7 +76,7 @@
                     </label>
                     <input type="number" name="usia_tanaman" id="usia_tanaman" class="form-control" required min="0" step="1" placeholder="Contoh: 12">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="jumlah_pohon">
                         <span class="label-text">Jumlah Pohon</span>
@@ -84,7 +84,7 @@
                     </label>
                     <input type="number" name="jumlah_pohon" id="jumlah_pohon" class="form-control" required min="1" step="1" value="1" placeholder="Contoh: 100">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="periode_per_tahun">
                         <span class="label-text">Periode Pemupukan per Tahun</span>
@@ -92,7 +92,7 @@
                     </label>
                     <input type="number" name="periode_per_tahun" id="periode_per_tahun" class="form-control" required min="1" step="1" value="4" placeholder="Contoh: 4">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="keterangan_aplikasi">
                         <span class="label-text">Keterangan Aplikasi</span>
@@ -100,7 +100,7 @@
                     </label>
                     <textarea name="keterangan_aplikasi" id="keterangan_aplikasi" class="form-control" rows="3" placeholder="Masukkan keterangan tambahan untuk aplikasi pupuk (opsional)"></textarea>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary btn-block">
                     <span class="btn-text">Hitung Dosis</span>
                     <span class="btn-icon">→</span>

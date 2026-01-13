@@ -45,7 +45,7 @@
         <div class="content-card">
             <h2>Formulir Kontak</h2>
             <p>Atau isi formulir di bawah ini dan kami akan menghubungi Anda secepatnya.</p>
-            
+
             <form class="contact-form" id="contactForm">
                 <div class="form-group">
                     <label for="name">Nama Lengkap *</label>

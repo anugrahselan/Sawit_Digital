@@ -3,7 +3,7 @@
         <?php 
 
         $gambar = null;
-        
+
         if (isset($article['gambar_header']) && !empty($article['gambar_header'])) {
             $gambar = trim($article['gambar_header']);
         } 
@@ -11,16 +11,16 @@
         elseif (isset($article['thumbnail']) && !empty($article['thumbnail'])) {
             $gambar = trim($article['thumbnail']);
         }
-        
+
         if ($gambar): 
 
             $gambar = trim($gambar);
-            
+
             if (strpos($gambar, 'assets/img/articles/') !== false) {
 
                 $gambar = basename($gambar);
             }
-            
+
             $gambar_url = base_url('assets/img/articles/' . $gambar);
         ?>
             <div class="article-header-image">

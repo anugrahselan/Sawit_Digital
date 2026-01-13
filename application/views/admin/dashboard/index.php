@@ -215,13 +215,13 @@
 
 <style>
     :root {
-        --admin-primary: #1B5E20;
-        --admin-secondary: #2E7D32;
-        --admin-accent: #388E3C;
-        --admin-bg: #FAFAFA;
-        --admin-text: #2c3e50;
-        --admin-border: #e9ecef;
-        --admin-text-light: #6c757d;
+        --admin-primary: 
+        --admin-secondary: 
+        --admin-accent: 
+        --admin-bg: 
+        --admin-text: 
+        --admin-border: 
+        --admin-text-light: 
     }
 
     .row.g-4 {
@@ -243,7 +243,7 @@
     }
 
     .stats-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        background: linear-gradient(135deg, 
         border: 2px solid rgba(27, 94, 32, 0.1);
         border-radius: 16px;
         padding: 1.75rem;
@@ -275,7 +275,7 @@
         transform: translateY(-4px);
         box-shadow: 0 8px 24px rgba(27, 94, 32, 0.15);
         border-color: var(--admin-primary);
-        background: linear-gradient(135deg, #ffffff 0%, #f0f4f0 100%);
+        background: linear-gradient(135deg, 
     }
 
     .stats-card:hover::before {
@@ -314,17 +314,17 @@
 
     .stats-card-icon.warning {
         background: linear-gradient(135deg, rgba(249, 168, 37, 0.15), rgba(255, 183, 77, 0.1));
-        color: #f9a825;
+        color: 
     }
 
     .stats-card-icon.info {
         background: linear-gradient(135deg, rgba(2, 119, 189, 0.15), rgba(3, 169, 244, 0.1));
-        color: #0277bd;
+        color: 
     }
 
     .stats-card-icon.danger {
         background: linear-gradient(135deg, rgba(211, 47, 47, 0.15), rgba(244, 67, 54, 0.1));
-        color: #d32f2f;
+        color: 
     }
 
     .stats-card-label {
@@ -373,7 +373,7 @@
     }
 
     .riwayat-table-wrapper {
-        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        background: linear-gradient(135deg, 
         border-radius: 16px;
         border: 2px solid rgba(27, 94, 32, 0.1);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -474,17 +474,17 @@
     }
 
     .riwayat-table tbody td .badge-success {
-        background-color: #28a745;
+        background-color: 
         color: white;
     }
 
     .riwayat-table tbody td .badge-danger {
-        background-color: #dc3545;
+        background-color: 
         color: white;
     }
 
     .riwayat-table tbody td .badge-secondary {
-        background-color: #6c757d;
+        background-color: 
         color: white;
     }
 

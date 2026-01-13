@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -31,7 +31,7 @@
                                         <?= $error ?>
                                     </div>
                                 <?php endif; ?>
-                                
+
                                 <form method="post">
                                     <div class="mb-3">
                                         <label for="id_kabupaten" class="form-label">Kabupaten</label>
@@ -43,7 +43,7 @@
                                         </select>
                                         <?= form_error('id_kabupaten', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="id_perusahaan" class="form-label">Perusahaan</label>
                                         <select class="form-control" name="id_perusahaan" id="id_perusahaan">
@@ -62,51 +62,51 @@
                                         </select>
                                         <?= form_error('id_perusahaan', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="tanggal" class="form-label">Tanggal</label>
                                         <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= set_value('tanggal', $price['tanggal']) ?>" aria-describedby="Tanggal">
                                         <?= form_error('tanggal', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="harga_per_kg" class="form-label">Harga per Kg (Rp)</label>
                                         <input type="number" class="form-control" name="harga_per_kg" id="harga_per_kg" value="<?= set_value('harga_per_kg', $price['harga_per_kg']) ?>" step="0.01" min="0" aria-describedby="Harga per kg">
                                         <?= form_error('harga_per_kg', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <button type="submit" class="btn btn-primary">Tambah</button>
                                     <a href="<?= base_url(uri: 'admin/harga_tbs') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
+
     </div>
-    
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const kabupatenSelect = document.getElementById('id_kabupaten');
     const perusahaanSelect = document.getElementById('id_perusahaan');
     const initialKabupatenId = kabupatenSelect.value;
     const initialPerusahaanId = perusahaanSelect.value;
-    
+
     function loadPerusahaan(id_kabupaten, preserveSelection = false) {
         if (!id_kabupaten) {
             perusahaanSelect.innerHTML = '<option value="">Pilih Kabupaten</option>';
             perusahaanSelect.disabled = true;
             return;
         }
-        
+
         perusahaanSelect.innerHTML = '<option value="">Memuat...</option>';
         perusahaanSelect.disabled = true;
-        
+
         fetch('<?= base_url(uri: 'admin/harga_tbs/get_perusahaan') ?>?id_kabupaten=' + id_kabupaten)
             .then(response => response.json())
             .then(data => {
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 perusahaanSelect.disabled = false;
             });
     }
-    
+
     kabupatenSelect.addEventListener('change', function() {
         if (this.value != initialKabupatenId) {
             loadPerusahaan(this.value, false);
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadPerusahaan(this.value, true);
         }
     });
-    
+
     perusahaanSelect.disabled = false;
 });
 </script>

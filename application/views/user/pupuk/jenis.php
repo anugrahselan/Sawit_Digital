@@ -11,11 +11,11 @@
                             <?php if(!empty($fertilizer['gambar_pupuk'])): 
 
                                 $gambar_pupuk = trim($fertilizer['gambar_pupuk']);
-                                
+
                                 if (strpos($gambar_pupuk, 'assets/img/pupuk/') !== false) {
                                     $gambar_pupuk = basename($gambar_pupuk);
                                 }
-                                
+
                                 $gambar_url = base_url('assets/img/pupuk/' . $gambar_pupuk);
                             ?>
                                 <div class="fertilizer-image">

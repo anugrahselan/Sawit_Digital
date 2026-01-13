@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -31,14 +31,14 @@
                                         <?= $error ?>
                                     </div>
                                 <?php endif; ?>
-                                
+
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
                                         <label for="judul" class="form-label">Judul</label>
                                         <input type="text" class="form-control" name="judul" id="judul" value="<?= set_value('judul', $article['judul']) ?>" aria-describedby="Judul">
                                         <?= form_error('judul', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="kategori" class="form-label">Kategori</label>
@@ -51,7 +51,7 @@
                                             <?= form_error('penulis', '<div class="text-danger small">', '</div>') ?>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="gambar_header" class="form-label">Gambar Header</label>
                                         <?php if (!empty($article['gambar_header'])): 
@@ -69,7 +69,7 @@
                                         <input type="file" class="form-control" name="gambar_header" id="gambar_header" accept="image/*">
                                         <small class="text-muted">Format: JPG, PNG, GIF, WEBP. Maksimal 2MB. Kosongkan jika tidak ingin mengubah gambar.</small>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="thumbnail" class="form-label">Thumbnail</label>
                                         <?php if (!empty($article['thumbnail'])): 
@@ -87,32 +87,31 @@
                                         <input type="file" class="form-control" name="thumbnail" id="thumbnail" accept="image/*">
                                         <small class="text-muted">Format: JPG, PNG, GIF, WEBP. Maksimal 2MB. Kosongkan jika tidak ingin mengubah gambar.</small>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="konten" class="form-label">Konten</label>
                                         <textarea name="konten" id="konten" cols="30" rows="15" class="form-control"><?= set_value('konten', $article['konten']) ?></textarea>
                                         <?= form_error('konten', '<div class="text-danger small">', '</div>') ?>
                                         <small class="text-muted">Gunakan HTML untuk formatting teks</small>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="tanggal" class="form-label">Tanggal</label>
                                         <input type="date" class="form-control" name="tanggal" id="tanggal" value="<?= set_value('tanggal', $article['tanggal']) ?>" aria-describedby="Tanggal">
                                         <?= form_error('tanggal', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <button type="submit" class="btn btn-primary">Tambah</button>
                                     <a href="<?= base_url(uri: 'admin/informasi') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
+
     </div>
-    

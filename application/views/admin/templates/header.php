@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($page_title) ? $page_title : 'Admin Dashboard' ?> - Sawit Digital</title>
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
+
     <link href="<?= base_url('assets/css/admin/main.css') ?>" rel="stylesheet">
-    
+
     <?php if (isset($page_css)): ?>
         <link href="<?= base_url('assets/css/admin/' . $page_css) ?>" rel="stylesheet">
     <?php endif; ?>
@@ -22,9 +22,9 @@
 <body>
     <div class="admin-wrapper">
         <?php $this->load->view('admin/templates/sidebar'); ?>
-        
+
         <div class="admin-main">
-            
+
             <header class="admin-header">
                 <div class="header-left">
                     <button class="sidebar-toggle-btn" id="sidebarToggle">
@@ -46,16 +46,16 @@
                         </ol>
                     </nav>
                 </div>
-                
+
                 <div class="header-right">
-                    
+
                     <div class="header-search">
                         <form id="adminSearchForm" class="search-form">
                             <input type="text" id="adminSearchInput" class="form-control" placeholder="Cari di halaman ini..." autocomplete="off">
                             <button type="submit" class="btn-search"><i class="bi bi-search"></i></button>
                         </form>
                     </div>
-                    
+
                     <div class="dropdown user-menu">
                         <button class="btn btn-link dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown">
                             <?php
@@ -87,27 +87,27 @@
                     </div>
                 </div>
             </header>
-            
+
             <main class="admin-content">
-                
+
                 <div id="adminSearchResults" class="alert alert-info" style="display: none; margin-bottom: 1rem;">
                     <div id="adminSearchResultsContent"></div>
                 </div>
-                
+
                 <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <i class="bi bi-check-circle"></i> <?= $this->session->flashdata('success') ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if ($this->session->flashdata('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <i class="bi bi-exclamation-circle"></i> <?= $this->session->flashdata('error') ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if ($this->session->flashdata('warning')): ?>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <i class="bi bi-exclamation-triangle"></i> <?= $this->session->flashdata('warning') ?>

@@ -11,11 +11,11 @@
                             <?php if(!empty($p['gambar_ilustrasi'])): 
 
                                 $gambar_penyakit = trim($p['gambar_ilustrasi']);
-                                
+
                                 if (strpos($gambar_penyakit, 'assets/img/penyakit/') !== false) {
                                     $gambar_penyakit = basename($gambar_penyakit);
                                 }
-                                
+
                                 $gambar_url = base_url('assets/img/penyakit/' . $gambar_penyakit);
                             ?>
                                 <div class="disease-image">

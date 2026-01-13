@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -44,7 +44,7 @@
                             <?php endif; ?>
 
                             <form method="POST" enctype="multipart/form-data" id="profileForm">
-                                
+
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Foto Profil</label>
                                     <div class="d-flex align-items-center gap-4">
@@ -75,7 +75,7 @@
 
                                 <div class="mb-3">
                                     <h6 class="fw-bold mb-3"><i class="bi bi-info-circle"></i> Informasi Akun</h6>
-                                    
+
                                     <div class="mb-3">
                                         <label for="username" class="form-label">
                                             Username <span class="text-danger">*</span>
@@ -136,9 +136,9 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
-    
+
 </div>
 
 <script>

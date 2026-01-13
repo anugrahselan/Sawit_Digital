@@ -28,7 +28,7 @@
             <h2 class="section-title">Riwayat Kalkulasi Panen</h2>
 
             <?php if (!empty($kalkulasi_panen)): ?>
-                
+
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-10">
@@ -160,7 +160,7 @@
             <h2 class="section-title">Riwayat Kalkulasi Pupuk</h2>
 
             <?php if (!empty($kalkulasi_pupuk)): ?>
-                
+
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-10">
@@ -224,7 +224,7 @@
                                 <tr class="detail-row" id="detail-pupuk-<?= $kdp->id_kalkulasi ?>">
                                     <td colspan="8">
                                         <div class="detail-content">
-                                            
+
                                             <div class="dosis-cards-section">
                                                 <div class="dosis-card">
                                                     <div class="dosis-card-content">

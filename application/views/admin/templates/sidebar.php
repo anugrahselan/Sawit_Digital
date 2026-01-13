@@ -9,7 +9,7 @@
 
     <nav class="sidebar-nav">
         <ul class="nav-menu">
-            
+
             <li class="nav-item">
                 <a href="<?= site_url('admin/dashboard') ?>"
                     class="nav-link <?= uri_string() == 'admin/dashboard' ? 'active' : '' ?>"
@@ -21,11 +21,11 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            
+
             <li class="nav-divider">
                 <span class="divider-text">Master Data</span>
             </li>
-            
+
             <li class="nav-item">
                 <a href="<?= site_url('admin/pupuk') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/pupuk') !== false ? 'active' : '' ?>"
@@ -81,11 +81,11 @@
                     <span>Jenis Tanah</span>
                 </a>
             </li>
-            
+
             <li class="nav-divider">
                 <span class="divider-text">Informasi</span>
             </li>
-            
+
             <li class="nav-item">
                 <a href="<?= site_url('admin/informasi') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/informasi') !== false ? 'active' : '' ?>"
@@ -108,11 +108,11 @@
                     <span>Harga TBS</span>
                 </a>
             </li>
-            
+
             <li class="nav-divider">
                 <span class="divider-text">Kalkulator</span>
             </li>
-            
+
             <li class="nav-item">
                 <a href="<?= site_url('admin/kalkulator_panen') ?>"
                     class="nav-link <?= strpos(uri_string(), 'admin/kalkulator_panen') !== false ? 'active' : '' ?>"
@@ -135,13 +135,13 @@
                     <span>Kalkulasi Pupuk</span>
                 </a>
             </li>
-            
+
             <?php if ($this->session->userdata('user_role') == 'admin'): ?>
-                
+
                 <li class="nav-divider">
                     <span class="divider-text">System</span>
                 </li>
-                
+
                 <li class="nav-item">
                     <a href="<?= site_url('admin/users') ?>"
                         class="nav-link <?= strpos(uri_string(), 'admin/users') !== false ? 'active' : '' ?>"
@@ -154,7 +154,7 @@
                     </a>
                 </li>
             <?php endif; ?>
-            
+
             <li class="nav-item">
                 <a href="<?= site_url('admin/logout') ?>"
                     class="nav-link"

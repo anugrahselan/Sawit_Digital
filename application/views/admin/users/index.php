@@ -1,24 +1,22 @@
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -38,7 +36,7 @@
                         </div>
                         <div class="card-body">
                             <?php if (!empty($users)): ?>
-                                <!-- Search Bar -->
+
                                 <div class="mb-3">
                                     <div class="row">
                                         <div class="col-md-10">
@@ -53,7 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="riwayat-table-wrapper">
                                     <table class="riwayat-table">
                                         <thead>
@@ -104,29 +102,27 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
+
                 </div>
-                <!-- /.row -->
+
             </div>
-            <!-- /.container-fluid -->
+
         </div>
-        <!-- /.content -->
+
     </div>
-    <!-- /.content-wrapper -->
 
 <style>
-/* Hybrid Table Styles for Admin */
+
 :root {
-    --admin-primary: #1B5E20;
-    --admin-secondary: #2E7D32;
-    --admin-accent: #388E3C;
-    --admin-bg: #FAFAFA;
-    --admin-text: #2c3e50;
-    --admin-border: #e9ecef;
-    --admin-text-light: #6c757d;
+    --admin-primary: 
+    --admin-secondary: 
+    --admin-accent: 
+    --admin-bg: 
+    --admin-text: 
+    --admin-border: 
+    --admin-text-light: 
 }
 
-/* Card Header Styles */
 .card-header {
     display: flex;
     align-items: center;
@@ -195,7 +191,7 @@
 }
 
 .input-group-append .btn,
-#searchBtn {
+
     margin: 0;
     padding: 0.75rem 1.5rem !important;
     border-radius: 10px !important;
@@ -210,13 +206,13 @@
 }
 
 .input-group-append .btn:hover,
-#searchBtn:hover {
+
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(27, 94, 32, 0.3);
 }
 
 .riwayat-table-wrapper {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: linear-gradient(135deg, 
     border-radius: 16px;
     border: 2px solid rgba(27, 94, 32, 0.1);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -324,16 +320,16 @@
 </style>
 
 <script>
-// Search Functionality
+
 (function() {
     'use strict';
-    
+
     function performSearch() {
         var searchInput = document.getElementById('searchInput');
         var keyword = searchInput ? searchInput.value.toLowerCase().trim() : '';
         var rows = document.querySelectorAll('tbody tr.riwayat-row');
         var visibleCount = 0;
-        
+
         rows.forEach(function(row) {
             var rowText = row.textContent.toLowerCase();
             if (keyword === '' || rowText.includes(keyword)) {
@@ -343,8 +339,7 @@
                 row.style.display = 'none';
             }
         });
-        
-        // Show/hide no results message
+
         var noResults = document.getElementById('no-results');
         if (keyword !== '' && visibleCount === 0) {
             if (!noResults) {
@@ -362,15 +357,15 @@
             }
         }
     }
-    
+
     function initSearch() {
         var searchBtn = document.getElementById('searchBtn');
         var searchInput = document.getElementById('searchInput');
-        
+
         if (searchBtn) {
             searchBtn.addEventListener('click', performSearch);
         }
-        
+
         if (searchInput) {
             searchInput.addEventListener('keyup', function(e) {
                 if (e.key === 'Enter') {
@@ -379,7 +374,7 @@
             });
         }
     }
-    
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initSearch);
     } else {

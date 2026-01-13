@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -46,12 +46,11 @@
                             </p>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
+
     </div>
-    

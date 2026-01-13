@@ -12,7 +12,7 @@
                 Sistem akan menghitung pendapatan kotor, total biaya, dan hasil bersih berdasarkan data yang Anda masukkan.</p>
             </div>
             <form id="harvestForm">
-                
+
                 <?php if ($this->session->userdata('id_user')): ?>
                 <div class="form-group user-info-display">
                     <div class="user-info-value">

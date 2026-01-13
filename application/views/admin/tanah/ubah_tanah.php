@@ -1,6 +1,6 @@
 
 <div class="content-wrapper">
-    
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -31,14 +31,14 @@
                                         <?= $error ?>
                                     </div>
                                 <?php endif; ?>
-                                
+
                                 <form method="post">
                                     <div class="mb-3">
                                         <label for="nama_tanah" class="form-label">Nama Tanah <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="nama_tanah" id="nama_tanah" value="<?= set_value('nama_tanah', $tanah['nama_tanah']) ?>" required>
                                         <?= form_error('nama_tanah', '<div class="text-danger small">', '</div>') ?>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="ph_min" class="form-label">pH Minimum</label>
@@ -49,7 +49,7 @@
                                             <input type="number" class="form-control" name="ph_max" id="ph_max" value="<?= set_value('ph_max', $tanah['ph_max']) ?>" step="0.1" min="0" max="14" placeholder="Contoh: 7.0">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="kandungan_n" class="form-label">Kandungan N (%)</label>
@@ -64,24 +64,23 @@
                                             <input type="number" class="form-control" name="kandungan_k" id="kandungan_k" value="<?= set_value('kandungan_k', $tanah['kandungan_k']) ?>" step="0.01" min="0" placeholder="Contoh: 2.0">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="rekomendasi" class="form-label">Rekomendasi</label>
                                         <textarea class="form-control" name="rekomendasi" id="rekomendasi" rows="3" placeholder="Masukkan rekomendasi untuk jenis tanah ini"><?= set_value('rekomendasi', $tanah['rekomendasi']) ?></textarea>
                                     </div>
-                                    
+
                                     <button type="submit" class="btn btn-primary">Update</button>
                                     <a href="<?= base_url(uri: 'admin/tanah') ?>" class="btn btn-danger">Kembali</a>
                                 </form>
                             </p>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
             </div>
-            
+
         </div>
-        
+
     </div>
-    

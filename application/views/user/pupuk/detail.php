@@ -6,15 +6,15 @@
         $gambar_url = null;
         if (isset($pupuk['gambar_pupuk']) && !empty($pupuk['gambar_pupuk'])) {
             $gambar = trim($pupuk['gambar_pupuk']);
-            
+
             if (strpos($gambar, 'assets/img/pupuk/') !== false) {
                 $gambar = basename($gambar);
             }
-            
+
             $gambar_url = base_url('assets/img/pupuk/' . $gambar);
         }
         ?>
-        
+
         <div class="fertilizer-detail-content">
             <div class="fertilizer-main-layout">
                 <?php if($gambar_url): ?>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <?php endif; ?>
-                
+
                 <div class="fertilizer-info-section">
                     <div class="fertilizer-header-info">
                         <h1 class="fertilizer-title"><?= htmlspecialchars($pupuk['nama_pupuk']) ?></h1>
@@ -34,7 +34,7 @@
                             <span>Jenis Pupuk Sawit</span>
                         </div>
                     </div>
-            
+
                     <div class="fertilizer-info-grid">
                         <?php if(!empty($pupuk['kandungan'])): ?>
                         <div class="fertilizer-section">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <?php endif; ?>
-                        
+
                         <?php if(!empty($pupuk['fungsi'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <?php endif; ?>
-                        
+
                         <?php if(!empty($pupuk['waktu_aplikasi'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <?php endif; ?>
-                        
+
                         <?php if(!empty($pupuk['catatan_khusus'])): ?>
                         <div class="fertilizer-section">
                             <div class="fertilizer-section-header">
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="fertilizer-actions">
             <a href="<?= site_url('pupuk/list') ?>" class="btn btn-secondary">
                 <span>←</span> Kembali ke Daftar Pupuk
