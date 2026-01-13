@@ -7,6 +7,7 @@ class Jenis_pupuk_model extends CI_Model
 
     public function get_all()
     {
+        $this->db->order_by('id_pupuk', 'ASC');
         $query = $this->db->get($this->_table);
         return $query->result_array();
     }

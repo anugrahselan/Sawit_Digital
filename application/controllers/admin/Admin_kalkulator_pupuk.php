@@ -30,13 +30,13 @@ class Admin_kalkulator_pupuk extends MY_Controller
                     LEFT JOIN jenis_pupuk ON jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk
                     LEFT JOIN jenis_tanah ON jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah
                     LEFT JOIN users ON users.id_user = kalkulasi_dosis_pupuk.id_user
-                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi DESC";
+                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi ASC";
         } else {
             $sql = "SELECT kalkulasi_dosis_pupuk.*, jenis_pupuk.nama_pupuk, jenis_tanah.nama_tanah
                     FROM kalkulasi_dosis_pupuk
                     LEFT JOIN jenis_pupuk ON jenis_pupuk.id_pupuk = kalkulasi_dosis_pupuk.id_pupuk
                     LEFT JOIN jenis_tanah ON jenis_tanah.id_tanah = kalkulasi_dosis_pupuk.id_tanah
-                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi DESC";
+                    ORDER BY kalkulasi_dosis_pupuk.id_kalkulasi ASC";
         }
 
         $data['dosis'] = $this->db->query($sql)->result();

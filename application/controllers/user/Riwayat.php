@@ -46,7 +46,7 @@ class Riwayat extends CI_Controller
         $this->db->join('kabupaten k', 'kp.id_kabupaten = k.id_kabupaten', 'left');
         $this->db->join('perusahaan p', 'kp.id_perusahaan = p.id_perusahaan', 'left');
         $this->db->where('kp.id_user', $id_pengguna);
-        $this->db->order_by(in_array('tanggal_kalkulasi', $kolom_tabel) ? 'kp.tanggal_kalkulasi' : 'kp.id_kalkulasi', 'DESC');
+        $this->db->order_by(in_array('tanggal_kalkulasi', $kolom_tabel) ? 'kp.tanggal_kalkulasi' : 'kp.id_kalkulasi', 'ASC');
 
         return $this->db->get()->result();
     }
@@ -63,7 +63,7 @@ class Riwayat extends CI_Controller
         $this->db->join('jenis_pupuk jp', 'kdp.id_pupuk = jp.id_pupuk', 'left');
         $this->db->join('jenis_tanah jt', 'kdp.id_tanah = jt.id_tanah', 'left');
         $this->db->where('kdp.id_user', $id_pengguna);
-        $this->db->order_by(in_array('tanggal_kalkulasi', $kolom_tabel) ? 'kdp.tanggal_kalkulasi' : 'kdp.id_kalkulasi', 'DESC');
+        $this->db->order_by(in_array('tanggal_kalkulasi', $kolom_tabel) ? 'kdp.tanggal_kalkulasi' : 'kdp.id_kalkulasi', 'ASC');
 
         return $this->db->get()->result();
     }

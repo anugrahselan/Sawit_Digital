@@ -99,12 +99,6 @@
                                         <input type="email" name="email" id="email" class="form-control" 
                                                value="<?= htmlspecialchars($user->email ?? '') ?>">
                                     </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label">Role</label>
-                                        <input type="text" class="form-control" value="<?= ucfirst($user->role ?? 'admin') ?>" disabled>
-                                        <small class="form-text text-muted">Role tidak dapat diubah</small>
-                                    </div>
                                 </div>
 
                                 <hr>
@@ -119,6 +113,15 @@
                                         <input type="password" name="password" id="password" class="form-control" 
                                                minlength="6" placeholder="Minimal 6 karakter">
                                         <small class="form-text text-muted">Password minimal 6 karakter</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="password_confirm" class="form-label">
+                                            Konfirmasi Password Baru <span class="text-muted">(Opsional)</span>
+                                        </label>
+                                        <input type="password" name="password_confirm" id="password_confirm" class="form-control" 
+                                               minlength="6" placeholder="Ulangi password baru">
+                                        <small class="form-text text-muted">Masukkan password yang sama untuk konfirmasi</small>
                                     </div>
                                 </div>
 

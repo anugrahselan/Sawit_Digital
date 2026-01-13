@@ -36,6 +36,15 @@ class Admin_profile extends MY_Controller
             $this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required|trim');
             $this->form_validation->set_rules('email', 'Email', 'valid_email|trim');
             $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[3]');
+            
+            // Validasi password jika diisi
+            $password = trim($this->input->post('password'));
+            if (!empty($password)) {
+                $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+                $this->form_validation->set_rules('password_confirm', 'Konfirmasi Password', 'required|matches[password]', [
+                    'matches' => 'Password tidak cocok'
+                ]);
+            }
 
             if ($this->form_validation->run() !== FALSE) {
                 $this->_ubah_profil($id_pengguna);
@@ -104,9 +113,16 @@ class Admin_profile extends MY_Controller
         }
 
         $password = trim($this->input->post('password'));
+        $password_confirm = trim($this->input->post('password_confirm'));
+        
         if (!empty($password)) {
             if (strlen($password) < 6) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password minimal 6 karakter</div>');
+                redirect('admin/profile');
+                return;
+            }
+            if ($password !== $password_confirm) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password dan konfirmasi password tidak cocok</div>');
                 redirect('admin/profile');
                 return;
             }

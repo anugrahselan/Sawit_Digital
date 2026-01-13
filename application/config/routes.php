@@ -140,6 +140,7 @@ $route['admin/informasi/tambah'] = 'admin/Admin_informasi/tambah_informasi';
 $route['admin/informasi/ubah/(:num)'] = 'admin/Admin_informasi/ubah_informasi/$1';
 $route['admin/informasi/hapus/(:num)'] = 'admin/Admin_informasi/hapus_informasi/$1';
 $route['admin/users'] = 'admin/Admin_users/index';
+$route['admin/users/delete/(:num)'] = 'admin/Admin_users/delete/$1';
 $route['admin/profile'] = 'admin/Admin_profile/index';
 $route['admin/settings'] = 'admin/Admin_settings/index';
 

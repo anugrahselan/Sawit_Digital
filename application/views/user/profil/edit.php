@@ -85,6 +85,17 @@
                         </label>
                         <input type="password" name="password" id="password" class="form-control" 
                                minlength="6" placeholder="Minimal 6 karakter">
+                        <small class="form-hint">Password minimal 6 karakter</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirm" class="form-label">
+                            <span class="label-text">Konfirmasi Password Baru</span>
+                            <span class="label-hint">(Opsional)</span>
+                        </label>
+                        <input type="password" name="password_confirm" id="password_confirm" class="form-control" 
+                               minlength="6" placeholder="Ulangi password baru">
+                        <small class="form-hint">Masukkan password yang sama untuk konfirmasi</small>
                     </div>
                 </div>
 

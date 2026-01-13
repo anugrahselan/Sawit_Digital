@@ -29,13 +29,13 @@ class Admin_kalkulator_panen extends MY_Controller
                     LEFT JOIN kabupaten ON kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten
                     LEFT JOIN perusahaan ON perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan
                     LEFT JOIN users ON users.id_user = kalkulasi_panen.id_user
-                    ORDER BY kalkulasi_panen.id_kalkulasi DESC";
+                    ORDER BY kalkulasi_panen.id_kalkulasi ASC";
         } else {
             $sql = "SELECT kalkulasi_panen.*, kabupaten.nama_kabupaten, perusahaan.nama_perusahaan
                     FROM kalkulasi_panen
                     LEFT JOIN kabupaten ON kabupaten.id_kabupaten = kalkulasi_panen.id_kabupaten
                     LEFT JOIN perusahaan ON perusahaan.id_perusahaan = kalkulasi_panen.id_perusahaan
-                    ORDER BY kalkulasi_panen.id_kalkulasi DESC";
+                    ORDER BY kalkulasi_panen.id_kalkulasi ASC";
         }
 
         $data['kalkulasi'] = $this->db->query($sql)->result();

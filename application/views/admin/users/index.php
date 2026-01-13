@@ -83,7 +83,10 @@
                                                             <a href="#" class="btn btn-sm btn-success" title="Edit">
                                                                 <i class="fa fa-edit"></i>
                                                             </a>
-                                                            <a href="#" class="btn btn-sm btn-danger" title="Hapus">
+                                                            <a href="<?= site_url('admin/users/delete/' . $user->id_user) ?>" 
+                                                               class="btn btn-sm btn-danger" 
+                                                               title="Hapus"
+                                                               onclick="return confirm('Apakah Anda yakin ingin menghapus user <?= htmlspecialchars($user->nama_lengkap) ?>?\n\nTindakan ini tidak dapat dibatalkan!');">
                                                                 <i class="fa fa-trash"></i>
                                                             </a>
                                                         </div>

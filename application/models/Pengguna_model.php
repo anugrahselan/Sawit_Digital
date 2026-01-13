@@ -8,19 +8,19 @@ class Pengguna_model extends CI_Model
     public function get_by_email($email)
     {
         $this->db->where('email', $email);
-        return $this->db->get($this->_table)->row_array();
+        return $this->db->get($this->_table)->row();
     }
 
     public function get_by_username($username)
     {
         $this->db->where('username', $username);
-        return $this->db->get($this->_table)->row_array();
+        return $this->db->get($this->_table)->row();
     }
 
     public function get_by_id($id)
     {
         $this->db->where('id_user', $id);
-        return $this->db->get($this->_table)->row_array();
+        return $this->db->get($this->_table)->row();
     }
 
     public function create($data)
@@ -53,8 +53,8 @@ class Pengguna_model extends CI_Model
             $pengguna = $this->get_by_username($username_atau_email);
         }
 
-        if ($pengguna && !empty($pengguna['password'])) {
-            if (password_verify($kata_sandi, $pengguna['password'])) {
+        if ($pengguna && !empty($pengguna->password)) {
+            if (password_verify($kata_sandi, $pengguna->password)) {
                 return $pengguna;
             }
         }
@@ -75,6 +75,19 @@ class Pengguna_model extends CI_Model
 
     public function count_all()
     {
+        return $this->db->count_all_results($this->_table);
+    }
+
+    public function delete($id)
+    {
+        $this->db->where('id_user', $id);
+        $this->db->delete($this->_table);
+        return ($this->db->affected_rows() > 0);
+    }
+
+    public function count_admins()
+    {
+        $this->db->where('role', 'admin');
         return $this->db->count_all_results($this->_table);
     }
 }

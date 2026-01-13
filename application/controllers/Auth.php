@@ -46,25 +46,25 @@ class Auth extends CI_Controller
 
         if ($user) {
             $this->session->set_userdata([
-                'id_user' => $user['id_user'],
-                'username' => $user['username'],
-                'role' => $user['role'],
-                'nama_lengkap' => $user['nama_lengkap'],
-                'email' => $user['email'],
-                'foto_profil' => isset($user['foto_profil']) ? $user['foto_profil'] : '',
-                'user_id' => $user['id_user'],
-                'user_role' => $user['role'],
-                'user_name' => $user['nama_lengkap'],
-                'user_email' => $user['email']
+                'id_user' => $user->id_user,
+                'username' => $user->username,
+                'role' => $user->role,
+                'nama_lengkap' => $user->nama_lengkap,
+                'email' => $user->email,
+                'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                'user_id' => $user->id_user,
+                'user_role' => $user->role,
+                'user_name' => $user->nama_lengkap,
+                'user_email' => $user->email
             ]);
 
-            if ($user['role'] === 'admin') {
+            if ($user->role === 'admin') {
                 redirect('admin/dashboard');
             } else {
                 redirect('beranda');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username/Email atau password salah</div>');
+            $this->session->set_flashdata('message', 'Username/Email atau password salah');
             redirect('login');
         }
     }
@@ -123,22 +123,22 @@ class Auth extends CI_Controller
             $user = $this->Pengguna_model->get_by_id($user_id);
             if ($user) {
                 $this->session->set_userdata([
-                    'id_user' => $user['id_user'],
-                    'username' => $user['username'],
-                    'role' => $user['role'],
-                    'nama_lengkap' => $user['nama_lengkap'],
-                    'email' => $user['email'],
-                    'foto_profil' => isset($user['foto_profil']) ? $user['foto_profil'] : '',
-                    'user_id' => $user['id_user'],
-                    'user_role' => $user['role'],
-                    'user_name' => $user['nama_lengkap'],
-                    'user_email' => $user['email']
+                    'id_user' => $user->id_user,
+                    'username' => $user->username,
+                    'role' => $user->role,
+                    'nama_lengkap' => $user->nama_lengkap,
+                    'email' => $user->email,
+                    'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
+                    'user_id' => $user->id_user,
+                    'user_role' => $user->role,
+                    'user_name' => $user->nama_lengkap,
+                    'user_email' => $user->email
                 ]);
 
                 redirect('beranda');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Terjadi kesalahan saat mendaftar. Silakan coba lagi.</div>');
+            $this->session->set_flashdata('message', 'Terjadi kesalahan saat mendaftar. Silakan coba lagi.');
             redirect('register');
         }
     }
