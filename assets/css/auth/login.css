@@ -1,9 +1,6 @@
-/* ============================================
-   AUTH PAGE - LOGIN & REGISTER
-   Split Screen Design (45:55)
-   ============================================ */
 
-/* Color Variables */
+
+
 :root {
     --primary-color: #1B5E20;
     --secondary-color: #2E7D32;
@@ -20,7 +17,7 @@
     --error-color: #DC2626;
 }
 
-/* Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -48,9 +45,7 @@ html {
     padding: 0 !important;
 }
 
-/* ============================================
-   CONTAINER - SPLIT SCREEN
-   ============================================ */
+
 .auth-container {
     display: flex;
     min-height: 100vh;
@@ -61,9 +56,7 @@ html {
     padding: 0 !important;
 }
 
-/* ============================================
-   LEFT SIDE - ILLUSTRATION (45%)
-   ============================================ */
+
 .auth-illustration {
     width: 45%;
     background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
@@ -79,7 +72,7 @@ html {
     margin: 0 !important;
 }
 
-/* Overlay untuk memastikan konten tetap readable */
+
 .auth-illustration::before {
     content: '';
     position: absolute;
@@ -96,7 +89,7 @@ html {
     z-index: 1;
 }
 
-/* Header - Logo */
+
 .illustration-header {
     position: relative;
     z-index: 2;
@@ -170,7 +163,7 @@ html {
     letter-spacing: 0.3px;
 }
 
-/* Center - Main Illustration */
+
 .illustration-center {
     flex: 1;
     display: flex;
@@ -263,7 +256,7 @@ html {
     text-shadow: 0 1px 5px rgba(255, 255, 255, 0.8);
 }
 
-/* Footer */
+
 .illustration-footer {
     position: relative;
     z-index: 2;
@@ -278,7 +271,7 @@ html {
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
-/* Background Blur Circles */
+
 .blur-circles {
     position: absolute;
     top: 0;
@@ -325,9 +318,7 @@ html {
     left: 60%;
 }
 
-/* ============================================
-   RIGHT SIDE - FORM SECTION (55%)
-   ============================================ */
+
 .auth-form-section {
     width: 55%;
     background: var(--white);
@@ -344,9 +335,7 @@ html {
     max-width: 400px;
 }
 
-/* ============================================
-   FORM STYLES
-   ============================================ */
+
 .auth-form {
     width: 100%;
 }
@@ -370,7 +359,7 @@ html {
     font-weight: 400;
 }
 
-/* Error Message */
+
 .form-error {
     background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
     border-left: 4px solid var(--error-color);
@@ -409,7 +398,7 @@ html {
     }
 }
 
-/* Form Group */
+
 .form-group {
     margin-bottom: 15px;
     position: relative;
@@ -443,7 +432,7 @@ html {
     text-decoration: underline;
 }
 
-/* Form Input */
+
 .form-input {
     width: 100%;
     padding: 14px 18px;
@@ -474,7 +463,7 @@ html {
     box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
 }
 
-/* Field Error */
+
 .field-error {
     color: var(--error-color);
     font-size: 12px;
@@ -482,7 +471,7 @@ html {
     display: block;
 }
 
-/* Password Input Wrapper */
+
 .password-input-wrapper {
     position: relative;
     display: flex;
@@ -493,7 +482,7 @@ html {
     padding-right: 50px;
 }
 
-/* Hide browser default password reveal button */
+
 input[type="password"]::-webkit-credentials-auto-fill-button,
 input[type="password"]::-webkit-strong-password-auto-fill-button,
 .form-input[type="password"]::-webkit-credentials-auto-fill-button,
@@ -508,7 +497,7 @@ input[type="password"]::-webkit-strong-password-auto-fill-button,
     height: 0 !important;
 }
 
-/* Hide Microsoft Edge password reveal button */
+
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear,
 .form-input[type="password"]::-ms-reveal,
@@ -518,19 +507,19 @@ input[type="password"]::-ms-clear,
     height: 0 !important;
 }
 
-/* Hide Firefox password reveal button */
+
 input[type="password"] {
     text-security: disc;
     -webkit-text-security: disc;
 }
 
-/* Additional CSS to prevent browser password manager icons */
+
 input[type="password"] {
     -webkit-appearance: none;
     -moz-appearance: textfield;
 }
 
-/* Ensure password toggle only appears in wrapper */
+
 .form-group:not(:has(.password-input-wrapper)) .password-toggle {
     display: none !important;
 }
@@ -564,19 +553,19 @@ input[type="password"] {
     stroke-width: 2;
 }
 
-/* Ensure confirm password field has proper padding for icon */
+
 #register_password_confirm {
     padding-right: 50px !important;
 }
 
-/* Ensure password toggle is visible in confirm password */
+
 #toggleRegisterPasswordConfirm {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
 }
 
-/* Submit Button */
+
 .submit-btn {
     width: 100%;
     padding: 15px;
@@ -632,7 +621,7 @@ input[type="password"] {
     opacity: 0.6;
 }
 
-/* Form Toggle */
+
 .form-toggle {
     text-align: center;
     margin-top: 25px;
@@ -652,7 +641,7 @@ input[type="password"] {
     text-decoration: underline;
 }
 
-/* Form Footer */
+
 .form-footer {
     text-align: center;
     margin-top: 25px;
@@ -671,9 +660,7 @@ input[type="password"] {
     text-decoration: underline;
 }
 
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
+
 @media (max-width: 968px) {
     .auth-container {
         flex-direction: column;
@@ -761,9 +748,7 @@ input[type="password"] {
     }
 }
 
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
+
 .hidden {
     display: none !important;
 }

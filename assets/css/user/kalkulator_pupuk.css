@@ -1,5 +1,5 @@
-/* Kalkulator Pupuk Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -148,7 +148,7 @@ body .container>* {
     gap: 0.75rem;
 }
 
-/* Result Placeholder */
+
 .result-placeholder {
     text-align: center;
     padding: 3rem 2rem;
@@ -288,7 +288,7 @@ textarea.form-control {
     margin-top: 1.5rem;
 }
 
-/* Result Summary Card */
+
 .result-summary-card {
     background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     color: var(--white);
@@ -374,7 +374,7 @@ textarea.form-control {
     opacity: 0.9;
 }
 
-/* Result Details */
+
 .result-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -458,7 +458,7 @@ textarea.form-control {
     font-weight: 500;
 }
 
-/* Result Info Box */
+
 .result-info-box {
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 235, 59, 0.05) 100%);
     border-left: 4px solid #FFC107;
@@ -493,7 +493,7 @@ textarea.form-control {
     font-size: 0.95rem;
 }
 
-/* Result Actions */
+
 .result-actions {
     margin-top: 2rem;
 }
@@ -579,7 +579,7 @@ textarea.form-control {
     margin-bottom: 0;
 }
 
-/* User Info Display */
+
 .user-info-display {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
     padding: 0.75rem 1rem;
@@ -606,7 +606,7 @@ textarea.form-control {
     margin-left: 0.5rem;
 }
 
-/* Tanah Info Box */
+
 .tanah-info-box,
 .pupuk-info-box {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.02) 100%);
@@ -657,7 +657,7 @@ textarea.form-control {
     color: var(--primary-color);
 }
 
-/* Result Section */
+
 .result-section {
     margin-bottom: 2rem;
 }
@@ -671,7 +671,7 @@ textarea.form-control {
     border-bottom: 2px solid rgba(27, 94, 32, 0.2);
 }
 
-/* Result Info Card */
+
 .result-info-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     padding: 1.75rem;
@@ -709,7 +709,7 @@ textarea.form-control {
     flex: 1;
 }
 
-/* Status Badges */
+
 .status-asam {
     color: #e53935;
     font-weight: 700;
@@ -764,7 +764,7 @@ textarea.form-control {
     display: inline-block;
 }
 
-/* Result Dosis Card */
+
 .result-dosis-card {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.02) 100%);
     padding: 1.75rem;
@@ -810,7 +810,7 @@ textarea.form-control {
     flex: 1;
 }
 
-/* Result Rekomendasi Card */
+
 .result-rekomendasi-card {
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 235, 59, 0.05) 100%);
     border-left: 4px solid #FFC107;
@@ -839,7 +839,7 @@ textarea.form-control {
     margin: 0;
 }
 
-/* Result Login Prompt */
+
 .result-login-prompt {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
     border: 2px solid rgba(27, 94, 32, 0.2);
@@ -922,7 +922,7 @@ textarea.form-control {
     font-weight: bold;
 }
 
-/* Result Success Message */
+
 .result-success-message {
     background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
     border: 2px solid rgba(46, 125, 50, 0.3);
@@ -976,7 +976,7 @@ textarea.form-control {
     font-size: 0.85rem;
 }
 
-/* Form Text Muted */
+
 .form-text {
     font-size: 0.85rem;
     color: var(--text-light);
@@ -988,7 +988,7 @@ textarea.form-control {
     color: var(--text-light);
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1024px) {
     .calculator-container {
         gap: 2rem;

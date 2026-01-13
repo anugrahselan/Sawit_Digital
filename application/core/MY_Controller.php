@@ -8,9 +8,9 @@ class MY_Controller extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->user_id = $this->session->userdata('id_user') ?: $this->session->userdata('user_id');
-        $this->user_role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
-        $this->user_name = $this->session->userdata('nama_lengkap') ?: $this->session->userdata('user_name');
+        $this->user_id = $this->session->userdata('id_user');
+        $this->user_role = $this->session->userdata('role');
+        $this->user_name = $this->session->userdata('nama_lengkap');
     }
     
     protected function require_login(): void {

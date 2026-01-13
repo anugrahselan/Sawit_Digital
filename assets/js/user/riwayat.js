@@ -1,6 +1,4 @@
-// Riwayat Kalkulasi JavaScript - Hybrid Table + Card
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching functionality
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     
@@ -8,17 +6,14 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', function() {
             const targetTab = this.getAttribute('data-tab');
             
-            // Remove active class from all buttons and contents
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
             
-            // Add active class to clicked button and corresponding content
             this.classList.add('active');
             document.getElementById('tab-' + targetTab).classList.add('active');
         });
     });
     
-    // Expand/Collapse functionality
     const expandButtons = document.querySelectorAll('.expand-btn');
     
     expandButtons.forEach(button => {
@@ -30,38 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (!detailRow) return;
             
-            // Toggle expanded state
             const isExpanded = detailRow.classList.contains('expanded');
             
             if (isExpanded) {
-                // Collapse
                 detailRow.classList.remove('expanded');
                 this.classList.remove('expanded');
             } else {
-                // Expand
                 detailRow.classList.add('expanded');
                 this.classList.add('expanded');
             }
         });
     });
     
-    // Row click to expand (optional - uncomment if needed)
-    // const riwayatRows = document.querySelectorAll('.riwayat-row');
-    // riwayatRows.forEach(row => {
-    //     row.addEventListener('click', function(e) {
-    //         // Don't trigger if clicking on button or link
-    //         if (e.target.closest('button') || e.target.closest('a')) {
-    //             return;
-    //         }
-    //         
-    //         const expandBtn = this.querySelector('.expand-btn');
-    //         if (expandBtn) {
-    //             expandBtn.click();
-    //         }
-    //     });
-    // });
-    
-    // Auto-dismiss alerts after 5 seconds
     const alerts = document.querySelectorAll('.alert');
     alerts.forEach(alert => {
         setTimeout(() => {
@@ -73,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 5000);
     });
     
-    // Search functionality for Panen tab
     const searchInputPanen = document.getElementById('searchInputPanen');
     const searchBtnPanen = document.getElementById('searchBtnPanen');
     
@@ -104,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Show/hide no results message
         let noResults = document.getElementById('no-results-panen');
         if (keyword !== '' && visibleCount === 0) {
             if (!noResults) {
@@ -135,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Search functionality for Pupuk tab
     const searchInputPupuk = document.getElementById('searchInputPupuk');
     const searchBtnPupuk = document.getElementById('searchBtnPupuk');
     
@@ -166,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Show/hide no results message
         let noResults = document.getElementById('no-results-pupuk');
         if (keyword !== '' && visibleCount === 0) {
             if (!noResults) {

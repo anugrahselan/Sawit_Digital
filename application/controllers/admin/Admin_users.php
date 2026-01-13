@@ -35,14 +35,12 @@ class Admin_users extends MY_Controller
             return;
         }
 
-        // Validasi: jangan hapus diri sendiri
         if ($id == $this->user_id) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak dapat menghapus akun sendiri!</div>');
             redirect('admin/users');
             return;
         }
 
-        // Cek apakah user ada
         $user = $this->Pengguna_model->get_by_id($id);
         if (!$user) {
             $this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">User tidak ditemukan!</div>');
@@ -50,7 +48,6 @@ class Admin_users extends MY_Controller
             return;
         }
 
-        // Validasi: minimal harus ada 1 admin
         if ($user->role == 'admin') {
             $admin_count = $this->Pengguna_model->count_admins();
             if ($admin_count <= 1) {
@@ -60,21 +57,17 @@ class Admin_users extends MY_Controller
             }
         }
 
-        // Mulai transaksi database
         $this->db->trans_start();
 
-        // Hapus data terkait di kalkulasi_dosis_pupuk
         $this->db->where('id_user', $id);
         $this->db->delete('kalkulasi_dosis_pupuk');
 
-        // Hapus data terkait di kalkulasi_panen (jika ada kolom id_user)
         $kolom_tabel = $this->db->list_fields('kalkulasi_panen');
         if (in_array('id_user', $kolom_tabel)) {
             $this->db->where('id_user', $id);
             $this->db->delete('kalkulasi_panen');
         }
 
-        // Hapus foto profil jika ada
         if (!empty($user->foto_profil) && $user->foto_profil != 'default.png') {
             $foto = $user->foto_profil;
             if (strpos($foto, 'assets/img/users/') !== false) {
@@ -86,10 +79,8 @@ class Admin_users extends MY_Controller
             }
         }
 
-        // Hapus user dari database
         $deleted = $this->Pengguna_model->delete($id);
 
-        // Selesaikan transaksi
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE || !$deleted) {

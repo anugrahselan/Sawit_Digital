@@ -1,28 +1,22 @@
-// Kalkulator Panen JavaScript
 $(document).ready(function() {
     $('#harvestForm').on('submit', function(e) {
         e.preventDefault();
         calculateHarvest();
     });
 
-    // Handle perubahan kabupaten
     $('#id_kabupaten').on('change', function() {
         var id_kabupaten = $(this).val();
         loadPerusahaan(id_kabupaten);
     });
 
-    // Handle perubahan perusahaan
     $('#id_perusahaan').on('change', function() {
         var id_perusahaan = $(this).val();
         var id_kabupaten = $('#id_kabupaten').val();
         
-        // Jika value kosong (Mitra) atau tidak ada, enable input harga manual
         if (!id_perusahaan || id_perusahaan === '') {
-            // Jika pilih Mitra (value kosong), enable input harga manual
             $('#harga_per_kg').prop('readonly', false).val('').focus();
             $('#harga-info').hide();
         } else if (id_perusahaan && id_kabupaten) {
-            // Jika pilih PT (ada ID), ambil harga TBS terbaru
             loadHargaTBS(id_kabupaten, id_perusahaan);
         } else {
             $('#harga_per_kg').prop('readonly', false).val('');
@@ -31,7 +25,6 @@ $(document).ready(function() {
     });
 });
 
-// Fungsi untuk load perusahaan berdasarkan kabupaten
 function loadPerusahaan(id_kabupaten) {
     var $perusahaanSelect = $('#id_perusahaan');
     
@@ -40,7 +33,6 @@ function loadPerusahaan(id_kabupaten) {
         return;
     }
     
-    // Show loading
     $perusahaanSelect.html('<option value="">Memuat...</option>').prop('disabled', true);
     
     var url = baseUrl + 'index.php/panen/get_perusahaan?id_kabupaten=' + id_kabupaten;
@@ -78,7 +70,6 @@ function loadPerusahaan(id_kabupaten) {
                 console.log('Response tidak sukses:', response);
             }
             
-            // Reset harga
             $('#harga_per_kg').prop('readonly', false).val('');
             $('#harga-info').hide();
         },
@@ -97,7 +88,6 @@ function loadPerusahaan(id_kabupaten) {
             $('#harga_per_kg').prop('readonly', false).val('');
             $('#harga-info').hide();
             
-            // Tampilkan error jika ada
             if (xhr.responseJSON && xhr.responseJSON.message) {
                 showNotification('error', 'Error', xhr.responseJSON.message);
             } else {
@@ -107,7 +97,6 @@ function loadPerusahaan(id_kabupaten) {
     });
 }
 
-// Fungsi untuk load harga TBS berdasarkan perusahaan dan kabupaten
 function loadHargaTBS(id_kabupaten, id_perusahaan) {
     $('#harga_per_kg').prop('readonly', true).val('Memuat...');
     $('#harga-info').hide();
@@ -127,20 +116,17 @@ function loadHargaTBS(id_kabupaten, id_perusahaan) {
                 $('#harga-info').html('Harga TBS terbaru: Rp ' + formatNumber(response.harga_per_kg) + 
                     (tanggal ? ' (Tanggal: ' + tanggal + ')' : '')).show();
             } else {
-                // Jika tidak ada data, enable input manual
                 $('#harga_per_kg').prop('readonly', false).val('').focus();
                 $('#harga-info').html('Tidak ada data harga TBS untuk perusahaan ini. Silakan input manual.').show();
             }
         },
         error: function() {
-            // Jika error, enable input manual
             $('#harga_per_kg').prop('readonly', false).val('').focus();
             $('#harga-info').html('Gagal memuat harga TBS. Silakan input manual.').show();
         }
     });
 }
 
-// Fungsi untuk escape HTML
 function escapeHtml(text) {
     var map = {
         '&': '&amp;',
@@ -165,7 +151,6 @@ function calculateHarvest() {
         return;
     }
     
-    // Calculate
     var beratBersih = beratKotor - (beratKotor * potongan / 100);
     var pendapatanKotor = beratBersih * hargaPerKg;
     var totalBiaya = upahPanen + biayaTransportasi + potongHutang;
@@ -189,13 +174,11 @@ function displayResult(data) {
     var html = '<div class="result-section">';
     html += '<h3 class="result-section-title">Hasil Kalkulasi</h3>';
     
-    // Hasil Bersih (Highlighted)
     html += '<div class="result-summary">';
     html += '<h3>Hasil Bersih</h3>';
     html += '<div class="amount">Rp ' + formatNumber(data.hasilBersih) + '</div>';
     html += '</div>';
     
-    // Informasi Detail
     html += '<div class="result-info-card">';
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">Berat Kotor:</span>';
@@ -223,7 +206,6 @@ function displayResult(data) {
     html += '</div>';
     html += '</div>';
     
-    // Total Biaya
     html += '<div class="result-dosis-card">';
     html += '<h4 class="result-dosis-title">Total Biaya</h4>';
     
@@ -250,11 +232,9 @@ function displayResult(data) {
     
     html += '</div>';
     
-    // Cek apakah user sudah login
     var userLoggedIn = typeof isLoggedIn !== 'undefined' ? isLoggedIn : false;
     
     if (!userLoggedIn) {
-        // Pesan untuk user yang belum login
         html += '<div class="result-login-prompt">';
         html += '<h4 class="login-prompt-title">Ingin menyimpan hasil kalkulasi ini?</h4>';
         html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">Daftar</a> terlebih dahulu.</p>';
@@ -268,7 +248,6 @@ function displayResult(data) {
         html += '</div>';
         html += '</div>';
     } else {
-        // Button untuk menyimpan (jika sudah login)
         html += '<div class="result-actions">';
         html += '<button type="button" class="btn btn-success btn-block" id="btnSave">';
         html += '<span class="btn-text">Simpan Kalkulasi</span>';
@@ -278,12 +257,10 @@ function displayResult(data) {
     
     $('#resultContent').html(html);
     
-    // Scroll to result
     $('html, body').animate({
         scrollTop: $('#resultContainer').offset().top - 100
     }, 500);
     
-    // Save button handler (jika ada)
     if (userLoggedIn) {
         $('#btnSave').on('click', function() {
             saveCalculation(data);
@@ -294,12 +271,9 @@ function displayResult(data) {
 function saveCalculation(data) {
     var id_perusahaan = $('#id_perusahaan').val();
     
-    // Jika pilih "Mitra" (value kosong), kirim string kosong
-    // Backend akan handle untuk mengubahnya menjadi NULL
-    // Jika ada ID perusahaan, kirim ID tersebut
     var formData = {
         id_kabupaten: $('#id_kabupaten').val(),
-        id_perusahaan: id_perusahaan || '', // Kosong untuk Mitra, atau ID untuk PT
+        id_perusahaan: id_perusahaan || '',
         harga_per_kg: data.hargaPerKg,
         berat_kotor: data.beratKotor,
         potongan: data.potongan,
@@ -311,7 +285,6 @@ function saveCalculation(data) {
     
     console.log('Data yang akan dikirim:', formData);
     
-    // Disable button saat proses save
     var $btnSave = $('#btnSave');
     $btnSave.prop('disabled', true).html('<span class="btn-text">Menyimpan...</span>');
     
@@ -322,7 +295,6 @@ function saveCalculation(data) {
         dataType: 'json',
         success: function(response) {
             if (response.success) {
-                // Tampilkan pesan sukses yang bagus
                 var successHtml = '<div class="result-success-message">';
                 successHtml += '<div class="success-content">';
                 successHtml += '<h4>Hasil kalkulasi berhasil disimpan!</h4>';
@@ -332,7 +304,6 @@ function saveCalculation(data) {
                 
                 $btnSave.replaceWith(successHtml);
             } else {
-                // Tampilkan pesan error yang bagus
                 showNotification('error', 'Gagal Menyimpan', response.message || 'Terjadi kesalahan saat menyimpan data');
                 $btnSave.prop('disabled', false).html('Simpan Hasil Perhitungan');
             }
@@ -340,7 +311,6 @@ function saveCalculation(data) {
         error: function(xhr) {
             var errorMessage = 'Terjadi kesalahan saat menyimpan data';
             
-            // Cek jika error karena belum login
             if (xhr.status === 401 || (xhr.responseJSON && xhr.responseJSON.message && xhr.responseJSON.message.includes('login'))) {
                 errorMessage = 'Anda harus login terlebih dahulu untuk menyimpan kalkulasi';
                 showNotification('warning', 'Login Diperlukan', errorMessage, true);
@@ -353,9 +323,7 @@ function saveCalculation(data) {
     });
 }
 
-// Fungsi untuk menampilkan notifikasi yang bagus
 function showNotification(type, title, message, showLoginButton) {
-    // Hapus notifikasi sebelumnya jika ada
     $('.custom-notification').remove();
     
     var icon = '';
@@ -424,7 +392,6 @@ function showNotification(type, title, message, showLoginButton) {
     
     $('body').append(notificationHtml);
     
-    // Auto hide setelah 5 detik (kecuali ada tombol login)
     if (!showLoginButton) {
         setTimeout(function() {
             $('.custom-notification').fadeOut(300, function() {
@@ -434,7 +401,6 @@ function showNotification(type, title, message, showLoginButton) {
     }
 }
 
-// CSS untuk animasi
 if (!$('#notification-styles').length) {
     $('head').append('<style id="notification-styles">' +
         '@keyframes slideInRight { ' +
@@ -449,7 +415,4 @@ function formatNumber(num) {
     if (typeof num === 'string' && num === 'Tidak tersedia') return num;
     return parseFloat(num).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-
-// Fungsi untuk cek dan simpan data pending dari localStorage
-// baseUrl sudah diset di footer.php
 

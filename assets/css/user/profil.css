@@ -1,5 +1,5 @@
-/* Profil Edit Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -302,7 +302,7 @@ body .container>* {
     }
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1024px) {
     .profile-edit-form {
         padding: 2rem;

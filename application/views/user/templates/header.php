@@ -56,7 +56,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Profil <span class="arrow">▼</span></a>
                     <ul class="dropdown-menu">
-                        <?php if ($this->session->userdata('user_id') || $this->session->userdata('id_user')): ?>
+                        <?php if ($this->session->userdata('id_user')): ?>
                             <li>
                                 <a href="<?= site_url('profil') ?>" class="user-profile-link">
                                     <?php
@@ -69,12 +69,12 @@
                                     ?>
                                     <img src="<?= $foto_url ?>" alt="Profile" class="user-avatar"
                                         onerror="this.src='<?= base_url('assets/img/users/default.png') ?>'">
-                                    <span class="user-name"><?= $this->session->userdata('user_name') ?></span>
+                                    <span class="user-name"><?= $this->session->userdata('nama_lengkap') ?></span>
                                 </a>
                             </li>
                             <?php
 
-                            $user_role = $this->session->userdata('user_role');
+                            $user_role = $this->session->userdata('role');
                             if ($user_role === 'admin'):
                                 ?>
                                 <li><a href="<?= site_url('admin/dashboard') ?>">Kembali ke Admin</a></li>

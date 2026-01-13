@@ -1,24 +1,20 @@
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header. (Page Header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0"><?= $page_title ?></h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="<?= base_url(uri: 'admin/dashboard') ?>">Home</a></li>
                         <li class="breadcrumb-item active"><?= $page_title ?></li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -32,7 +28,6 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <!-- Search Bar -->
                             <div class="mb-3">
                                 <div class="row">
                                     <div class="col-md-10">
@@ -99,11 +94,9 @@
                                                     <td style="text-align: center;">
                                                         <strong>
                                                             <?php
-                                                            // Gunakan hasil_bersih dari database jika ada, jika tidak hitung
                                                             if (isset($k->hasil_bersih) && $k->hasil_bersih !== null) {
                                                                 echo 'Rp ' . number_format($k->hasil_bersih, 0, ',', '.');
                                                             } else {
-                                                                // Hitung hasil bersih: (harga_per_kg * berat_kotor) - potongan - upah_panen - biaya_transportasi - potong_hutang
                                                                 $total_pendapatan = $k->harga_per_kg * $k->berat_kotor;
                                                                 $potongan_rp = ($total_pendapatan * $k->potongan) / 100;
                                                                 $hasil_bersih = $total_pendapatan - $potongan_rp - $k->upah_panen - $k->biaya_transportasi - $k->potong_hutang;
@@ -169,18 +162,12 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                    <!-- /.col-md-6 -->
                 </div>
-                <!-- /.row -->
             </div>
-            <!-- /.container-fluid -->
         </div>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
     <style>
-        /* Hybrid Table Styles for Admin */
         :root {
             --admin-primary: #1B5E20;
             --admin-secondary: #2E7D32;
@@ -191,7 +178,6 @@
             --admin-text-light: #6c757d;
         }
 
-        /* Card Header Styles */
         .card-header {
             display: flex;
             align-items: center;
@@ -353,7 +339,6 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Expand Button Styles */
         .expand-btn {
             background: transparent;
             border: none;
@@ -390,7 +375,6 @@
             background: rgba(27, 94, 32, 0.15);
         }
 
-        /* Detail Row Styles */
         .detail-row {
             display: none;
         }
@@ -436,15 +420,11 @@
     </style>
 
     <script>
-        // Expand/Collapse functionality
         (function () {
             'use strict';
 
             function handleExpandClick(e) {
-                // Cek jika klik pada icon atau button
                 var expandBtn = e.target.closest('.expand-btn');
-
-                // Jika tidak ditemukan, coba cari dari icon
                 if (!expandBtn) {
                     if (e.target.classList.contains('fa') || e.target.classList.contains('fa-chevron-down')) {
                         expandBtn = e.target.closest('button.expand-btn');
@@ -480,19 +460,16 @@
                     detailRow.classList.remove('expanded');
                     expandBtn.classList.remove('expanded');
                 } else {
-                    // Tutup semua detail row yang terbuka
                     var expandedRows = document.querySelectorAll('.detail-row.expanded');
                     expandedRows.forEach(function (row) {
                         row.classList.remove('expanded');
                     });
 
-                    // Reset semua button yang expanded
                     var expandedBtns = document.querySelectorAll('.expand-btn.expanded');
                     expandedBtns.forEach(function (b) {
                         b.classList.remove('expanded');
                     });
 
-                    // Buka detail row yang dipilih
                     detailRow.classList.add('expanded');
                     expandBtn.classList.add('expanded');
                 }
@@ -501,11 +478,9 @@
             function initExpandButtons() {
                 var tbody = document.querySelector('.riwayat-table tbody');
                 if (tbody) {
-                    // Gunakan event delegation pada tbody
                     tbody.addEventListener('click', handleExpandClick, true);
                 }
 
-                // Juga attach langsung ke semua button sebagai backup
                 var expandButtons = document.querySelectorAll('.expand-btn');
                 expandButtons.forEach(function (btn) {
                     btn.addEventListener('click', handleExpandClick, true);
@@ -519,7 +494,6 @@
             }
         })();
 
-        // Search Functionality
         (function () {
             'use strict';
 
@@ -551,7 +525,6 @@
                     }
                 });
 
-                // Show/hide no results message
                 var noResults = document.getElementById('no-results');
                 if (keyword !== '' && visibleCount === 0) {
                     if (!noResults) {

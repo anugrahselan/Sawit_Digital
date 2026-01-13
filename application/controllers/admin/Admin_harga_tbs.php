@@ -248,7 +248,7 @@ class Admin_harga_tbs extends MY_Controller
         $harga = $this->Harga_tbs_model->get_by_id($id);
 
         if ($harga) {
-            $id_pengguna = $this->session->userdata('user_id');
+            $id_pengguna = $this->session->userdata('id_user');
 
             $hapus = $this->Harga_tbs_model->delete($id, $id_pengguna);
             if ($hapus) {

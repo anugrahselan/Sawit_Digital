@@ -1,5 +1,5 @@
-/* Perusahaan Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -136,7 +136,7 @@ body .container>* {
     font-size: 1.1rem;
 }
 
-/* Visi Misi Styles */
+
 .visi-misi-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -168,7 +168,7 @@ body .container>* {
     line-height: 1.8;
 }
 
-/* Mitra Kerjasama Styles */
+
 .mitra-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -222,7 +222,7 @@ body .container>* {
     margin: 0;
 }
 
-/* Program Styles */
+
 .program-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -269,7 +269,7 @@ body .container>* {
     margin: 0;
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1024px) {
     .visi-misi-grid,
     .mitra-grid,

@@ -1,5 +1,5 @@
-/* Informasi Admin Custom Styles */
-/* Override container padding untuk menghilangkan jarak di kanan */
+
+
 .admin-content {
     overflow-x: hidden !important;
 }
@@ -97,7 +97,7 @@
     font-weight: 600;
 }
 
-/* Search Bar Styling untuk Admin Informasi */
+
 .card-body .input-group {
     position: relative;
     display: flex;
@@ -192,7 +192,7 @@
     box-shadow: 0 0 0 0.2rem rgba(27, 94, 32, 0.25);
 }
 
-/* Responsive untuk search bar */
+
 @media (max-width: 768px) {
     .card-body .input-group {
         flex-direction: column;

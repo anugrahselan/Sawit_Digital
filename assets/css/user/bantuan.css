@@ -1,5 +1,5 @@
-/* Bantuan Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -154,7 +154,7 @@ body .container>* {
     font-style: italic;
 }
 
-/* Help Categories */
+
 .help-categories {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -217,7 +217,7 @@ body .container>* {
     gap: 0.75rem;
 }
 
-/* FAQ Styles */
+
 .faq-category {
     margin-bottom: 3rem;
 }
@@ -259,7 +259,7 @@ body .container>* {
     margin: 0;
 }
 
-/* Contact Styles */
+
 .contact-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -327,7 +327,7 @@ body .container>* {
     margin: 0;
 }
 
-/* Contact Form */
+
 .contact-form {
     margin-top: 2rem;
 }
@@ -407,8 +407,8 @@ body .container>* {
     margin-bottom: 0;
 }
 
-/* Responsive breakpoints */
-/* Tablet */
+
+
 @media (max-width: 1024px) {
     .help-categories,
     .contact-grid {
@@ -421,7 +421,7 @@ body .container>* {
     }
 }
 
-/* Mobile */
+
 @media (max-width: 768px) {
     .page-title {
         font-size: 2rem;
@@ -470,7 +470,7 @@ body .container>* {
     }
 }
 
-/* Mobile Kecil */
+
 @media (max-width: 480px) {
     .page-title {
         font-size: 1.75rem;

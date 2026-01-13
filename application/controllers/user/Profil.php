@@ -9,7 +9,7 @@ class Profil extends CI_Controller
         $this->load->model('Pengguna_model');
         $this->load->library('form_validation');
         
-        if (!$this->session->userdata('user_id') && !$this->session->userdata('id_user')) {
+        if (!$this->session->userdata('id_user')) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Silakan login terlebih dahulu</div>');
             redirect('masuk');
         }
@@ -17,7 +17,7 @@ class Profil extends CI_Controller
 
     public function index()
     {
-        $id_pengguna = $this->session->userdata('user_id') ?: $this->session->userdata('id_user');
+        $id_pengguna = $this->session->userdata('id_user');
         $pengguna = $this->Pengguna_model->get_by_id($id_pengguna);
 
         if (!$pengguna) {
@@ -36,7 +36,6 @@ class Profil extends CI_Controller
             $this->form_validation->set_rules('email', 'Email', 'valid_email|trim');
             $this->form_validation->set_rules('username', 'Username', 'required|trim|min_length[3]');
             
-            // Validasi password jika diisi
             $password = trim($this->input->post('password'));
             if (!empty($password)) {
                 $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
@@ -128,7 +127,6 @@ class Profil extends CI_Controller
             $pengguna_update = $this->Pengguna_model->get_by_id($id_pengguna);
             $this->session->set_userdata([
                 'nama_lengkap' => $pengguna_update->nama_lengkap,
-                'user_name' => $pengguna_update->nama_lengkap,
                 'email' => $pengguna_update->email,
                 'username' => $pengguna_update->username,
                 'foto_profil' => isset($pengguna_update->foto_profil) ? $pengguna_update->foto_profil : ''

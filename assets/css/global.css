@@ -1,4 +1,4 @@
-/* Reset & Base Styles */
+
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +13,7 @@ body {
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-top: 80px; /* Space untuk fixed navbar */
+    padding-top: 80px; 
 }
 
 .container {
@@ -22,7 +22,7 @@ body {
     padding: 0 24px;
 }
 
-/* Full width untuk layar sangat besar */
+
 @media (min-width: 1600px) {
     .container {
         max-width: 1600px;
@@ -30,7 +30,7 @@ body {
     }
 }
 
-/* Padding lebih kecil untuk mobile */
+
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
@@ -43,7 +43,7 @@ body {
     }
 }
 
-/* Khusus untuk mobile sangat kecil (320px) */
+
 @media (max-width: 360px) {
     .container {
         padding: 0 8px;
@@ -56,7 +56,7 @@ body {
     }
 }
 
-/* Colors */
+
 :root {
     --primary-color: #1B5E20;
     --secondary-color: #2E7D32;
@@ -71,7 +71,7 @@ body {
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Navbar */
+
 .navbar {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, #0D4A12 100%);
     color: var(--white);
@@ -99,7 +99,7 @@ body {
     padding-right: 24px;
 }
 
-/* Responsive padding untuk navbar */
+
 @media (min-width: 1600px) {
     .navbar .container {
         padding-left: 32px;
@@ -190,7 +190,7 @@ body {
     order: 1;
 }
 
-/* Override untuk avatar di dropdown */
+
 .dropdown-menu .user-profile-link .user-avatar {
     width: 42px !important;
     height: 42px !important;
@@ -217,7 +217,7 @@ body {
     padding: 0;
 }
 
-/* Override untuk nama user di dropdown */
+
 .dropdown-menu .user-profile-link .user-name {
     flex: 1 !important;
     text-align: left !important;
@@ -243,7 +243,7 @@ body {
     align-items: center;
 }
 
-/* Tambahkan padding untuk item terakhir (Profil) agar tidak terlalu pinggir */
+
 .navbar-menu > li:last-child {
     margin-right: 0;
     padding-right: 0;
@@ -254,7 +254,7 @@ body {
     padding-left: 0.75rem;
 }
 
-/* Pastikan spacing yang baik untuk semua item navbar */
+
 .navbar-menu a {
     padding: 0.75rem 0.75rem;
 }
@@ -274,13 +274,13 @@ body {
     z-index: 1;
 }
 
-/* Pastikan link navbar biasa (bukan dropdown) tidak terpengaruh oleh dropdown */
+
 .navbar-menu > li:not(.dropdown) > a {
     position: relative;
     z-index: 2;
 }
 
-/* Pastikan link dropdown toggle tidak mengikuti link biasa */
+
 .dropdown-toggle {
     pointer-events: auto;
     cursor: pointer;
@@ -332,21 +332,21 @@ body {
     box-sizing: border-box;
 }
 
-/* Dropdown menu untuk item di kanan navbar (seperti Profil) */
+
 .navbar-menu > li:last-child .dropdown-menu {
     left: auto;
     right: 0;
     margin-right: 0;
 }
 
-/* Pastikan semua dropdown menu tidak terpotong dan memiliki ukuran yang konsisten */
+
 .navbar-menu .dropdown-menu {
     min-width: 200px;
     max-width: 280px;
     width: auto;
 }
 
-/* Dropdown menu untuk item di tengah (seperti Fitur) - pastikan tidak terpotong */
+
 .navbar-menu > li:not(:last-child) .dropdown-menu {
     left: 0;
     right: auto;
@@ -364,19 +364,19 @@ body {
     }
 }
 
-/* Dropdown tetap terbuka saat hover pada parent atau menu */
+
 .dropdown:hover > .dropdown-menu,
 .dropdown-menu:hover {
     display: block;
 }
 
-/* Pastikan link biasa (bukan dropdown) tidak terpengaruh */
+
 .navbar-menu > li:not(.dropdown) > a {
     pointer-events: auto;
     cursor: pointer;
 }
 
-/* Area invisible untuk menghilangkan gap antara trigger dan menu */
+
 .dropdown-menu::before {
     content: '';
     position: absolute;
@@ -388,7 +388,7 @@ body {
     pointer-events: auto;
 }
 
-/* Pastikan dropdown tetap terbuka saat hover di area gap */
+
 .dropdown::after {
     content: '';
     position: absolute;
@@ -419,7 +419,7 @@ body {
     overflow-wrap: break-word;
 }
 
-/* Override untuk user profile link di dropdown */
+
 .dropdown-menu .user-profile-link {
     display: flex !important;
     align-items: center !important;
@@ -457,7 +457,7 @@ body {
     transform: rotate(180deg);
 }
 
-/* Hero Banner */
+
 .hero-banner {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
     background-size: cover;
@@ -503,7 +503,7 @@ body {
     pointer-events: none !important;
 }
 
-/* Pattern overlay dihapus untuk performa lebih baik */
+
 
 .hero-banner .container {
     position: relative;
@@ -556,7 +556,7 @@ body {
     }
 }
 
-/* Page Header Styles */
+
 .page-header {
     text-align: center;
     margin: 1.5rem 0 2.5rem !important;
@@ -580,7 +580,7 @@ body {
     line-height: 1.6;
 }
 
-/* Search Section */
+
 .search-section {
     background: linear-gradient(135deg, var(--white) 0%, #FAFAFA 100%);
     padding: 2.5rem 1.5rem;
@@ -599,7 +599,7 @@ body {
     padding: 0;
 }
 
-/* Responsive untuk mobile */
+
 @media (max-width: 1200px) {
     .search-section {
         margin-left: 24px;
@@ -628,7 +628,7 @@ body {
     }
 }
 
-/* Khusus untuk mobile sangat kecil (320px) */
+
 @media (max-width: 360px) {
     .search-section {
         margin-left: 8px;
@@ -709,7 +709,7 @@ body {
     }
 }
 
-/* Buttons */
+
 .btn {
     padding: 0.875rem 2rem;
     border: none;
@@ -841,7 +841,7 @@ body {
     }
 }
 
-/* Search Highlight */
+
 .search-highlight {
     background-color: #FFEB3B;
     color: #000;
@@ -948,13 +948,13 @@ body {
     width: 100%;
 }
 
-/* Footer */
+
 .footer {
     margin-top: 5rem;
     position: relative;
 }
 
-/* CTA Section (Dark Gray) */
+
 .footer-cta {
     background: #1a252f;
     padding: 3.5rem 0;
@@ -1018,7 +1018,7 @@ body {
     align-items: center;
 }
 
-/* Footer Content (Dark Gray) */
+
 .footer-content {
     background: #1a252f;
     padding: 3.5rem 0;
@@ -1163,7 +1163,7 @@ body {
     margin-bottom: 0;
 }
 
-/* Bottom Footer Bar (Dark Gray) */
+
 .footer-bottom {
     background: #1a252f;
     color: var(--white);
@@ -1182,7 +1182,7 @@ body {
     color: var(--white);
 }
 
-/* Responsive Footer */
+
 @media (max-width: 968px) {
     .footer-links {
         grid-template-columns: 1fr;
@@ -1218,7 +1218,7 @@ body {
     }
 }
 
-/* Utility Classes */
+
 .text-center {
     text-align: center;
 }

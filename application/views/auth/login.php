@@ -290,7 +290,6 @@
             });
         });
 
-        // Auto-hide error messages after 5 seconds
         const errorMessages = document.querySelectorAll('.form-error');
         errorMessages.forEach(errorMsg => {
             setTimeout(() => {
@@ -300,10 +299,8 @@
                 setTimeout(() => {
                     errorMsg.remove();
                 }, 500);
-            }, 5000); // Hide after 5 seconds
+            }, 5000);
         });
-
-        // Password toggle functionality
         function setupPasswordToggle(toggleId, inputId) {
             const toggleBtn = document.getElementById(toggleId);
             const passwordInput = document.getElementById(inputId);
@@ -327,7 +324,6 @@
             }
         }
 
-        // Setup password toggles
         setupPasswordToggle('toggleLoginPassword', 'login_password');
         setupPasswordToggle('toggleRegisterPassword', 'register_password');
         setupPasswordToggle('toggleRegisterPasswordConfirm', 'register_password_confirm');

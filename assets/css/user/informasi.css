@@ -1,4 +1,4 @@
-/* Informasi Styles */
+
 .page-title {
     font-size: 2.5rem;
     font-weight: 800;
@@ -17,7 +17,7 @@
     text-align: center;
 }
 
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -36,7 +36,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -78,7 +78,7 @@ body .container>* {
     width: 100%;
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1200px) {
     .articles-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -86,7 +86,7 @@ body .container>* {
     }
 }
 
-/* Full width untuk layar besar */
+
 @media (min-width: 1400px) {
     .articles-grid {
         gap: 2.5rem;
@@ -339,7 +339,7 @@ body .container>* {
     text-decoration: none;
 }
 
-/* Article Detail */
+
 .article-detail {
     background-color: var(--white);
     border-radius: 20px;
@@ -415,7 +415,7 @@ body .container>* {
     justify-content: center;
 }
 
-/* Search Results */
+
 .search-section {
     margin: 2rem 0;
 }

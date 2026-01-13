@@ -69,6 +69,25 @@ class Pupuk extends CI_Controller
         $this->load->view('user/templates/footer');
     }
 
+    public function get_dosis()
+    {
+        header('Content-Type: application/json');
+
+        $id_pupuk = $this->input->get('id_pupuk');
+        $id_tanah = $this->input->get('id_tanah');
+        $usia_tanaman = $this->input->get('usia_tanaman');
+
+        if (!$id_pupuk || !$id_tanah || !$usia_tanaman) {
+            echo json_encode(['success' => false, 'message' => 'Parameter tidak lengkap']);
+            return;
+        }
+
+        $dosis = $this->Jenis_pupuk_model->get_dosis($id_pupuk, $id_tanah, $usia_tanaman);
+        echo json_encode(!empty($dosis)
+            ? ['success' => true, 'data' => $dosis]
+            : ['success' => false, 'message' => 'Data dosis tidak ditemukan']);
+    }
+
     public function simpan_dosis()
     {
         header('Content-Type: application/json');

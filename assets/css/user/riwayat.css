@@ -1,4 +1,4 @@
-/* Riwayat Kalkulasi Styles - Hybrid Table + Card */
+
 :root {
     --primary-color: #1B5E20;
     --secondary-color: #2E7D32;
@@ -14,7 +14,7 @@
     --text-light: #6c757d;
 }
 
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -33,7 +33,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -91,7 +91,7 @@ body .container>* {
     text-align: center;
 }
 
-/* Tab Navigation */
+
 .riwayat-tabs {
     display: flex;
     gap: 1rem;
@@ -123,7 +123,7 @@ body .container>* {
     border-bottom-color: var(--primary-color);
 }
 
-/* Tab Content */
+
 .tab-content {
     display: none;
 }
@@ -155,7 +155,7 @@ body .container>* {
     margin-bottom: 1.5rem;
 }
 
-/* Search Bar Styles */
+
 .input-group {
     display: flex;
     gap: 0.75rem;
@@ -220,7 +220,7 @@ body .container>* {
     font-size: 0.9rem;
 }
 
-/* Perbaikan layout search bar */
+
 .mb-3 .row {
     display: flex;
     align-items: stretch;
@@ -260,7 +260,7 @@ body .container>* {
     }
 }
 
-/* Table Wrapper */
+
 .riwayat-table-wrapper {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     border-radius: 16px;
@@ -270,7 +270,7 @@ body .container>* {
     overflow-x: auto;
 }
 
-/* Table Styles */
+
 .riwayat-table {
     width: 100%;
     border-collapse: collapse;
@@ -317,7 +317,7 @@ body .container>* {
     color: var(--success-color);
 }
 
-/* Expand Button */
+
 .expand-btn {
     background: transparent;
     border: none;
@@ -354,7 +354,7 @@ body .container>* {
     font-size: 1.2rem;
 }
 
-/* Delete Button in Table */
+
 .btn-delete-table {
     background: transparent;
     border: none;
@@ -376,7 +376,7 @@ body .container>* {
     transform: scale(1.1);
 }
 
-/* Detail Row (Expandable) */
+
 .detail-row {
     display: none;
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.02) 0%, rgba(46, 125, 50, 0.01) 100%);
@@ -458,7 +458,7 @@ body .container>* {
     font-weight: 700;
 }
 
-/* Dosis Cards Section - New Layout */
+
 .dosis-cards-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -509,7 +509,7 @@ body .container>* {
     line-height: 1.2;
 }
 
-/* Additional Info Section */
+
 .additional-info-section {
     display: flex;
     flex-direction: column;
@@ -548,7 +548,7 @@ body .container>* {
     line-height: 1.6;
 }
 
-/* Empty State */
+
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;
@@ -600,7 +600,7 @@ body .container>* {
     box-shadow: 0 6px 20px rgba(27, 94, 32, 0.4);
 }
 
-/* Alert Styles */
+
 .alert {
     padding: 1rem 1.5rem;
     border-radius: 12px;
@@ -637,7 +637,7 @@ body .container>* {
     opacity: 1;
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1024px) {
     .detail-grid {
         grid-template-columns: repeat(2, 1fr);

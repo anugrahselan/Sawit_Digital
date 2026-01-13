@@ -1,5 +1,5 @@
-/* Jenis Pupuk Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir dan tidak ada jarak putih */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -77,14 +77,14 @@ body .container>* {
     margin: 1rem 0 2rem 0;
 }
 
-/* Responsive untuk tablet */
+
 @media (max-width: 1024px) {
     .fertilizer-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
-/* Responsive untuk tablet kecil */
+
 @media (max-width: 768px) {
     .fertilizer-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -92,7 +92,7 @@ body .container>* {
     }
 }
 
-/* Responsive untuk mobile */
+
 @media (max-width: 480px) {
     .fertilizer-grid {
         grid-template-columns: 1fr;
@@ -222,7 +222,7 @@ body .container>* {
     transform: translateX(5px);
 }
 
-/* Fertilizer Detail Page */
+
 .fertilizer-detail {
     background-color: var(--white);
     border-radius: 24px;

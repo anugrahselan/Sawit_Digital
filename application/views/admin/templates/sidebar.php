@@ -136,7 +136,7 @@
                 </a>
             </li>
 
-            <?php if ($this->session->userdata('user_role') == 'admin'): ?>
+            <?php if ($this->session->userdata('role') == 'admin'): ?>
 
                 <li class="nav-divider">
                     <span class="divider-text">System</span>

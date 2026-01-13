@@ -9,6 +9,10 @@ application/logs/*
 !application/*/.htaccess
 
 composer.lock
+
+# Database backup files
+*.sql
+!*.sql.example
 tests/mocks/database/ci_test.sqlite
 
 user_guide_src/build/*

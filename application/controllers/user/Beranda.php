@@ -25,30 +25,17 @@ class Beranda extends CI_Controller
         }
 
         foreach ($daftar_harga_tbs as $harga) {
-            $tanggal_sekarang = date('Y-m-d', strtotime($harga->tanggal));
-
             $harga_sebelumnya = $this->Harga_tbs_model->get_harga_sebelumnya(
                 $harga->id_kabupaten,
                 $harga->id_perusahaan,
-                $tanggal_sekarang
+                $harga->tanggal
             );
 
-            if ($harga_sebelumnya && isset($harga_sebelumnya->harga_per_kg)) {
-                $harga_sekarang = floatval($harga->harga_per_kg);
-                $harga_kemarin = floatval($harga_sebelumnya->harga_per_kg);
-                $selisih = $harga_sekarang - $harga_kemarin;
-
-                if ($selisih > 0) {
-                    $harga->perubahan = $selisih;
-                    $harga->status_perubahan = 'naik';
-                } elseif ($selisih < 0) {
-                    $harga->perubahan = $selisih;
-                    $harga->status_perubahan = 'turun';
-                } else {
-                    $harga->perubahan = 0;
-                    $harga->status_perubahan = 'tidak_ada';
-                }
-                $harga->harga_kemarin = $harga_kemarin;
+            if ($harga_sebelumnya) {
+                $selisih = $harga->harga_per_kg - $harga_sebelumnya->harga_per_kg;
+                $harga->perubahan = $selisih;
+                $harga->status_perubahan = $selisih > 0 ? 'naik' : ($selisih < 0 ? 'turun' : 'tidak_ada');
+                $harga->harga_kemarin = $harga_sebelumnya->harga_per_kg;
             } else {
                 $harga->perubahan = null;
                 $harga->status_perubahan = 'tidak_ada';

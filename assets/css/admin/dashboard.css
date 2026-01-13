@@ -1,5 +1,5 @@
-/* Dashboard Admin Custom Styles - AdminLTE Style */
-/* Override container padding untuk menghilangkan jarak di kanan */
+
+
 .admin-content {
     overflow-x: hidden !important;
 }
@@ -13,7 +13,7 @@
     box-sizing: border-box !important;
 }
 
-/* Content Header (AdminLTE Style) */
+
 .content-header {
     padding: 1rem 1.5rem;
     background: #FAFAFA;
@@ -60,7 +60,7 @@
     }
 }
 
-/* Content Section (AdminLTE Style) */
+
 .content {
     padding: 0 1.5rem 1.5rem;
 }
@@ -76,7 +76,7 @@
     margin-bottom: 2rem;
 }
 
-/* Stats Card (AdminLTE Style) */
+
 .stats-card-link {
     text-decoration: none;
     color: inherit;
@@ -171,7 +171,7 @@
     color: #6c757d;
 }
 
-/* Card (AdminLTE Style) */
+
 .card {
     background: #fff;
     border-radius: 0.25rem;

@@ -1,5 +1,5 @@
-/* Kalkulator Panen Styles */
-/* Container padding yang seimbang agar tidak mepet ke pinggir */
+
+
 body {
     overflow-x: hidden !important;
     width: 100% !important;
@@ -18,7 +18,7 @@ body .container {
     box-sizing: border-box !important;
 }
 
-/* Pastikan semua elemen di dalam container tidak melebihi lebar */
+
 body .container>* {
     max-width: 100% !important;
     box-sizing: border-box !important;
@@ -45,7 +45,7 @@ body .container>* {
     }
 }
 
-/* Khusus untuk mobile sangat kecil (320px) */
+
 @media (max-width: 360px) {
     body .container {
         padding-left: 12px !important;
@@ -154,7 +154,7 @@ body .container>* {
     gap: 0.75rem;
 }
 
-/* Result Placeholder */
+
 .result-placeholder {
     text-align: center;
     padding: 3rem 2rem;
@@ -285,7 +285,7 @@ body .container>* {
     border: none;
 }
 
-/* Result Section */
+
 .result-section {
     margin-bottom: 2rem;
 }
@@ -299,7 +299,7 @@ body .container>* {
     border-bottom: 2px solid rgba(27, 94, 32, 0.2);
 }
 
-/* Result Info Card */
+
 .result-info-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     padding: 1.25rem 1.75rem;
@@ -340,7 +340,7 @@ body .container>* {
     word-break: break-word;
 }
 
-/* Result Dosis Card */
+
 .result-dosis-card {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.05) 0%, rgba(46, 125, 50, 0.02) 100%);
     padding: 1.25rem 1.75rem;
@@ -389,7 +389,7 @@ body .container>* {
     word-break: break-word;
 }
 
-/* Result Actions */
+
 .result-actions {
     margin-top: 1.5rem;
 }
@@ -423,7 +423,7 @@ body .container>* {
     color: var(--white) !important;
 }
 
-/* Result Success Message */
+
 .result-success-message {
     background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%);
     border: 2px solid rgba(46, 125, 50, 0.3);
@@ -511,7 +511,7 @@ body .container>* {
     border: 1px solid rgba(27, 94, 32, 0.1);
 }
 
-/* Login Prompt Styles */
+
 .result-login-prompt {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
     border: 2px solid rgba(27, 94, 32, 0.2);
@@ -618,7 +618,7 @@ body .container>* {
     }
 }
 
-/* User Info Display */
+
 .user-info-display {
     background: linear-gradient(135deg, rgba(27, 94, 32, 0.08) 0%, rgba(46, 125, 50, 0.04) 100%);
     padding: 0.75rem 1rem;
@@ -645,7 +645,7 @@ body .container>* {
     margin-left: 0.5rem;
 }
 
-/* Tips Box */
+
 .tips-box {
     background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 235, 59, 0.05) 100%);
     border: 2px solid rgba(255, 193, 7, 0.3);
@@ -694,7 +694,7 @@ body .container>* {
     margin-bottom: 0;
 }
 
-/* Responsive breakpoints */
+
 @media (max-width: 1024px) {
     .calculator-container {
         gap: 2rem;

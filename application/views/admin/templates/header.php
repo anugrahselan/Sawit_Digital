@@ -76,7 +76,7 @@
                             <img src="<?= $foto_url ?>" 
                                  alt="User" class="user-avatar" 
                                  onerror="this.src='<?= base_url('assets/img/users/default.png') ?>'">
-                            <span class="user-name"><?= $this->session->userdata('user_name') ?></span>
+                            <span class="user-name"><?= $this->session->userdata('nama_lengkap') ?></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="<?= site_url('admin/profile') ?>"><i class="bi bi-person"></i> Profil</a></li>

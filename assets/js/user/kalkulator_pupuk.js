@@ -1,12 +1,10 @@
-// Kalkulator Pupuk JavaScript
-$(document).ready(function() {
-    $('#fertilizerForm').on('submit', function(e) {
+$(document).ready(function () {
+    $('#fertilizerForm').on('submit', function (e) {
         e.preventDefault();
         calculateDosis();
     });
-    
-    // Tampilkan info tanah saat dipilih
-    $('#id_tanah').on('change', function() {
+
+    $('#id_tanah').on('change', function () {
         var selectedOption = $(this).find('option:selected');
         var phMin = selectedOption.data('ph-min');
         var phMax = selectedOption.data('ph-max');
@@ -14,7 +12,7 @@ $(document).ready(function() {
         var kandunganP = selectedOption.data('kandungan-p');
         var kandunganK = selectedOption.data('kandungan-k');
         var rekomendasi = selectedOption.data('rekomendasi');
-        
+
         var infoHtml = '';
         if (phMin || phMax) {
             infoHtml += '<div><strong>pH:</strong> ' + (phMin ? phMin : '?') + ' - ' + (phMax ? phMax : '?') + '</div>';
@@ -30,7 +28,7 @@ $(document).ready(function() {
         if (rekomendasi) {
             infoHtml += '<div><strong>Rekomendasi:</strong> ' + rekomendasi + '</div>';
         }
-        
+
         if (infoHtml) {
             $('#tanah-details').html(infoHtml);
             $('#tanah-info').show();
@@ -38,13 +36,12 @@ $(document).ready(function() {
             $('#tanah-info').hide();
         }
     });
-    
-    // Tampilkan info pupuk saat dipilih
-    $('#id_pupuk').on('change', function() {
+
+    $('#id_pupuk').on('change', function () {
         var selectedOption = $(this).find('option:selected');
         var kandungan = selectedOption.data('kandungan');
         var fungsi = selectedOption.data('fungsi');
-        
+
         var infoHtml = '';
         if (kandungan) {
             infoHtml += '<div><strong>Kandungan:</strong> ' + kandungan + '</div>';
@@ -52,7 +49,7 @@ $(document).ready(function() {
         if (fungsi) {
             infoHtml += '<div><strong>Fungsi:</strong> ' + fungsi + '</div>';
         }
-        
+
         if (infoHtml) {
             $('#pupuk-details').html(infoHtml);
             $('#pupuk-info').show();
@@ -62,7 +59,6 @@ $(document).ready(function() {
     });
 });
 
-// Fungsi untuk menentukan status pH
 function getPhStatus(ph) {
     if (ph < 6.5) {
         return { status: 'Asam', class: 'status-asam' };
@@ -73,12 +69,10 @@ function getPhStatus(ph) {
     }
 }
 
-// Fungsi untuk menentukan status kandungan hara
 function getKandunganStatus(nilai) {
     if (!nilai || nilai === '') return { status: '-', class: '' };
-    
+
     var num = parseFloat(nilai);
-    // Threshold: Rendah < 1.5%, Sedang 1.5-3%, Tinggi > 3%
     if (num < 1.5) {
         return { status: 'Rendah', class: 'status-rendah' };
     } else if (num >= 1.5 && num <= 3.0) {
@@ -94,13 +88,12 @@ function calculateDosis() {
     var usia_tanaman = parseInt($('#usia_tanaman').val());
     var jumlah_pohon = parseInt($('#jumlah_pohon').val());
     var periode_per_tahun = parseInt($('#periode_per_tahun').val()) || 4;
-    
+
     if (!id_pupuk || !id_tanah || !usia_tanaman || !jumlah_pohon) {
         alert('Mohon lengkapi semua field yang wajib!');
         return;
     }
-    
-    // Ambil data tanah yang dipilih
+
     var selectedTanah = $('#id_tanah option:selected');
     var namaTanah = selectedTanah.text();
     var phMin = parseFloat(selectedTanah.data('ph-min')) || null;
@@ -109,11 +102,9 @@ function calculateDosis() {
     var kandunganP = parseFloat(selectedTanah.data('kandungan-p')) || null;
     var kandunganK = parseFloat(selectedTanah.data('kandungan-k')) || null;
     var rekomendasiTanah = selectedTanah.data('rekomendasi') || '';
-    
-    // Gunakan estimasi pH dari jenis tanah yang dipilih
+
     var phEstimate = null;
     var phDisplay = null;
-    // Gunakan rata-rata dari ph_min dan ph_max jika ada
     if (phMin && phMax) {
         phEstimate = ((phMin + phMax) / 2).toFixed(1);
         phDisplay = phEstimate;
@@ -126,19 +117,15 @@ function calculateDosis() {
     } else {
         phDisplay = 'Tidak tersedia';
     }
-    
-    // Ambil data pupuk
+
     var selectedPupuk = $('#id_pupuk option:selected');
     var namaPupuk = selectedPupuk.text();
     var kandunganPupuk = selectedPupuk.data('kandungan') || '';
     var fungsiPupuk = selectedPupuk.data('fungsi') || '';
-    
-    // Hitung dosis (default atau dari API jika tersedia)
-    var dosisPerPohon = 2.5; // Default value in kg
-    
-    // AJAX call to get dosis data (optional)
+
+    var dosisPerPohon = 2.5;
     $.ajax({
-        url: baseUrl + 'index.php/api/get_dosis',
+        url: baseUrl + 'index.php/pupuk/get_dosis',
         method: 'GET',
         data: {
             id_pupuk: id_pupuk,
@@ -146,7 +133,7 @@ function calculateDosis() {
             usia_tanaman: usia_tanaman
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.success && response.data.length > 0) {
                 dosisPerPohon = parseFloat(response.data[0].dosis_per_pohon) || dosisPerPohon;
             }
@@ -164,8 +151,7 @@ function calculateDosis() {
                 dosis_per_pohon: dosisPerPohon
             }, jumlah_pohon, periode_per_tahun);
         },
-        error: function() {
-            // Fallback: gunakan default dosis
+        error: function () {
             displayResult({
                 nama_tanah: namaTanah,
                 ph_display: phDisplay,
@@ -187,26 +173,22 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     var dosisPerPohon = parseFloat(data.dosis_per_pohon) || 2.5;
     var totalDosis = dosisPerPohon * jumlahPohon;
     var dosisPerPeriode = totalDosis / periodePerTahun;
-    
-    // Format number with thousand separator
+
     function formatNumber(num) {
         if (typeof num === 'string' && num === 'Tidak tersedia') return num;
         return parseFloat(num).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
-    
-    // Tentukan status pH
+
     var phValue = parseFloat(data.ph_display);
     var phStatus = null;
     if (!isNaN(phValue)) {
         phStatus = getPhStatus(phValue);
     }
-    
-    // Tentukan status kandungan hara
+
     var statusN = getKandunganStatus(data.kandungan_n);
     var statusP = getKandunganStatus(data.kandungan_p);
     var statusK = getKandunganStatus(data.kandungan_k);
-    
-    // Informasi pupuk untuk ditampilkan
+
     var infoPupuk = '';
     if (data.nama_pupuk) {
         infoPupuk = data.nama_pupuk;
@@ -220,18 +202,17 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     if (!infoPupuk) {
         infoPupuk = 'Informasi pupuk tidak tersedia.';
     }
-    
-    
+
+
     var html = '<div class="result-section">';
     html += '<h3 class="result-section-title">Hasil Kalkulasi</h3>';
-    
-    // Informasi Tanah
+
     html += '<div class="result-info-card">';
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">Jenis Tanah:</span>';
     html += '<span class="result-info-value">' + (data.nama_tanah || '-') + '</span>';
     html += '</div>';
-    
+
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">pH Tanah:</span>';
     html += '<span class="result-info-value">' + data.ph_display;
@@ -243,7 +224,7 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     }
     html += '</span>';
     html += '</div>';
-    
+
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">Kandungan N:</span>';
     html += '<span class="result-info-value">' + (data.kandungan_n ? data.kandungan_n + '%' : '-');
@@ -252,7 +233,7 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     }
     html += '</span>';
     html += '</div>';
-    
+
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">Kandungan P:</span>';
     html += '<span class="result-info-value">' + (data.kandungan_p ? data.kandungan_p + '%' : '-');
@@ -261,7 +242,7 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     }
     html += '</span>';
     html += '</div>';
-    
+
     html += '<div class="result-info-row">';
     html += '<span class="result-info-label">Kandungan K:</span>';
     html += '<span class="result-info-value">' + (data.kandungan_k ? data.kandungan_k + '%' : '-');
@@ -271,40 +252,36 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
     html += '</span>';
     html += '</div>';
     html += '</div>';
-    
-    // Hasil Perhitungan Dosis
+
     html += '<div class="result-dosis-card">';
     html += '<h4 class="result-dosis-title">Hasil Perhitungan Dosis</h4>';
-    
+
     html += '<div class="result-dosis-item">';
     html += '<span class="result-dosis-label">Dosis per Pohon:</span>';
     html += '<span class="result-dosis-value">' + formatNumber(dosisPerPohon) + ' kg</span>';
     html += '</div>';
-    
+
     html += '<div class="result-dosis-item">';
     html += '<span class="result-dosis-label">Total Dosis:</span>';
     html += '<span class="result-dosis-value">' + formatNumber(totalDosis) + ' kg</span>';
     html += '</div>';
-    
+
     html += '<div class="result-dosis-item">';
     html += '<span class="result-dosis-label">Dosis per Periode:</span>';
     html += '<span class="result-dosis-value">' + formatNumber(dosisPerPeriode) + ' kg</span>';
     html += '</div>';
     html += '</div>';
-    
-    // Informasi Pupuk
+
     html += '<div class="result-rekomendasi-card">';
     html += '<h4 class="result-rekomendasi-title">Informasi Pupuk</h4>';
     html += '<p class="result-rekomendasi-text">' + infoPupuk + '</p>';
     html += '</div>';
-    
+
     html += '</div>';
-    
-    // Cek apakah user sudah login (variabel isLoggedIn sudah diset di footer.php)
+
     var userLoggedIn = typeof isLoggedIn !== 'undefined' ? isLoggedIn : false;
-    
+
     if (!userLoggedIn) {
-        // Pesan untuk user yang belum login
         html += '<div class="result-login-prompt">';
         html += '<h4 class="login-prompt-title">Ingin menyimpan hasil kalkulasi ini?</h4>';
         html += '<p class="login-prompt-text">Silakan <a href="' + baseUrl + 'index.php/login" class="login-link">Login</a> atau <a href="' + baseUrl + 'index.php/login" class="register-link">Daftar</a> terlebih dahulu.</p>';
@@ -318,24 +295,21 @@ function displayResult(data, jumlahPohon, periodePerTahun) {
         html += '</div>';
         html += '</div>';
     } else {
-        // Button untuk menyimpan (jika sudah login)
         html += '<div class="result-actions">';
         html += '<button type="button" class="btn btn-success btn-block" id="btnSaveDosis">';
         html += '<span class="btn-text">Simpan Kalkulasi</span>';
         html += '</button>';
         html += '</div>';
     }
-    
+
     $('#resultContent').html(html);
-    
-    // Scroll to result
+
     $('html, body').animate({
         scrollTop: $('#resultContainer').offset().top - 100
     }, 500);
-    
-    // Save button handler (jika ada)
+
     if (userLoggedIn) {
-        $('#btnSaveDosis').on('click', function() {
+        $('#btnSaveDosis').on('click', function () {
             saveDosis(data, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTahun);
         });
     }
@@ -346,7 +320,7 @@ function saveDosis(data, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTah
     if (!keteranganAplikasi) {
         keteranganAplikasi = 'Aplikasikan pupuk secara merata di sekitar pangkal pohon. Pastikan tanah dalam kondisi lembab.';
     }
-    
+
     var formData = {
         id_pupuk: $('#id_pupuk').val(),
         id_tanah: $('#id_tanah').val(),
@@ -359,31 +333,29 @@ function saveDosis(data, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTah
         rekomendasi_pupuk: data.nama_pupuk + ' - ' + (data.rekomendasi_tanah || ''),
         keterangan_aplikasi: keteranganAplikasi
     };
-    
+
     $.ajax({
         url: baseUrl + 'index.php/pupuk/save_dosis',
         type: 'POST',
         data: formData,
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
-                // Tampilkan pesan sukses
                 var successHtml = '<div class="result-success-message">';
                 successHtml += '<div class="success-content">';
                 successHtml += '<h4>Hasil kalkulasi berhasil disimpan ke histori Anda.</h4>';
                 successHtml += '<p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">Data kalkulasi Anda telah tersimpan dan dapat dilihat di halaman riwayat kalkulasi.</p>';
                 successHtml += '</div>';
                 successHtml += '</div>';
-                
+
                 $('#btnSaveDosis').replaceWith(successHtml);
             } else {
                 showNotification('error', 'Gagal Menyimpan', response.message || 'Terjadi kesalahan saat menyimpan data');
             }
         },
-        error: function(xhr) {
+        error: function (xhr) {
             var errorMessage = 'Terjadi kesalahan saat menyimpan data';
-            
-            // Cek jika error karena belum login
+
             if (xhr.status === 401 || (xhr.responseJSON && xhr.responseJSON.message && xhr.responseJSON.message.includes('login'))) {
                 errorMessage = 'Anda harus login terlebih dahulu untuk menyimpan kalkulasi';
                 showNotification('warning', 'Login Diperlukan', errorMessage, true);
@@ -394,16 +366,14 @@ function saveDosis(data, jumlahPohon, totalDosis, dosisPerPeriode, periodePerTah
     });
 }
 
-// Fungsi untuk menampilkan notifikasi yang bagus
 function showNotification(type, title, message, showLoginButton) {
-    // Hapus notifikasi sebelumnya jika ada
     $('.custom-notification').remove();
-    
+
     var icon = '';
     var bgColor = '';
     var borderColor = '';
-    
-    switch(type) {
+
+    switch (type) {
         case 'success':
             icon = '';
             bgColor = 'rgba(46, 125, 50, 0.1)';
@@ -424,7 +394,7 @@ function showNotification(type, title, message, showLoginButton) {
             bgColor = 'rgba(33, 150, 243, 0.1)';
             borderColor = 'rgba(33, 150, 243, 0.3)';
     }
-    
+
     var notificationHtml = '<div class="custom-notification" style="';
     notificationHtml += 'position: fixed; top: 20px; right: 20px; z-index: 10000; ';
     notificationHtml += 'background: linear-gradient(135deg, ' + bgColor + ' 0%, rgba(255,255,255,0.95) 100%); ';
@@ -438,7 +408,7 @@ function showNotification(type, title, message, showLoginButton) {
     notificationHtml += '<div style="flex: 1;">';
     notificationHtml += '<h4 style="margin: 0 0 0.5rem 0; color: var(--primary-color); font-size: 1.1rem; font-weight: 700;">' + title + '</h4>';
     notificationHtml += '<p style="margin: 0; color: var(--text-color); font-size: 0.95rem; line-height: 1.5;">' + message + '</p>';
-    
+
     if (showLoginButton) {
         notificationHtml += '<div style="margin-top: 1rem; display: flex; gap: 0.75rem;">';
         notificationHtml += '<a href="' + baseUrl + 'index.php/login" style="';
@@ -460,22 +430,20 @@ function showNotification(type, title, message, showLoginButton) {
         notificationHtml += 'font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;';
         notificationHtml += '">Tutup</button>';
     }
-    
+
     notificationHtml += '</div></div></div>';
-    
+
     $('body').append(notificationHtml);
-    
-    // Auto hide setelah 5 detik (kecuali ada tombol login)
+
     if (!showLoginButton) {
-        setTimeout(function() {
-            $('.custom-notification').fadeOut(300, function() {
+        setTimeout(function () {
+            $('.custom-notification').fadeOut(300, function () {
                 $(this).remove();
             });
         }, 5000);
     }
 }
 
-// CSS untuk animasi
 if (!$('#notification-styles').length) {
     $('head').append('<style id="notification-styles">' +
         '@keyframes slideInRight { ' +
@@ -485,5 +453,3 @@ if (!$('#notification-styles').length) {
         '.custom-notification:hover { transform: translateX(-5px); } ' +
         '</style>');
 }
-
-// baseUrl sudah diset di footer.php

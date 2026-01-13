@@ -61,18 +61,6 @@ class Pengguna_model extends CI_Model
         return false;
     }
 
-    public function email_ada($email)
-    {
-        $this->db->where('email', $email);
-        return $this->db->count_all_results($this->_table) > 0;
-    }
-
-    public function username_ada($username)
-    {
-        $this->db->where('username', $username);
-        return $this->db->count_all_results($this->_table) > 0;
-    }
-
     public function count_all()
     {
         return $this->db->count_all_results($this->_table);

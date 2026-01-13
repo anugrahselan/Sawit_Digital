@@ -12,8 +12,8 @@ class Auth extends CI_Controller
 
     public function login()
     {
-        if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
-            $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
+        if ($this->session->userdata('id_user')) {
+            $role = $this->session->userdata('role');
             if ($role === 'admin') {
                 redirect('admin/dashboard');
             } else {
@@ -51,11 +51,7 @@ class Auth extends CI_Controller
                 'role' => $user->role,
                 'nama_lengkap' => $user->nama_lengkap,
                 'email' => $user->email,
-                'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
-                'user_id' => $user->id_user,
-                'user_role' => $user->role,
-                'user_name' => $user->nama_lengkap,
-                'user_email' => $user->email
+                'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : ''
             ]);
 
             if ($user->role === 'admin') {
@@ -71,8 +67,8 @@ class Auth extends CI_Controller
 
     public function register()
     {
-        if ($this->session->userdata('id_user') || $this->session->userdata('user_id')) {
-            $role = $this->session->userdata('role') ?: $this->session->userdata('user_role');
+        if ($this->session->userdata('id_user')) {
+            $role = $this->session->userdata('role');
             if ($role === 'admin') {
                 redirect('admin/dashboard');
             } else {
@@ -128,11 +124,7 @@ class Auth extends CI_Controller
                     'role' => $user->role,
                     'nama_lengkap' => $user->nama_lengkap,
                     'email' => $user->email,
-                    'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : '',
-                    'user_id' => $user->id_user,
-                    'user_role' => $user->role,
-                    'user_name' => $user->nama_lengkap,
-                    'user_email' => $user->email
+                    'foto_profil' => isset($user->foto_profil) ? $user->foto_profil : ''
                 ]);
 
                 redirect('beranda');
