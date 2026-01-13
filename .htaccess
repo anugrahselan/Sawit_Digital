@@ -1,5 +1,11 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    # Allow access to assets folder (CSS, JS, images, etc.)
+    RewriteCond %{REQUEST_URI} ^/(assets|uploads)/ [NC]
+    RewriteRule ^ - [L]
+    
+    # Redirect all other requests to CodeIgniter
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
